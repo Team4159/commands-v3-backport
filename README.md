@@ -13,3 +13,5 @@ Derived from WPILib 2027_alpha6.
 5. Paste in this URL: https://raw.githubusercontent.com/breathaning/commands-v3-backport/refs/heads/main/vendordep.json
 6. Ensure that `CommandScheduler` is replaced with the new `Scheduler`
     - This primarily means replacing every instance of `CommandScheduler.getInstance()` with `Scheduler.getDefault()` inside `Robot.java`
+7. Make sure to build the project
+8. You might have to restart the language server or your code editor
