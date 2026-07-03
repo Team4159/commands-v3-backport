@@ -4,6 +4,8 @@ A comprehensive, but not exhaustive, backport of WPILib 2027 Commands V3 to WPIL
 
 Derived from WPILib 2027_alpha6.
 
+Made for Team 4159's rookie Internal Robotics Competition.
+
 ## Installation
 
 1. Delete old commands file dependency in your project's `vendordeps` folder
