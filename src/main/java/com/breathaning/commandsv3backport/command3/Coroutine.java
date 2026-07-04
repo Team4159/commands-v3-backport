@@ -44,7 +44,7 @@ public final class Coroutine {
      * @param callback The callback for the continuation to execute when mounted. Often a command
      *     function's body.
      */
-    public Coroutine(Scheduler scheduler, Consumer<Coroutine> callback) {
+    Coroutine(Scheduler scheduler, Consumer<Coroutine> callback) {
         this.scheduler = scheduler;
         this.callback = coroutine -> {
             try {
@@ -338,7 +338,7 @@ public final class Coroutine {
         });
     }
 
-    public void runToYieldPoint() {
+    void runToYieldPoint() {
         resumeQueue.release();
         try {
             yieldQueue.acquire();
