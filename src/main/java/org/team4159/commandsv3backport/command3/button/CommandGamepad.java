@@ -191,7 +191,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     loop.
      */
     public Trigger guide(EventLoop loop) {
-        return button(Gamepad.Button.GUIDE.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -335,7 +335,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return button(Gamepad.Button.DPAD_UP.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -359,7 +359,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return button(Gamepad.Button.DPAD_DOWN.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -383,7 +383,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return button(Gamepad.Button.DPAD_LEFT.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -407,7 +407,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return button(Gamepad.Button.DPAD_RIGHT.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -431,7 +431,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc1(EventLoop loop) {
-        return button(Gamepad.Button.MISC_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -455,7 +455,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger rightPaddle1(EventLoop loop) {
-        return button(Gamepad.Button.RIGHT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -479,7 +479,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger leftPaddle1(EventLoop loop) {
-        return button(Gamepad.Button.LEFT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -503,7 +503,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger rightPaddle2(EventLoop loop) {
-        return button(Gamepad.Button.RIGHT_PADDLE_2.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -527,7 +527,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger leftPaddle2(EventLoop loop) {
-        return button(Gamepad.Button.LEFT_PADDLE_2.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -551,7 +551,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     given loop.
      */
     public Trigger touchpad(EventLoop loop) {
-        return button(Gamepad.Button.TOUCHPAD.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -575,7 +575,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc2(EventLoop loop) {
-        return button(Gamepad.Button.MISC_2.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -599,7 +599,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc3(EventLoop loop) {
-        return button(Gamepad.Button.MISC_3.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -623,7 +623,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc4(EventLoop loop) {
-        return button(Gamepad.Button.MISC_4.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -647,7 +647,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc5(EventLoop loop) {
-        return button(Gamepad.Button.MISC_5.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -671,7 +671,7 @@ public class CommandGamepad extends CommandGenericHID {
      *     the given loop.
      */
     public Trigger misc6(EventLoop loop) {
-        return button(Gamepad.Button.MISC_6.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

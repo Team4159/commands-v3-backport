@@ -28,57 +28,58 @@ public class Gamepad extends GenericHID implements Sendable {
     /** Represents a digital button on a Gamepad. */
     public enum Button {
         /** South Face button. */
-        SOUTH_FACE(0, "SouthFaceButton"),
+        SOUTH_FACE(1, "SouthFaceButton"),
         /** East Face button. */
-        EAST_FACE(1, "EastFaceButton"),
+        EAST_FACE(2, "EastFaceButton"),
         /** West Face button. */
-        WEST_FACE(2, "WestFaceButton"),
+        WEST_FACE(3, "WestFaceButton"),
         /** North Face button. */
-        NORTH_FACE(3, "NorthFaceButton"),
+        NORTH_FACE(4, "NorthFaceButton"),
         /** Back button. */
-        BACK(4, "BackButton"),
+        BACK(7, "BackButton"),
         /** Guide button. */
-        GUIDE(5, "GuideButton"),
+        //GUIDE(5, "GuideButton"),
         /** Start button. */
-        START(6, "StartButton"),
+        START(8, "StartButton"),
         /** Left stick button. */
-        LEFT_STICK(7, "LeftStickButton"),
+        LEFT_STICK(9, "LeftStickButton"),
         /** Right stick button. */
-        RIGHT_STICK(8, "RightStickButton"),
+        RIGHT_STICK(10, "RightStickButton"),
         /** Left bumper button. */
-        LEFT_BUMPER(9, "LeftBumperButton"),
+        LEFT_BUMPER(5, "LeftBumperButton"),
         /** Right bumper button. */
-        RIGHT_BUMPER(10, "RightBumperButton"),
+        RIGHT_BUMPER(6, "RightBumperButton");
+
         /** D-pad up button. */
-        DPAD_UP(11, "DpadUpButton"),
+        // DPAD_UP(11, "DpadUpButton"),
         /** D-pad down button. */
-        DPAD_DOWN(12, "DpadDownButton"),
+        // DPAD_DOWN(12, "DpadDownButton"),
         /** D-pad left button. */
-        DPAD_LEFT(13, "DpadLeftButton"),
+        // DPAD_LEFT(13, "DpadLeftButton"),
         /** D-pad right button. */
-        DPAD_RIGHT(14, "DpadRightButton"),
+        // DPAD_RIGHT(14, "DpadRightButton"),
         /** Miscellaneous 1 button. */
-        MISC_1(15, "Misc1Button"),
+        // MISC_1(15, "Misc1Button"),
         /** Right Paddle 1 button. */
-        RIGHT_PADDLE_1(16, "RightPaddle1Button"),
+        // RIGHT_PADDLE_1(16, "RightPaddle1Button"),
         /** Left Paddle 1 button. */
-        LEFT_PADDLE_1(17, "LeftPaddle1Button"),
+        // LEFT_PADDLE_1(17, "LeftPaddle1Button"),
         /** Right Paddle 2 button. */
-        RIGHT_PADDLE_2(18, "RightPaddle2Button"),
+        // RIGHT_PADDLE_2(18, "RightPaddle2Button"),
         /** Left Paddle 2 button. */
-        LEFT_PADDLE_2(19, "LeftPaddle2Button"),
+        // LEFT_PADDLE_2(19, "LeftPaddle2Button"),
         /** Touchpad button. */
-        TOUCHPAD(20, "TouchpadButton"),
+        // TOUCHPAD(20, "TouchpadButton"),
         /** Miscellaneous 2 button. */
-        MISC_2(21, "Misc2Button"),
+        // MISC_2(21, "Misc2Button"),
         /** Miscellaneous 3 button. */
-        MISC_3(22, "Misc3Button"),
+        // MISC_3(22, "Misc3Button"),
         /** Miscellaneous 4 button. */
-        MISC_4(23, "Misc4Button"),
+        // MISC_4(23, "Misc4Button"),
         /** Miscellaneous 5 button. */
-        MISC_5(24, "Misc5Button"),
+        // MISC_5(24, "Misc5Button"),
         /** Miscellaneous 6 button. */
-        MISC_6(25, "Misc6Button");
+        //MISC_6(25, "Misc6Button");
 
         /** Button value. */
         public final int value;
@@ -110,13 +111,13 @@ public class Gamepad extends GenericHID implements Sendable {
         /** Left Y axis. */
         LEFT_Y(1, "LeftY"),
         /** Right X axis. */
-        RIGHT_X(2, "RightX"),
+        RIGHT_X(4, "RightX"),
         /** Right Y axis. */
-        RIGHT_Y(3, "RightY"),
+        RIGHT_Y(5, "RightY"),
         /** Left trigger. */
-        LEFT_TRIGGER(4, "LeftTriggerAxis"),
+        LEFT_TRIGGER(2, "LeftTriggerAxis"),
         /** Right trigger. */
-        RIGHT_TRIGGER(5, "RightTriggerAxis");
+        RIGHT_TRIGGER(3, "RightTriggerAxis");
 
         /** Axis value. */
         public final int value;
@@ -455,7 +456,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getGuideButton() {
-        return getButton(Button.GUIDE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -464,7 +465,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getGuideButtonPressed() {
-        return getButtonPressed(Button.GUIDE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -473,7 +474,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getGuideButtonReleased() {
-        return getButtonReleased(Button.GUIDE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -484,7 +485,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     loop.
      */
     public BooleanEvent guide(EventLoop loop) {
-        return button(Button.GUIDE, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -683,7 +684,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getDpadUpButton() {
-        return getButton(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -692,7 +693,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadUpButtonPressed() {
-        return getButtonPressed(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -701,7 +702,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadUpButtonReleased() {
-        return getButtonReleased(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -712,7 +713,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     given loop.
      */
     public BooleanEvent dpadUp(EventLoop loop) {
-        return button(Button.DPAD_UP, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -721,7 +722,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getDpadDownButton() {
-        return getButton(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -730,7 +731,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadDownButtonPressed() {
-        return getButtonPressed(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -739,7 +740,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadDownButtonReleased() {
-        return getButtonReleased(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -750,7 +751,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     given loop.
      */
     public BooleanEvent dpadDown(EventLoop loop) {
-        return button(Button.DPAD_DOWN, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -759,7 +760,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getDpadLeftButton() {
-        return getButton(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -768,7 +769,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadLeftButtonPressed() {
-        return getButtonPressed(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -777,7 +778,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadLeftButtonReleased() {
-        return getButtonReleased(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -788,7 +789,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     given loop.
      */
     public BooleanEvent dpadLeft(EventLoop loop) {
-        return button(Button.DPAD_LEFT, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -797,7 +798,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getDpadRightButton() {
-        return getButton(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -806,7 +807,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadRightButtonPressed() {
-        return getButtonPressed(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -815,7 +816,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadRightButtonReleased() {
-        return getButtonReleased(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -826,7 +827,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     given loop.
      */
     public BooleanEvent dpadRight(EventLoop loop) {
-        return button(Button.DPAD_RIGHT, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -835,7 +836,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc1Button() {
-        return getButton(Button.MISC_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -844,7 +845,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc1ButtonPressed() {
-        return getButtonPressed(Button.MISC_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -853,7 +854,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc1ButtonReleased() {
-        return getButtonReleased(Button.MISC_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -864,7 +865,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc1(EventLoop loop) {
-        return button(Button.MISC_1, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -873,7 +874,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getRightPaddle1Button() {
-        return getButton(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -882,7 +883,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getRightPaddle1ButtonPressed() {
-        return getButtonPressed(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -891,7 +892,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getRightPaddle1ButtonReleased() {
-        return getButtonReleased(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -902,7 +903,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent rightPaddle1(EventLoop loop) {
-        return button(Button.RIGHT_PADDLE_1, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -911,7 +912,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getLeftPaddle1Button() {
-        return getButton(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -920,7 +921,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getLeftPaddle1ButtonPressed() {
-        return getButtonPressed(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -929,7 +930,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getLeftPaddle1ButtonReleased() {
-        return getButtonReleased(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -940,7 +941,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent leftPaddle1(EventLoop loop) {
-        return button(Button.LEFT_PADDLE_1, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -949,7 +950,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getRightPaddle2Button() {
-        return getButton(Button.RIGHT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -958,7 +959,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getRightPaddle2ButtonPressed() {
-        return getButtonPressed(Button.RIGHT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -967,7 +968,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getRightPaddle2ButtonReleased() {
-        return getButtonReleased(Button.RIGHT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -978,7 +979,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent rightPaddle2(EventLoop loop) {
-        return button(Button.RIGHT_PADDLE_2, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -987,7 +988,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getLeftPaddle2Button() {
-        return getButton(Button.LEFT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -996,7 +997,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getLeftPaddle2ButtonPressed() {
-        return getButtonPressed(Button.LEFT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1005,7 +1006,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getLeftPaddle2ButtonReleased() {
-        return getButtonReleased(Button.LEFT_PADDLE_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1016,7 +1017,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent leftPaddle2(EventLoop loop) {
-        return button(Button.LEFT_PADDLE_2, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1025,7 +1026,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getTouchpadButton() {
-        return getButton(Button.TOUCHPAD);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1034,7 +1035,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getTouchpadButtonPressed() {
-        return getButtonPressed(Button.TOUCHPAD);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1043,7 +1044,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getTouchpadButtonReleased() {
-        return getButtonReleased(Button.TOUCHPAD);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1054,7 +1055,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     given loop.
      */
     public BooleanEvent touchpad(EventLoop loop) {
-        return button(Button.TOUCHPAD, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1063,7 +1064,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc2Button() {
-        return getButton(Button.MISC_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1072,7 +1073,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc2ButtonPressed() {
-        return getButtonPressed(Button.MISC_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1081,7 +1082,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc2ButtonReleased() {
-        return getButtonReleased(Button.MISC_2);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1092,7 +1093,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc2(EventLoop loop) {
-        return button(Button.MISC_2, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1101,7 +1102,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc3Button() {
-        return getButton(Button.MISC_3);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1110,7 +1111,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc3ButtonPressed() {
-        return getButtonPressed(Button.MISC_3);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1119,7 +1120,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc3ButtonReleased() {
-        return getButtonReleased(Button.MISC_3);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1130,7 +1131,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc3(EventLoop loop) {
-        return button(Button.MISC_3, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1139,7 +1140,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc4Button() {
-        return getButton(Button.MISC_4);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1148,7 +1149,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc4ButtonPressed() {
-        return getButtonPressed(Button.MISC_4);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1157,7 +1158,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc4ButtonReleased() {
-        return getButtonReleased(Button.MISC_4);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1168,7 +1169,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc4(EventLoop loop) {
-        return button(Button.MISC_4, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1177,7 +1178,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc5Button() {
-        return getButton(Button.MISC_5);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1186,7 +1187,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc5ButtonPressed() {
-        return getButtonPressed(Button.MISC_5);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1195,7 +1196,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc5ButtonReleased() {
-        return getButtonReleased(Button.MISC_5);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1206,7 +1207,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc5(EventLoop loop) {
-        return button(Button.MISC_5, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1215,7 +1216,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return The state of the button.
      */
     public boolean getMisc6Button() {
-        return getButton(Button.MISC_6);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1224,7 +1225,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getMisc6ButtonPressed() {
-        return getButtonPressed(Button.MISC_6);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1233,7 +1234,7 @@ public class Gamepad extends GenericHID implements Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getMisc6ButtonReleased() {
-        return getButtonReleased(Button.MISC_6);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1244,7 +1245,7 @@ public class Gamepad extends GenericHID implements Sendable {
      *     the given loop.
      */
     public BooleanEvent misc6(EventLoop loop) {
-        return button(Button.MISC_6, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1359,26 +1360,26 @@ public class Gamepad extends GenericHID implements Sendable {
         builder.addBooleanProperty("WestFace", () -> getButtonForSendable(Button.WEST_FACE), null);
         builder.addBooleanProperty("NorthFace", () -> getButtonForSendable(Button.NORTH_FACE), null);
         builder.addBooleanProperty("Back", () -> getButtonForSendable(Button.BACK), null);
-        builder.addBooleanProperty("Guide", () -> getButtonForSendable(Button.GUIDE), null);
+        // builder.addBooleanProperty("Guide", () -> getButtonForSendable(Button.GUIDE), null);
         builder.addBooleanProperty("Start", () -> getButtonForSendable(Button.START), null);
         builder.addBooleanProperty("LeftStick", () -> getButtonForSendable(Button.LEFT_STICK), null);
         builder.addBooleanProperty("RightStick", () -> getButtonForSendable(Button.RIGHT_STICK), null);
         builder.addBooleanProperty("LeftBumper", () -> getButtonForSendable(Button.LEFT_BUMPER), null);
         builder.addBooleanProperty("RightBumper", () -> getButtonForSendable(Button.RIGHT_BUMPER), null);
-        builder.addBooleanProperty("DpadUp", () -> getButtonForSendable(Button.DPAD_UP), null);
-        builder.addBooleanProperty("DpadDown", () -> getButtonForSendable(Button.DPAD_DOWN), null);
-        builder.addBooleanProperty("DpadLeft", () -> getButtonForSendable(Button.DPAD_LEFT), null);
-        builder.addBooleanProperty("DpadRight", () -> getButtonForSendable(Button.DPAD_RIGHT), null);
-        builder.addBooleanProperty("Misc1", () -> getButtonForSendable(Button.MISC_1), null);
-        builder.addBooleanProperty("RightPaddle1", () -> getButtonForSendable(Button.RIGHT_PADDLE_1), null);
-        builder.addBooleanProperty("LeftPaddle1", () -> getButtonForSendable(Button.LEFT_PADDLE_1), null);
-        builder.addBooleanProperty("RightPaddle2", () -> getButtonForSendable(Button.RIGHT_PADDLE_2), null);
-        builder.addBooleanProperty("LeftPaddle2", () -> getButtonForSendable(Button.LEFT_PADDLE_2), null);
-        builder.addBooleanProperty("Touchpad", () -> getButtonForSendable(Button.TOUCHPAD), null);
-        builder.addBooleanProperty("Misc2", () -> getButtonForSendable(Button.MISC_2), null);
-        builder.addBooleanProperty("Misc3", () -> getButtonForSendable(Button.MISC_3), null);
-        builder.addBooleanProperty("Misc4", () -> getButtonForSendable(Button.MISC_4), null);
-        builder.addBooleanProperty("Misc5", () -> getButtonForSendable(Button.MISC_5), null);
-        builder.addBooleanProperty("Misc6", () -> getButtonForSendable(Button.MISC_6), null);
+        // builder.addBooleanProperty("DpadUp", () -> getButtonForSendable(Button.DPAD_UP), null);
+        // builder.addBooleanProperty("DpadDown", () -> getButtonForSendable(Button.DPAD_DOWN), null);
+        // builder.addBooleanProperty("DpadLeft", () -> getButtonForSendable(Button.DPAD_LEFT), null);
+        // builder.addBooleanProperty("DpadRight", () -> getButtonForSendable(Button.DPAD_RIGHT), null);
+        // builder.addBooleanProperty("Misc1", () -> getButtonForSendable(Button.MISC_1), null);
+        // builder.addBooleanProperty("RightPaddle1", () -> getButtonForSendable(Button.RIGHT_PADDLE_1), null);
+        // builder.addBooleanProperty("LeftPaddle1", () -> getButtonForSendable(Button.LEFT_PADDLE_1), null);
+        // builder.addBooleanProperty("RightPaddle2", () -> getButtonForSendable(Button.RIGHT_PADDLE_2), null);
+        // builder.addBooleanProperty("LeftPaddle2", () -> getButtonForSendable(Button.LEFT_PADDLE_2), null);
+        // builder.addBooleanProperty("Touchpad", () -> getButtonForSendable(Button.TOUCHPAD), null);
+        // builder.addBooleanProperty("Misc2", () -> getButtonForSendable(Button.MISC_2), null);
+        // builder.addBooleanProperty("Misc3", () -> getButtonForSendable(Button.MISC_3), null);
+        // builder.addBooleanProperty("Misc4", () -> getButtonForSendable(Button.MISC_4), null);
+        // builder.addBooleanProperty("Misc5", () -> getButtonForSendable(Button.MISC_5), null);
+        // builder.addBooleanProperty("Misc6", () -> getButtonForSendable(Button.MISC_6), null);
     }
 }
