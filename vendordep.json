@@ -1,7 +1,7 @@
 {
     "fileName": "commands-v3-backport.json",
     "name": "Commands V3 Backport",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "frcYear": "2026",
     "uuid": "e05215fc-e24a-4263-b83e-013648fc5ee3",
     "mavenUrls": ["https://jitpack.io"],
@@ -10,7 +10,7 @@
         {
             "groupId": "com.github.team4159",
             "artifactId": "commands-v3-backport",
-            "version": "2.0.3"
+            "version": "2.0.4"
         }
     ],
     "jniDependencies": [],

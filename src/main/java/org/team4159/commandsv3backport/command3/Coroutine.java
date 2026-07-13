@@ -50,8 +50,8 @@ public final class Coroutine {
             try {
                 resumeQueue.acquire();
                 callback.accept(coroutine);
-            } catch (Exception e) {
-                throw new InterruptedException();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         };
         start();
