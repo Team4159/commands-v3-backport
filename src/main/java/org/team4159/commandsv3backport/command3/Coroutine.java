@@ -48,6 +48,7 @@ public final class Coroutine {
         this.scheduler = scheduler;
         this.callback = coroutine -> {
             try {
+                coroutine.yield();
                 callback.accept(coroutine);
             } catch (Exception e) {
                 throw new InterruptedException();
