@@ -68,7 +68,9 @@ public final class Coroutine {
         yieldQueue.release();
         try {
             resumeQueue.acquire();
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -83,7 +85,9 @@ public final class Coroutine {
                 yieldQueue.release();
                 resumeQueue.acquire();
             }
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -343,7 +347,9 @@ public final class Coroutine {
         resumeQueue.release();
         try {
             yieldQueue.acquire();
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     boolean isDone() {
