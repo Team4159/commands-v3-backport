@@ -17,3 +17,13 @@ Made for Team 4159's rookie Internal Robotics Competition.
     - This primarily means replacing every instance of `CommandScheduler.getInstance()` with `Scheduler.getDefault()` inside `Robot.java`
 7. Make sure to build the project
 8. You might have to restart the language server or your code editor
+
+## Usage
+
+You may run into a loop overrun error when using this library. Try pasting in the following line into your `Robot.java` constructor:
+
+```java
+public Robot() {
+    Scheduler.getDefault().run(); // Run the scheduler once to force load everything
+}
+```
