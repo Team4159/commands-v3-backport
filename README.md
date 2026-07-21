@@ -8,7 +8,8 @@ Made for Team 4159's rookie Internal Robotics Competition.
 
 ## Installation
 
-1. Delete old commands file dependency in your project's `vendordeps` folder
+1. Delete old commands file dependency
+    - Delete the file in the `vendordeps` folder or use the WPILib GUI found in the left ribbon with the explorer and Git
 2. Open the WPILib command palette by clicking the icon in the top right
 3. Search for `Manage Vendor Libraries`
 4. Select the option to install online
