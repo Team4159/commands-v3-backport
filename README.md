@@ -21,7 +21,7 @@ Made for Team 4159's rookie Internal Robotics Competition.
 
 ## Usage
 
-You may run into a loop overrun error when using this library. Try pasting in the following line into your `Robot.java` constructor:
+You may run into a loop overrun error on initialization when using this library. Try pasting in the following line into your `Robot.java` constructor:
 
 ```java
 public Robot() {
