@@ -24,15 +24,11 @@ public final class Coroutine {
 
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
-    @FunctionalInterface
-    private interface CoroutineCallback {
-        void run(Coroutine coroutine) throws InterruptedException;
-    }
-
     private final Semaphore resumeQueue = new Semaphore(0, false);
     private final Semaphore yieldQueue = new Semaphore(0, false);
+
     private final Scheduler scheduler;
-    private final CoroutineCallback callback;
+    private final Consumer<Coroutine> callback;
 
     private boolean done = false;
 
@@ -46,14 +42,7 @@ public final class Coroutine {
      */
     Coroutine(Scheduler scheduler, Consumer<Coroutine> callback) {
         this.scheduler = scheduler;
-        this.callback = coroutine -> {
-            try {
-                resumeQueue.acquire();
-                callback.accept(coroutine);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        };
+        this.callback = callback;
         start();
     }
 
@@ -330,19 +319,6 @@ public final class Coroutine {
         return scheduler;
     }
 
-    private void start() {
-        THREAD_POOL.submit(() -> {
-            try {
-                callback.run(this);
-                yieldQueue.release();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } finally {
-                done = true;
-            }
-        });
-    }
-
     void runToYieldPoint() {
         resumeQueue.release();
         try {
@@ -354,5 +330,19 @@ public final class Coroutine {
 
     boolean isDone() {
         return done;
+    }
+
+    private void start() {
+        THREAD_POOL.submit(() -> {
+            try {
+                resumeQueue.acquire();
+                callback.accept(this);
+                yieldQueue.release();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } finally {
+                done = true;
+            }
+        });
     }
 }
