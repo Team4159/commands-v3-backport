@@ -6,9 +6,13 @@ package org.team4159.commandsv3backport.command3;
 
 import static edu.wpi.first.units.Units.Microseconds;
 import static edu.wpi.first.units.Units.Milliseconds;
-import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
 
+import edu.wpi.first.util.ErrorMessages;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.TimedRobot;
+import org.team4159.commandsv3backport.command3.button.CommandGenericHID;
+import org.team4159.commandsv3backport.command3.proto.SchedulerProto;
+import org.team4159.commandsv3backport.event.EventLoop;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,8 +25,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import org.team4159.commandsv3backport.command3.proto.SchedulerProto;
-import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
  * Manages the lifecycles of {@link Coroutine}-based {@link Command Commands}. Commands may be
@@ -126,13 +128,10 @@ public final class Scheduler implements ProtobufSerializable {
     private final Stack<CommandState> m_currentCommandAncestry = new Stack<>();
 
     /** The periodic callbacks to run, outside of the command structure. */
-    private final List<Coroutine> m_periodicCallbacks = new ArrayList<>();
+    private final LinkedHashMap<BindingScope, Coroutine> m_periodicCallbacks = new LinkedHashMap<>();
 
     /** Event loop for trigger bindings. */
     private final EventLoop m_eventLoop = new EventLoop();
-
-    /** The scope for continuations to yield to. */
-    // private final ContinuationScope m_scope = new ContinuationScope("coroutine commands");
 
     // Telemetry
     /** Protobuf serializer for a scheduler. */
@@ -260,16 +259,18 @@ public final class Scheduler implements ProtobufSerializable {
      * unrecoverable infinite loop!
      *
      * @param callback the callback to sideload
+     * @see #addPeriodic(Runnable)
      */
     public void sideload(Consumer<Coroutine> callback) {
         var coroutine = new Coroutine(this, callback);
-        m_periodicCallbacks.add(coroutine);
+        var scope = BindingScope.createNarrowestScope(this);
+        m_periodicCallbacks.put(scope, coroutine);
     }
 
     /**
-     * Adds a task to run repeatedly for as long as the scheduler runs. This internally handles the
-     * looping and control yielding necessary for proper function. The callback will run at the same
-     * periodic frequency as the scheduler.
+     * Adds a periodic callback to run as part of the scheduler. The callback should not manipulate or
+     * control any mechanisms, but can be used to log information, update data (such as simulations or
+     * LED data buffers), or perform some other helpful task.
      *
      * <p>For example:
      *
@@ -281,7 +282,24 @@ public final class Scheduler implements ProtobufSerializable {
      * });
      * }</pre>
      *
+     * <p>{@code addPeriodic} is a convenience method that is identical to using {@link
+     * #sideload(Consumer)} with an unending {@code while} loop:
+     *
+     * <pre>{@code
+     * // An addPeriodic call:
+     * scheduler.addPeriodic(() -> leds.setData(ledDataBuffer));
+     *
+     * // Is equivalent to this sideload call:
+     * scheduler.sideload(coroutine -> {
+     *   while (true) {
+     *     leds.setData(ledDataBuffer)
+     *     coroutine.yield();
+     *   }
+     * });
+     * }</pre>
+     *
      * @param callback the periodic function to run
+     * @see #sideload(Consumer)
      */
     public void addPeriodic(Runnable callback) {
         sideload(coroutine -> {
@@ -629,18 +647,20 @@ public final class Scheduler implements ProtobufSerializable {
     }
 
     private void runPeriodicSideloads() {
+        m_periodicCallbacks.entrySet().removeIf(e -> !e.getKey().active());
+
         // Update periodic callbacks
-        for (Coroutine coroutine : m_periodicCallbacks) {
-            // coroutine.mount();
+        for (Coroutine coroutine : m_periodicCallbacks.values()) {
+            coroutine.mount();
             try {
                 coroutine.runToYieldPoint();
             } finally {
-                // Continuation.mountContinuation(null);
+                Continuation.mountContinuation(null);
             }
         }
 
         // And remove any periodic callbacks that have completed
-        m_periodicCallbacks.removeIf(Coroutine::isDone);
+        m_periodicCallbacks.entrySet().removeIf(e -> e.getValue().isDone());
     }
 
     private void runCommands() {
@@ -675,7 +695,7 @@ public final class Scheduler implements ProtobufSerializable {
         m_currentCommandAncestry.push(state);
         long startMicros = RobotController.getTime();
         emitMountedEvent(command);
-        //coroutine.mount();
+        coroutine.mount();
         try {
             coroutine.runToYieldPoint();
         } catch (RuntimeException e) {
@@ -693,9 +713,9 @@ public final class Scheduler implements ProtobufSerializable {
 
             if (previousState != null) {
                 // Remount the parent command, if there is one
-                // previousState.coroutine().mount();
+                previousState.coroutine().mount();
             } else {
-                // Continuation.mountContinuation(null);
+                Continuation.mountContinuation(null);
             }
         }
 
@@ -1087,12 +1107,15 @@ public final class Scheduler implements ProtobufSerializable {
      * @throws NullPointerException if given a null listener
      */
     public void addEventListener(Consumer<? super SchedulerEvent> listener) {
-        requireNonNullParam(listener, "listener", "addEventListener");
+        ErrorMessages.requireNonNullParam(listener, "listener", "addEventListener");
 
         m_eventListeners.add(listener);
     }
 
     private void emitEvent(SchedulerEvent event) {
+        // TODO: Prevent listeners from interacting with the scheduler.
+        //       Scheduling or canceling commands while the scheduler is processing will probably cause
+        //       bugs in user code or even a program crash.
         for (var listener : m_eventListeners) {
             listener.accept(event);
         }

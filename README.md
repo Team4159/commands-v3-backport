@@ -2,8 +2,6 @@
 
 A comprehensive, but not exhaustive, backport of WPILib 2027 Commands V3 to WPILib 2026.
 
-Derived from WPILib 2027_alpha6.
-
 Made for Team 4159's rookie Internal Robotics Competition.
 
 ## Installation

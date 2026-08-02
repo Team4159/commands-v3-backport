@@ -1,3 +1,7 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package org.team4159.commandsv3backport.command3;
 
 import static edu.wpi.first.units.Units.Seconds;
@@ -8,9 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
@@ -22,15 +23,8 @@ import java.util.function.Consumer;
  */
 public final class Coroutine {
 
-    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
-
-    private final Semaphore resumeQueue = new Semaphore(0, false);
-    private final Semaphore yieldQueue = new Semaphore(0, false);
-
-    private final Scheduler scheduler;
-    private final Consumer<Coroutine> callback;
-
-    private boolean done = false;
+    private final Scheduler m_scheduler;
+    private final Continuation m_backingContinuation;
 
     /**
      * Creates a new coroutine. Package-private; only the scheduler should be creating these.
@@ -41,9 +35,10 @@ public final class Coroutine {
      *     function's body.
      */
     Coroutine(Scheduler scheduler, Consumer<Coroutine> callback) {
-        this.scheduler = scheduler;
-        this.callback = callback;
-        start();
+        m_scheduler = scheduler;
+        m_backingContinuation = new Continuation(() -> {
+            callback.accept(this);
+        });
     }
 
     /**
@@ -53,13 +48,10 @@ public final class Coroutine {
      * @return true
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
-    public void yield() {
-        yieldQueue.release();
-        try {
-            resumeQueue.acquire();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    public boolean yield() {
+        requireMounted();
+
+        return m_backingContinuation.yield();
     }
 
     /**
@@ -68,14 +60,13 @@ public final class Coroutine {
      *
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
+    @SuppressWarnings("InfiniteLoopStatement")
     public void park() {
-        try {
-            while (true) {
-                yieldQueue.release();
-                resumeQueue.acquire();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        requireMounted();
+
+        while (true) {
+            // 'this' is required because 'yield' is a semi-keyword and needs to be qualified
+            this.yield();
         }
     }
 
@@ -109,15 +100,19 @@ public final class Coroutine {
      * @see #await(Command)
      */
     public void fork(Command... commands) {
+        requireMounted();
+
         requireNonNullParam(commands, "commands", "Coroutine.fork");
         for (int i = 0; i < commands.length; i++) {
             requireNonNullParam(commands[i], "commands[" + i + "]", "Coroutine.fork");
         }
 
+        // Check for user error; there's no reason to fork conflicting commands simultaneously
         ConflictDetector.throwIfConflicts(List.of(commands));
 
+        // Shorthand; this is handy for user-defined compositions
         for (var command : commands) {
-            scheduler.schedule(command);
+            m_scheduler.schedule(command);
         }
     }
 
@@ -159,11 +154,15 @@ public final class Coroutine {
      * @see #fork(Command...)
      */
     public void await(Command command) {
+        requireMounted();
+
         requireNonNullParam(command, "command", "Coroutine.await");
 
-        scheduler.schedule(command);
+        m_scheduler.schedule(command);
 
-        while (scheduler.isScheduledOrRunning(command)) {
+        while (m_scheduler.isScheduledOrRunning(command)) {
+            // If the command is a one-shot, then the schedule call will completely execute the command.
+            // There would be nothing to await
             this.yield();
         }
     }
@@ -177,6 +176,8 @@ public final class Coroutine {
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
     public void awaitAll(Collection<? extends Command> commands) {
+        requireMounted();
+
         requireNonNullParam(commands, "commands", "Coroutine.awaitAll");
         int i = 0;
         for (Command command : commands) {
@@ -187,10 +188,10 @@ public final class Coroutine {
         ConflictDetector.throwIfConflicts(commands);
 
         for (var command : commands) {
-            scheduler.schedule(command);
+            m_scheduler.schedule(command);
         }
 
-        while (commands.stream().anyMatch(scheduler::isScheduledOrRunning)) {
+        while (commands.stream().anyMatch(m_scheduler::isScheduledOrRunning)) {
             this.yield();
         }
     }
@@ -216,6 +217,8 @@ public final class Coroutine {
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
     public void awaitAny(Collection<? extends Command> commands) {
+        requireMounted();
+
         requireNonNullParam(commands, "commands", "Coroutine.awaitAny");
         int i = 0;
         for (Command command : commands) {
@@ -227,14 +230,15 @@ public final class Coroutine {
 
         // Schedule anything that's not already queued or running
         for (var command : commands) {
-            scheduler.schedule(command);
+            m_scheduler.schedule(command);
         }
 
-        while (commands.stream().allMatch(scheduler::isScheduledOrRunning)) {
+        while (commands.stream().allMatch(m_scheduler::isScheduledOrRunning)) {
             this.yield();
         }
 
-        commands.forEach(scheduler::cancel);
+        // At least one command exited; cancel the rest.
+        commands.forEach(m_scheduler::cancel);
     }
 
     /**
@@ -283,6 +287,8 @@ public final class Coroutine {
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
     public void wait(Time duration) {
+        requireMounted();
+
         requireNonNullParam(duration, "duration", "Coroutine.wait");
 
         var timer = new Timer();
@@ -293,17 +299,110 @@ public final class Coroutine {
     }
 
     /**
-     * Yields until a condition is met.
+     * Represents the result of a call to {@link Coroutine#waitUntil(BooleanSupplier)} or {@link
+     * Coroutine#waitUntil(BooleanSupplier, Time)}.
+     */
+    public enum WaitResult {
+        /** A call to {@code waitUntil} has met its condition. */
+        CONDITION_MET {
+            @Override
+            public boolean timedOut() {
+                return false;
+            }
+        },
+        /** A call to {@link Coroutine#waitUntil(BooleanSupplier, Time)} has timed out. */
+        TIMED_OUT {
+            @Override
+            public boolean timedOut() {
+                return true;
+            }
+        };
+
+        /**
+         * Checks if the wait has timed out.
+         *
+         * @return true if this result was a timeout, false if the condition was met without timing out.
+         */
+        public abstract boolean timedOut();
+    }
+
+    /**
+     * Yields until a condition is met. This method will <b>only</b> return once the condition is met;
+     * if the condition never becomes true or is delayed longer than you expect, this method will
+     * block indefinitely. {@link #waitUntil(BooleanSupplier, Time)} is an alternative that will only
+     * wait up until a maximum duration before exiting.
      *
      * @param condition The condition to wait for
+     * @return {@link WaitResult#CONDITION_MET}
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
+     * @see #waitUntil(BooleanSupplier, Time)
      */
-    public void waitUntil(BooleanSupplier condition) {
+    public WaitResult waitUntil(BooleanSupplier condition) {
+        requireMounted();
+
         requireNonNullParam(condition, "condition", "Coroutine.waitUntil");
 
         while (!condition.getAsBoolean()) {
             this.yield();
         }
+
+        return WaitResult.CONDITION_MET;
+    }
+
+    /**
+     * Yields until a condition is met, waiting for up to a specified duration. If the condition is
+     * not met before the timeout duration elapses, this method stops waiting and returns {@link
+     * WaitResult#TIMED_OUT}.
+     *
+     * <p>Teams may use this method for waiting for conditions in autonomous or automated routines to
+     * be resilient to hardware faults (e.g., a mechanism not reaching a target state or a faulty
+     * sensor).
+     *
+     * <pre>{@code
+     * Command.noRequirements(coroutine -> {
+     *   coroutine.fork(elevator.up());
+     *   Coroutine.WaitResult upResult = coroutine.waitUntil(elevator::atTop, Seconds.of(1.25));
+     *   if (upResult.timedOut()) {
+     *     // We've waited 1.25 seconds and the elevator still has not reached the top. It may have
+     *     // jammed or there may be a fault with the sensors. In this example, we set a driverstation
+     *     // alert and exit early - team code may want to take other approaches like retrying the
+     *     // command or falling back to a secondary behavior that doesn't need the elevator to be up.
+     *     elevator.setJamAlert();
+     *     return;
+     *   }
+     *
+     *   // The elevator reached the top within 1.25 seconds. Clear the alert and continue.
+     *   elevator.clearJamAlert();
+     *
+     *   // ... more commands ...
+     * })
+     * }</pre>
+     *
+     * @param condition The condition to wait for
+     * @param timeout The maximum duration to wait
+     * @return {@link WaitResult#CONDITION_MET} if the condition was met within the specified timeout,
+     *     or {@link WaitResult#TIMED_OUT} if the timeout duration elapsed before the condition was
+     *     met.
+     * @see #waitUntil(BooleanSupplier)
+     */
+    public WaitResult waitUntil(BooleanSupplier condition, Time timeout) {
+        requireMounted();
+
+        requireNonNullParam(condition, "condition", "Coroutine.waitUntil");
+        requireNonNullParam(timeout, "timeout", "Coroutine.waitUntil");
+
+        Timer timer = new Timer();
+        timer.start();
+
+        while (!condition.getAsBoolean()) {
+            if (timer.hasElapsed(timeout)) {
+                return WaitResult.TIMED_OUT;
+            } else {
+                this.yield();
+            }
+        }
+
+        return WaitResult.CONDITION_MET;
     }
 
     /**
@@ -316,33 +415,40 @@ public final class Coroutine {
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
     public Scheduler scheduler() {
-        return scheduler;
+        requireMounted();
+
+        return m_scheduler;
     }
 
-    void runToYieldPoint() {
-        resumeQueue.release();
-        try {
-            yieldQueue.acquire();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+    private boolean isMounted() {
+        return m_backingContinuation.isMounted();
+    }
+
+    private void requireMounted() {
+        // Note: attempting to yield() outside a command will already throw an error due to the
+        // continuation being unmounted, but other actions like forking and awaiting should also
+        // throw errors. For consistent messaging, we use this helper in all places, not just the
+        // ones that interact with the backing continuation.
+
+        if (isMounted()) {
+            return;
         }
+
+        throw new IllegalStateException("Coroutines can only be used by the command bound to them");
+    }
+
+    // Package-private for interaction with the scheduler.
+    // These functions are not intended for team use.
+
+    void runToYieldPoint() {
+        m_backingContinuation.run();
+    }
+
+    void mount() {
+        Continuation.mountContinuation(m_backingContinuation);
     }
 
     boolean isDone() {
-        return done;
-    }
-
-    private void start() {
-        THREAD_POOL.submit(() -> {
-            try {
-                resumeQueue.acquire();
-                callback.accept(this);
-                yieldQueue.release();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } finally {
-                done = true;
-            }
-        });
+        return m_backingContinuation.isDone();
     }
 }
