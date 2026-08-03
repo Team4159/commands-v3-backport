@@ -8,6 +8,7 @@ import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
 
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.GenericHID;
+import org.team4159.commandsv3backport.driverstation.HIDDevice;
 
 /** A {@link Trigger} that gets its state from a {@link GenericHID}. */
 public class JoystickButton extends Trigger {
@@ -21,5 +22,15 @@ public class JoystickButton extends Trigger {
     public JoystickButton(GenericHID joystick, int buttonNumber) {
         super(() -> joystick.getRawButton(buttonNumber));
         requireNonNullParam(joystick, "joystick", "JoystickButton");
+    }
+
+    /**
+     * Creates a joystick button for triggering commands.
+     *
+     * @param joystick The HIDDevice object that has the button
+     * @param buttonNumber The button number (see {@link GenericHID#getRawButton(int) }
+     */
+    public JoystickButton(HIDDevice joystick, int buttonNumber) {
+        this(requireNonNullParam(joystick, "joystick", "JoystickButton").getHID(), buttonNumber);
     }
 }

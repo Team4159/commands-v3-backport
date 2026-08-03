@@ -68,27 +68,39 @@ public class GenericHID {
     /** USB HID interface type. */
     public enum HIDType {
         /** Unknown. */
-        UNKNOWN(0),
-        /** Standard. */
-        STANDARD(1),
-        /** Xbox 360. */
-        XBOX_360(2),
-        /** Xbox One. */
-        XBOX_ONE(3),
-        /** PS3. */
-        PS3(4),
-        /** PS4. */
-        PS4(5),
-        /** PS5. */
-        PS5(6),
-        /** Switch Pro. */
-        SWITCH_PRO(7),
-        /** Switch Joycon Left. */
-        SWITCH_JOYCON_LEFT(8),
-        /** Switch Joycon Right. */
-        SWITCH_JOYCON_RIGHT(9),
-        /** Switch Joycon Pair. */
-        SWITCH_JOYCON_PAIR(10);
+        UNKNOWN(-1),
+        /** XInputUnknown. */
+        X_INPUT_UNKOWN(0),
+        /** XInputGamepad. */
+        X_INPUT_GAMEPAD(1),
+        /** XInputWheel. */
+        X_INPUT_WHEEL(2),
+        /** XInputArcadeStick. */
+        X_INPUT_ARCADE_STICK(3),
+        /** XInputFlightStick. */
+        X_INPUT_FLIGHT_STICK(4),
+        /** XInputDancePad. */
+        X_INPUT_DANCE_PAD(5),
+        /** XInputGuitar. */
+        X_INPUT_GUITAR(6),
+        /** XInputGuitar2. */
+        X_INPUT_GUITAR_2(7),
+        /** XInputDrumKit. */
+        X_INPUT_DRUM_KIT(8),
+        /** XInputGuitar3. */
+        X_INPUT_GUITAR_3(11),
+        /** XInputArcadePad. */
+        X_INPUT_ARCADE_PAD(19),
+        /** HIDJoystick. */
+        HID_JOYSTICK(20),
+        /** HIDGamepad. */
+        HID_GAMEPAD(21),
+        /** HIDDriving. */
+        HID_DRIVING(22),
+        /** HIDFlight. */
+        HID_FLIGHT(23),
+        /** HID1stPerson. */
+        HID_1ST_PERSON(24);
 
         /** HIDType value. */
         public final int value;

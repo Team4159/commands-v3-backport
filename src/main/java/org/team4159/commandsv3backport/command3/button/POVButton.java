@@ -8,6 +8,7 @@ import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
 
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.GenericHID;
+import org.team4159.commandsv3backport.driverstation.HIDDevice;
 import org.team4159.commandsv3backport.driverstation.POVDirection;
 
 /** A {@link Trigger} that gets its state from a POV on a {@link GenericHID}. */
@@ -23,6 +24,17 @@ public class POVButton extends Trigger {
     public POVButton(GenericHID joystick, POVDirection angle, int povNumber) {
         super(() -> joystick.getPOV(povNumber) == angle);
         requireNonNullParam(joystick, "joystick", "POVButton");
+    }
+
+    /**
+     * Creates a POV button for triggering commands.
+     *
+     * @param joystick The HIDDevice object that has the POV
+     * @param angle The desired angle
+     * @param povNumber The POV number (see {@link GenericHID#getPOV(int)})
+     */
+    public POVButton(HIDDevice joystick, POVDirection angle, int povNumber) {
+        this(requireNonNullParam(joystick, "joystick", "POVButton").getHID(), angle, povNumber);
     }
 
     /**

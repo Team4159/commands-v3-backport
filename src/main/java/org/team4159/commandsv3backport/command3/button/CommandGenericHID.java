@@ -6,11 +6,15 @@ package org.team4159.commandsv3backport.command3.button;
 
 import edu.wpi.first.math.Pair;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.GenericHID;
 import org.team4159.commandsv3backport.driverstation.POVDirection;
+import org.team4159.commandsv3backport.driverstation.internal.DriverStationBackend;
 import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
@@ -18,7 +22,10 @@ import org.team4159.commandsv3backport.event.EventLoop;
  *
  * @see GenericHID
  */
-public class CommandGenericHID {
+public final class CommandGenericHID {
+
+    private static final Lock m_hidsLock = new ReentrantLock();
+    private static final Map<Scheduler, CommandGenericHID[]> m_hids = new IdentityHashMap<>();
 
     private final Scheduler m_scheduler;
     private final GenericHID m_hid;
@@ -37,6 +44,64 @@ public class CommandGenericHID {
     public CommandGenericHID(Scheduler scheduler, int port) {
         m_scheduler = scheduler;
         m_hid = new GenericHID(port);
+    }
+
+    /**
+     * Construct an instance of a device with a GenericHID object.
+     *
+     * @param scheduler The scheduler that should execute the triggered commands.
+     * @param hid The GenericHID object to use for this command HID.
+     */
+    public CommandGenericHID(Scheduler scheduler, GenericHID hid) {
+        m_scheduler = scheduler;
+        m_hid = hid;
+    }
+
+    /**
+     * Construct an instance of a device with a GenericHID object.
+     *
+     * @param hid The GenericHID object to use for this command HID.
+     */
+    public CommandGenericHID(GenericHID hid) {
+        this(Scheduler.getDefault(), hid);
+    }
+
+    /**
+     * Gets the CommandGenericHID object for the given scheduler and port. CommandGenericHID objects
+     * are cached, so this will always return the same object for the same scheduler and port.
+     *
+     * @param scheduler The scheduler that should execute the triggered commands.
+     * @param port The port index on the Driver Station that the device is plugged into.
+     * @return The CommandGenericHID object for the given scheduler and port.
+     */
+    public static CommandGenericHID getCommandGenericHID(Scheduler scheduler, int port) {
+        m_hidsLock.lock();
+        try {
+            CommandGenericHID[] hids = m_hids.computeIfAbsent(
+                scheduler,
+                k -> new CommandGenericHID[DriverStationBackend.JOYSTICK_PORTS]
+            );
+            CommandGenericHID toRet = hids[port];
+            if (toRet == null) {
+                toRet = new CommandGenericHID(scheduler, port);
+                hids[port] = toRet;
+            }
+            return toRet;
+        } finally {
+            m_hidsLock.unlock();
+        }
+    }
+
+    /**
+     * Gets the CommandGenericHID object for the given port using the default scheduler.
+     * CommandGenericHID objects are cached, so this will always return the same object for the same
+     * port.
+     *
+     * @param port The port index on the Driver Station that the device is plugged into.
+     * @return The CommandGenericHID object for the given port.
+     */
+    public static CommandGenericHID getCommandGenericHID(int port) {
+        return getCommandGenericHID(Scheduler.getDefault(), port);
     }
 
     /**
@@ -334,7 +399,7 @@ public class CommandGenericHID {
      *
      * @return the scheduler that should execute the triggered commands
      */
-    protected final Scheduler getScheduler() {
+    Scheduler getScheduler() {
         return m_scheduler;
     }
 }

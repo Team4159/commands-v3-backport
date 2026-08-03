@@ -23,6 +23,9 @@ import org.team4159.commandsv3backport.hardware.hal.RobotMode;
 /** Provide access to the network communication data to / from the Driver Station. */
 public final class DriverStationBackend {
 
+    /** Number of Joystick ports. */
+    public static final int JOYSTICK_PORTS = DriverStation.kJoystickPorts;
+
     /**
      * DriverStation constructor.
      *
@@ -274,7 +277,7 @@ public final class DriverStationBackend {
      * @return The value of type
      */
     public static int getJoystickGamepadType(int stick) {
-        return DriverStation.getJoystickIsXbox(stick) ? 1 : 0;
+        return DriverStation.getJoystickType(stick);
     }
 
     /**

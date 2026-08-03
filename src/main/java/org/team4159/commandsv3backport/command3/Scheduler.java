@@ -10,9 +10,6 @@ import static edu.wpi.first.units.Units.Milliseconds;
 import edu.wpi.first.util.ErrorMessages;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
-import org.team4159.commandsv3backport.command3.button.CommandGenericHID;
-import org.team4159.commandsv3backport.command3.proto.SchedulerProto;
-import org.team4159.commandsv3backport.event.EventLoop;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +22,9 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import org.team4159.commandsv3backport.command3.button.CommandGenericHID;
+import org.team4159.commandsv3backport.command3.proto.SchedulerProto;
+import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
  * Manages the lifecycles of {@link Coroutine}-based {@link Command Commands}. Commands may be
