@@ -48,7 +48,7 @@ import java.util.function.Consumer;
  * <p>The recommended way to create a command is using {@link Mechanism#run(Consumer)} or a related
  * factory method to create commands that require a single mechanism (for example, a command that
  * drives an elevator up and down or rotates an arm). Commands may be <i>composed</i> into {@link
- * ParallelGroup parallel groups} and {@link SequentialGroup sequences} to build more complex
+ * ParallelGroup parallel groups} and {@link SequentialGroupBuilder sequences} to build more complex
  * behavior out of fundamental building blocks. These built-in compositions will require every
  * mechanism used by every command in them, even if those commands aren't always running, and thus
  * can leave certain required mechanisms in an <i>uncommanded</i> state: owned, but not used, this
