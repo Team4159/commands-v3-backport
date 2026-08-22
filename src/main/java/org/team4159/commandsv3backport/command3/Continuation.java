@@ -64,11 +64,11 @@ final class Continuation {
             try {
                 resumeQueue.acquire();
                 target.run();
-                yieldQueue.release();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } finally {
                 done = true;
+                yieldQueue.release();
             }
         });
     }
