@@ -15,7 +15,7 @@ A comprehensive, but not exhaustive, backport of WPILib 2027 Commands V3 to WPIL
 6. Ensure that `CommandScheduler` is replaced with the new `Scheduler`
    - This primarily means replacing every instance of `CommandScheduler.getInstance()` with `Scheduler.getDefault()` inside `Robot.java`
 7. Make sure to build the project
-8. You might have to restart the language server or your code editor
+8. You might have to clear your language server's cache and restart it
 
 ## Usage
 
