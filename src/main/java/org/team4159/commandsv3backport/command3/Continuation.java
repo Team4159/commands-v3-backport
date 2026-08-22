@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
 final class Continuation {
 
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
-    private static Continuation mountedContinuation = null;
+    private static volatile Continuation mountedContinuation = null;
 
     private final Semaphore resumeQueue = new Semaphore(0, false);
     private final Semaphore yieldQueue = new Semaphore(0, false);
