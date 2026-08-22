@@ -17,7 +17,7 @@ final class Continuation {
     private final Semaphore resumeQueue = new Semaphore(0, false);
     private final Semaphore yieldQueue = new Semaphore(0, false);
 
-    private boolean done = false;
+    private volatile boolean done = false;
 
     Continuation(Runnable target) {
         start(target);
