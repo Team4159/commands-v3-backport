@@ -12,17 +12,20 @@ A comprehensive, but not exhaustive, backport of WPILib 2027 Commands V3 to WPIL
 3. Search for `Manage Vendor Libraries`
 4. Select the option to install online
 5. Paste in this URL: `https://raw.githubusercontent.com/Team4159/commands-v3-backport/refs/heads/main/vendordep.json`
-6. Ensure that `CommandScheduler` is replaced with the new `Scheduler`
-   - This primarily means replacing every instance of `CommandScheduler.getInstance()` with `Scheduler.getDefault()` inside `Robot.java`
+6. Ensure that all command dependencies are replaced
+   - Includes changing every instance of `CommandScheduler.getInstance()` with `Scheduler.getDefault()` inside `Robot.java`
+   - Make sure to clean up old imports
 7. Make sure to build the project
 8. You might have to clear your language server's cache and restart it
 
 ## Usage
 
-You may run into a loop overrun error on initialization when using this library. Try pasting in the following line into your `Robot.java` constructor:
+You may run into a loop overrun on initialization when using this library. Try pasting in the following line into your `Robot.java` constructor:
 
 ```java
 public Robot() {
-    Scheduler.getDefault().run(); // Run the scheduler once to force load everything
+    Scheduler.getDefault().run(); // Run the scheduler once to force load imports
 }
 ```
+
+Loop overruns caused by scheduling commands (usually ~100ms) are unavoidable.
