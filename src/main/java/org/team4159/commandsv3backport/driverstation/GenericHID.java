@@ -418,6 +418,7 @@ public class GenericHID {
      *
      * @return the number of axis for the current HID
      */
+    @Deprecated
     public int getAxesAvailable() {
         return DriverStationBackend.getStickAxesAvailable(m_port);
     }
@@ -436,6 +437,7 @@ public class GenericHID {
      *
      * @return the number of POVs for the current HID
      */
+    @Deprecated
     public int getPOVsAvailable() {
         return DriverStationBackend.getStickPOVsAvailable(m_port);
     }
@@ -454,6 +456,7 @@ public class GenericHID {
      *
      * @return the number of buttons for the current HID
      */
+    @Deprecated
     public long getButtonsAvailable() {
         return DriverStationBackend.getStickButtonsAvailable(m_port);
     }
@@ -481,7 +484,8 @@ public class GenericHID {
      *
      * @return the supported outputs for the HID.
      */
-    public EnumSet<SupportedOutput> getSupportedOutputs() {
+     @Deprecated
+     public EnumSet<SupportedOutput> getSupportedOutputs() {
         int supported = DriverStationBackend.getJoystickSupportedOutputs(m_port);
         EnumSet<SupportedOutput> outputs = EnumSet.noneOf(SupportedOutput.class);
         for (SupportedOutput output : SupportedOutput.values()) {
@@ -518,6 +522,7 @@ public class GenericHID {
      * @param g Green value from 0-255
      * @param b Blue value from 0-255
      */
+    @Deprecated
     public void setLeds(int r, int g, int b) {
         throw new UnsupportedOperationException();
     }
@@ -552,6 +557,7 @@ public class GenericHID {
      * @param finger The finger to check.
      * @return true if the touchpad finger is available.
      */
+    @Deprecated
     public boolean getTouchpadFingerAvailable(int touchpad, int finger) {
         return DriverStationBackend.getStickTouchpadFingerAvailable(m_port, touchpad, finger);
     }
@@ -563,6 +569,7 @@ public class GenericHID {
      * @param finger The finger to read.
      * @return The touchpad finger data.
      */
+    @Deprecated
     public TouchpadFinger getTouchpadFinger(int touchpad, int finger) {
         return DriverStationBackend.getStickTouchpadFinger(m_port, touchpad, finger);
     }

@@ -47,6 +47,7 @@ public final class RobotState {
      *
      * @return robot mode
      */
+    @Deprecated
     public static RobotMode getRobotMode() {
         return DriverStationBackend.getRobotMode();
     }
@@ -97,6 +98,7 @@ public final class RobotState {
      *
      * @return True if utility mode should be enabled, false otherwise.
      */
+    @Deprecated
     public static boolean isUtility() {
         return DriverStationBackend.isUtility();
     }
@@ -107,6 +109,7 @@ public final class RobotState {
      *
      * @return True if utility mode should be set and the robot should be enabled.
      */
+    @Deprecated
     public static boolean isUtilityEnabled() {
         return DriverStationBackend.isUtilityEnabled();
     }
@@ -125,6 +128,7 @@ public final class RobotState {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same robot mode
      *     and name already exists
      */
+    @Deprecated
     public static long addOpMode(
         RobotMode mode,
         String name,
@@ -148,6 +152,7 @@ public final class RobotState {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name, String group, String description) {
         return DriverStationBackend.addOpMode(mode, name, group, description);
     }
@@ -163,6 +168,7 @@ public final class RobotState {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name, String group) {
         return DriverStationBackend.addOpMode(mode, name, group);
     }
@@ -177,6 +183,7 @@ public final class RobotState {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name) {
         return DriverStationBackend.addOpMode(mode, name);
     }
@@ -189,16 +196,19 @@ public final class RobotState {
      * @param name name of the operating mode
      * @return unique ID for the opmode, or 0 if not found
      */
+    @Deprecated
     public static long removeOpMode(RobotMode mode, String name) {
         return DriverStationBackend.removeOpMode(mode, name);
     }
 
     /** Publishes the operating mode options to the driver station. */
+    @Deprecated
     public static void publishOpModes() {
         DriverStationBackend.publishOpModes();
     }
 
     /** Clears all operating mode options and publishes an empty list to the driver station. */
+    @Deprecated
     public static void clearOpModes() {
         DriverStationBackend.clearOpModes();
     }
@@ -212,6 +222,7 @@ public final class RobotState {
      * @return the unique ID provided by the addOpMode() function; may return 0 or a unique ID not
      *     added, so callers should be prepared to handle that case
      */
+    @Deprecated
     public static long getOpModeId() {
         return DriverStationBackend.getOpModeId();
     }
@@ -225,6 +236,7 @@ public final class RobotState {
      * @return Operating mode string; may return a string not in the list of options, so callers
      *     should be prepared to handle that case
      */
+    @Deprecated
     public static String getOpMode() {
         return DriverStationBackend.getOpMode();
     }
@@ -236,6 +248,7 @@ public final class RobotState {
      * @param id operating mode unique ID
      * @return True if that mode is the current mode
      */
+    @Deprecated
     public static boolean isOpMode(long id) {
         return DriverStationBackend.isOpMode(id);
     }
@@ -247,6 +260,7 @@ public final class RobotState {
      * @param mode operating mode
      * @return True if that mode is the current mode
      */
+    @Deprecated
     public static boolean isOpMode(String mode) {
         return DriverStationBackend.isOpMode(mode);
     }

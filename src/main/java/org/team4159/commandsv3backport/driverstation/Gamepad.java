@@ -572,6 +572,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getGuideButton() {
         throw new UnsupportedOperationException();
     }
@@ -581,6 +582,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getGuideButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -590,6 +592,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getGuideButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -601,6 +604,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Guide button's digital signal attached to the given
      *     loop.
      */
+    @Deprecated
     public BooleanEvent guide(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -952,6 +956,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc1Button() {
         throw new UnsupportedOperationException();
     }
@@ -961,6 +966,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc1ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -970,6 +976,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc1ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -981,6 +988,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -990,6 +998,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getRightPaddle1Button() {
         throw new UnsupportedOperationException();
     }
@@ -999,6 +1008,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle1ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1008,6 +1018,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle1ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1019,6 +1030,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Right Paddle 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent rightPaddle1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1028,6 +1040,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getLeftPaddle1Button() {
         throw new UnsupportedOperationException();
     }
@@ -1037,6 +1050,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle1ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1046,6 +1060,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle1ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1057,6 +1072,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Left Paddle 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent leftPaddle1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1066,6 +1082,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getRightPaddle2Button() {
         throw new UnsupportedOperationException();
     }
@@ -1075,6 +1092,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle2ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1084,6 +1102,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle2ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1095,6 +1114,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Right Paddle 2 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent rightPaddle2(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1104,6 +1124,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getLeftPaddle2Button() {
         throw new UnsupportedOperationException();
     }
@@ -1113,6 +1134,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle2ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1122,6 +1144,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle2ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1133,6 +1156,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Left Paddle 2 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent leftPaddle2(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1142,6 +1166,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getTouchpadButton() {
         throw new UnsupportedOperationException();
     }
@@ -1151,6 +1176,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getTouchpadButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1160,6 +1186,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getTouchpadButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1171,6 +1198,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Touchpad button's digital signal attached to the
      *     given loop.
      */
+    @Deprecated
     public BooleanEvent touchpad(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1180,6 +1208,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc2Button() {
         throw new UnsupportedOperationException();
     }
@@ -1189,6 +1218,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc2ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1198,6 +1228,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc2ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1209,6 +1240,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 2 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc2(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1218,6 +1250,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc3Button() {
         throw new UnsupportedOperationException();
     }
@@ -1227,6 +1260,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc3ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1236,6 +1270,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc3ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1247,6 +1282,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 3 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc3(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1256,6 +1292,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc4Button() {
         throw new UnsupportedOperationException();
     }
@@ -1265,6 +1302,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc4ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1274,6 +1312,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc4ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1285,6 +1324,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 4 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc4(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1294,6 +1334,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc5Button() {
         throw new UnsupportedOperationException();
     }
@@ -1303,6 +1344,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc5ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1312,6 +1354,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc5ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1323,6 +1366,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 5 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc5(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1332,6 +1376,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMisc6Button() {
         throw new UnsupportedOperationException();
     }
@@ -1341,6 +1386,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMisc6ButtonPressed() {
         throw new UnsupportedOperationException();
     }
@@ -1350,6 +1396,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMisc6ButtonReleased() {
         throw new UnsupportedOperationException();
     }
@@ -1361,6 +1408,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @return an event instance representing the Miscellaneous 6 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public BooleanEvent misc6(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -1459,6 +1507,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return the number of axis for the current gamepad
      */
+    @Deprecated
     public int getAxesAvailable() {
         return m_hid.getAxesAvailable();
     }
@@ -1468,6 +1517,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return the bitmask of buttons for the current gamepad
      */
+    @Deprecated
     public long getButtonsAvailable() {
         return m_hid.getButtonsAvailable();
     }
@@ -1495,6 +1545,7 @@ public class Gamepad implements HIDDevice, Sendable {
      *
      * @return the supported outputs for the gamepad.
      */
+    @Deprecated
     public EnumSet<SupportedOutput> getSupportedOutputs() {
         return m_hid.getSupportedOutputs();
     }
@@ -1516,6 +1567,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @param g Green value from 0-255
      * @param b Blue value from 0-255
      */
+    @Deprecated
     public void setLeds(int r, int g, int b) {
         m_hid.setLeds(r, g, b);
     }
@@ -1538,6 +1590,7 @@ public class Gamepad implements HIDDevice, Sendable {
      * @param finger The finger to check.
      * @return true if the touchpad finger is available.
      */
+    @Deprecated
     public boolean getTouchpadFingerAvailable(int touchpad, int finger) {
         return m_hid.getTouchpadFingerAvailable(touchpad, finger);
     }
@@ -1549,14 +1602,17 @@ public class Gamepad implements HIDDevice, Sendable {
      * @param finger The finger to read.
      * @return The touchpad finger data.
      */
+    @Deprecated
     public TouchpadFinger getTouchpadFinger(int touchpad, int finger) {
         return m_hid.getTouchpadFinger(touchpad, finger);
     }
 
+    @Deprecated
     private double getAxisForSendable(Axis axis) {
         return DriverStationBackend.getStickAxisIfAvailable(m_hid.getPort(), axis.value).orElse(0.0);
     }
 
+    @Deprecated
     private boolean getButtonForSendable(Button button) {
         return DriverStationBackend.getStickButtonIfAvailable(m_hid.getPort(), button.value).orElse(false);
     }

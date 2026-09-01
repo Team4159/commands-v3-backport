@@ -245,6 +245,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Guide button's digital signal attached to the given
      *     loop.
      */
+    @Deprecated
     public Trigger guide(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -497,6 +498,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -521,6 +523,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Right Paddle 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger rightPaddle1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -545,6 +548,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Left Paddle 1 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger leftPaddle1(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -593,6 +597,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Left Paddle 2 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger leftPaddle2(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -617,6 +622,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Touchpad button's digital signal attached to the
      *     given loop.
      */
+    @Deprecated
     public Trigger touchpad(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -641,6 +647,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 2 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc2(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -665,6 +672,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 3 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc3(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -689,6 +697,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 4 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc4(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -713,6 +722,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 5 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc5(EventLoop loop) {
         throw new UnsupportedOperationException();
     }
@@ -737,6 +747,7 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 6 button's digital signal attached to
      *     the given loop.
      */
+    @Deprecated
     public Trigger misc6(EventLoop loop) {
         throw new UnsupportedOperationException();
     }

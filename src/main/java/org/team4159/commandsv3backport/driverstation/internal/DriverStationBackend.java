@@ -92,6 +92,7 @@ public final class DriverStationBackend {
      * @param button The button index.
      * @return The state of the joystick button, or false if the button is not available.
      */
+    @Deprecated
     public static Optional<Boolean> getStickButtonIfAvailable(final int stick, final int button) {
         throw new UnsupportedOperationException();
     }
@@ -138,6 +139,7 @@ public final class DriverStationBackend {
      * @param finger The finger to read.
      * @return the state of the touchpad finger.
      */
+    @Deprecated
     public static TouchpadFinger getStickTouchpadFinger(int stick, int touchpad, int finger) {
         throw new UnsupportedOperationException();
     }
@@ -150,6 +152,7 @@ public final class DriverStationBackend {
      * @param finger The finger to read.
      * @return whether the touchpad finger is available.
      */
+    @Deprecated
     public static boolean getStickTouchpadFingerAvailable(int stick, int touchpad, int finger) {
         throw new UnsupportedOperationException();
     }
@@ -162,6 +165,7 @@ public final class DriverStationBackend {
      * @param axis The analog axis value to read from the joystick.
      * @return The value of the axis on the joystick, or 0 if the axis is not available.
      */
+    @Deprecated
     public static OptionalDouble getStickAxisIfAvailable(int stick, int axis) {
         throw new UnsupportedOperationException();
     }
@@ -216,6 +220,7 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The number of axes available on the indicated joystick
      */
+    @Deprecated
     public static int getStickAxesAvailable(int stick) {
         throw new UnsupportedOperationException();
     }
@@ -236,6 +241,7 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The number of povs available on the indicated joystick
      */
+    @Deprecated
     public static int getStickPOVsAvailable(int stick) {
         throw new UnsupportedOperationException();
     }
@@ -256,6 +262,7 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The buttons available on the indicated joystick
      */
+    @Deprecated
     public static long getStickButtonsAvailable(int stick) {
         throw new UnsupportedOperationException();
     }
@@ -286,6 +293,7 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The value of supported outputs
      */
+    @Deprecated
     public static int getJoystickSupportedOutputs(int stick) {
         throw new UnsupportedOperationException();
     }
@@ -347,6 +355,7 @@ public final class DriverStationBackend {
      *
      * @return robot mode
      */
+    @Deprecated
     public static RobotMode getRobotMode() {
         throw new UnsupportedOperationException();
     }
@@ -397,6 +406,7 @@ public final class DriverStationBackend {
      *
      * @return True if utility mode should be enabled, false otherwise.
      */
+    @Deprecated
     public static boolean isUtility() {
         throw new UnsupportedOperationException();
     }
@@ -407,6 +417,7 @@ public final class DriverStationBackend {
      *
      * @return True if utility mode should be set and the robot should be enabled.
      */
+    @Deprecated
     public static boolean isUtilityEnabled() {
         throw new UnsupportedOperationException();
     }
@@ -426,6 +437,7 @@ public final class DriverStationBackend {
      *     and name already exists
      */
     @SuppressWarnings("PMD.UseStringBufferForStringAppends")
+    @Deprecated
     public static long addOpMode(
         RobotMode mode,
         String name,
@@ -449,6 +461,7 @@ public final class DriverStationBackend {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name, String group, String description) {
         throw new UnsupportedOperationException();
     }
@@ -464,6 +477,7 @@ public final class DriverStationBackend {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name, String group) {
         throw new UnsupportedOperationException();
     }
@@ -478,6 +492,7 @@ public final class DriverStationBackend {
      * @throws IllegalArgumentException if name is empty or an operating mode with the same name
      *     already exists
      */
+    @Deprecated
     public static long addOpMode(RobotMode mode, String name) {
         throw new UnsupportedOperationException();
     }
@@ -490,16 +505,19 @@ public final class DriverStationBackend {
      * @param name name of the operating mode
      * @return unique ID for the opmode, or 0 if not found
      */
+    @Deprecated
     public static long removeOpMode(RobotMode mode, String name) {
         throw new UnsupportedOperationException();
     }
 
     /** Publishes the operating mode options to the driver station. */
+    @Deprecated
     public static void publishOpModes() {
         throw new UnsupportedOperationException();
     }
 
     /** Clears all operating mode options and publishes an empty list to the driver station. */
+    @Deprecated
     public static void clearOpModes() {
         throw new UnsupportedOperationException();
     }
@@ -521,6 +539,7 @@ public final class DriverStationBackend {
      * @see #getOpMode()
      * @see #getOpModeId()
      */
+    @Deprecated
     public static void observeUserProgramStarting() {
         throw new UnsupportedOperationException();
     }
@@ -539,6 +558,7 @@ public final class DriverStationBackend {
      * @return the unique ID provided by the addOpMode() function; may return 0 or a unique ID not
      *     added, so callers should be prepared to handle that case
      */
+    @Deprecated
     public static long getOpModeId() {
         throw new UnsupportedOperationException();
     }
@@ -557,6 +577,7 @@ public final class DriverStationBackend {
      * @return Operating mode string; may return a string not in the list of options, so callers
      *     should be prepared to handle that case
      */
+    @Deprecated
     public static String getOpMode() {
         throw new UnsupportedOperationException();
     }
@@ -568,6 +589,7 @@ public final class DriverStationBackend {
      * @param id operating mode unique ID
      * @return True if that mode is the current mode
      */
+    @Deprecated
     public static boolean isOpMode(long id) {
         throw new UnsupportedOperationException();
     }
@@ -579,6 +601,7 @@ public final class DriverStationBackend {
      * @param mode operating mode
      * @return True if that mode is the current mode
      */
+    @Deprecated
     public static boolean isOpMode(String mode) {
         throw new UnsupportedOperationException();
     }
