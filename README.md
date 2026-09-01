@@ -29,3 +29,5 @@ public Robot() {
 ```
 
 Loop overruns caused by scheduling commands (usually ~100ms) are unavoidable.
+
+This library is not compatible with any 2026 library that depends on the default commands library, like auto routines.
