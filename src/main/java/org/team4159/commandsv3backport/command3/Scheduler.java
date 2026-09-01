@@ -136,6 +136,9 @@ public final class Scheduler implements ProtobufSerializable {
   /** Event loop for trigger bindings. */
   private final EventLoop m_eventLoop = new EventLoop();
 
+  /** The scope for continuations to yield to. */
+  private final ContinuationScope m_scope = new ContinuationScope("coroutine commands");
+
   /** Represents a single periodic callback. Stores a coroutine and its scope. */
   private record PeriodicCallback(BindingScope scope, Coroutine coroutine) {}
 
@@ -275,7 +278,7 @@ public final class Scheduler implements ProtobufSerializable {
    * @see #addPeriodic(Runnable)
    */
   public void sideload(Consumer<Coroutine> callback) {
-    var coroutine = new Coroutine(this, callback);
+    var coroutine = new Coroutine(this, m_scope, callback);
     // Sideloaded functions shouldn't be canceled if a command can't be forked. The default behavior
     // should allow user code the opportunity to recover from a failure. This differs from
     // coroutines issued to commands, which should fail by default to prevent unexpected robot state
@@ -1120,7 +1123,7 @@ public final class Scheduler implements ProtobufSerializable {
    * @return the binding coroutine
    */
   private Coroutine buildCoroutine(Command command) {
-    return new Coroutine(this, command::run);
+    return new Coroutine(this, m_scope, command::run);
   }
 
   /**

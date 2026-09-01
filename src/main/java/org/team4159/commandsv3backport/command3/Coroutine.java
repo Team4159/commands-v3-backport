@@ -41,9 +41,9 @@ public final class Coroutine {
    * @param callback The callback for the continuation to execute when mounted. Often a command
    *     function's body.
    */
-  Coroutine(Scheduler scheduler, Consumer<Coroutine> callback) {
+  Coroutine(Scheduler scheduler, ContinuationScope scope, Consumer<Coroutine> callback) {
     m_scheduler = scheduler;
-    m_backingContinuation = new Continuation(() -> callback.accept(this));
+    m_backingContinuation = new Continuation(scope, () -> callback.accept(this));
   }
 
   /**

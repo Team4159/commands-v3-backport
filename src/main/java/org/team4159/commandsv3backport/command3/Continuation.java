@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
 final class Continuation {
 
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
+
     private static Continuation mountedContinuation = null;
 
     private final Semaphore resumeQueue = new Semaphore(0, false);
@@ -19,7 +20,7 @@ final class Continuation {
 
     private boolean done = false;
 
-    Continuation(Runnable target) {
+    Continuation(ContinuationScope scope, Runnable target) {
         start(target);
     }
 
