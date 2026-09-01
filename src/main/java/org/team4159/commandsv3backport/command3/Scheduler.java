@@ -20,7 +20,6 @@ import java.util.Stack;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import org.team4159.commandsv3backport.command3.Scheduler.ScheduleResult;
 import org.team4159.commandsv3backport.command3.Scheduler.ScheduleResult.LowerPriorityThanQueuedCommand;
 import org.team4159.commandsv3backport.command3.Scheduler.ScheduleResult.LowerPriorityThanRunningCommand;
 import org.team4159.commandsv3backport.command3.button.CommandGenericHID;
@@ -485,7 +484,8 @@ public final class Scheduler implements ProtobufSerializable {
     }
 
     Set<Command> ancestry = new HashSet<>();
-    if (binding.scope() instanceof BindingScope.ForCommand(Scheduler _, Command parent)) {
+    if (binding.scope() instanceof BindingScope.ForCommand forCommand) {
+        Command parent = forCommand.command();
       for (var state = m_runningCommands.get(parent);
           state != null;
           state = m_runningCommands.get(state.parent())) {
@@ -969,16 +969,12 @@ public final class Scheduler implements ProtobufSerializable {
     // to interrupt the entire composition. Because InterruptEvent only supports a single
     // interruptor, we attribute the interrupt to the first conflicting command.
     var failure = coroutine.getForkResult().getFailedCommands().get(0);
-    Command interruptor =
-        switch (failure) {
-          case LowerPriorityThanRunningCommand(var _, Command conflict) -> conflict;
-          case LowerPriorityThanQueuedCommand(var _, Command conflict) -> conflict;
-          default -> {
-            // Shouldn't get here (this is a bug in WPILib code, not handling new cases).
-            // But we don't want to crash user programs, so just attribute to null.
-            yield null;
-          }
-        };
+    Command interruptor = null;
+    if (failure instanceof LowerPriorityThanRunningCommand runningCommand) {
+        interruptor = runningCommand.alreadyRunning();
+    } else if (failure instanceof LowerPriorityThanQueuedCommand queuedCommand) {
+        interruptor = queuedCommand.queuedCommand();
+    }
 
     Command root = getRoot(command);
     m_currentCommandAncestry.clear();
