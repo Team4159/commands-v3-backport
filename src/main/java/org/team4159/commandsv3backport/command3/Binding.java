@@ -4,7 +4,7 @@
 
 package org.team4159.commandsv3backport.command3;
 
-import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
+import edu.wpi.first.util.ErrorMessages;
 
 /**
  * A single trigger binding.
@@ -12,15 +12,16 @@ import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
  * @param scope The scope in which the binding is active.
  * @param type The type of binding; or, when the bound command should run
  * @param command The bound command. Cannot be null.
- * @param frames The stack frames when the binding was created. Used for telemetry and error
- *     reporting so if a command throws an exception, we can tell users where that command was bound
- *     instead of giving a fairly useless backtrace of the command framework.
+ * @param stackTraceStore A {@link Throwable} storing stack frames when the binding was created.
+ *     Used for telemetry and error reporting so if a command throws an exception, we can tell users
+ *     where that command was bound instead of giving a fairly useless backtrace of the command
+ *     framework.
  */
-record Binding(BindingScope scope, BindingType type, Command command, StackTraceElement[] frames) {
+record Binding(BindingScope scope, BindingType type, Command command, Throwable stackTraceStore) {
     public Binding {
-        requireNonNullParam(scope, "scope", "Binding");
-        requireNonNullParam(type, "type", "Binding");
-        requireNonNullParam(command, "command", "Binding");
-        requireNonNullParam(frames, "frames", "Binding");
+        ErrorMessages.requireNonNullParam(scope, "scope", "Binding");
+        ErrorMessages.requireNonNullParam(type, "type", "Binding");
+        ErrorMessages.requireNonNullParam(command, "command", "Binding");
+        ErrorMessages.requireNonNullParam(stackTraceStore, "stackTraceStore", "Binding");
     }
 }

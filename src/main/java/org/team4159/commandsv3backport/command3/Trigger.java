@@ -428,7 +428,6 @@ public class Trigger implements BooleanSupplier {
         m_bindings.forEach((unused, bindings) -> {
             bindings.forEach(binding -> m_scheduler.cancel(binding.command()));
         });
-        m_bindings.clear();
         m_loop.unbind(m_eventLoopCallback); // note: ConcurrentModificationException if called in poll()
         m_bound = false;
     }
@@ -439,7 +438,7 @@ public class Trigger implements BooleanSupplier {
         //       stack frame filtering and modification.
         m_bindings
             .computeIfAbsent(bindingType, _k -> new ArrayList<>())
-            .add(new Binding(scope, bindingType, command, new Throwable().getStackTrace()));
+            .add(new Binding(scope, bindingType, command, new Throwable()));
 
         if (!m_bound) {
             // Ensure we're bound to the event loop.
