@@ -438,7 +438,7 @@ public class Trigger implements BooleanSupplier {
         //       stack frame filtering and modification.
         m_bindings
             .computeIfAbsent(bindingType, _k -> new ArrayList<>())
-            .add(new Binding(scope, bindingType, command, new Throwable()));
+            .add(new Binding(scope, bindingType, command, new Throwable().getStackTrace()));
 
         if (!m_bound) {
             // Ensure we're bound to the event loop.
