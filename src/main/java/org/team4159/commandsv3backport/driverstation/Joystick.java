@@ -19,32 +19,32 @@ import org.team4159.commandsv3backport.event.EventLoop;
 public class Joystick extends GenericHID {
 
     /** Default X axis channel. */
-    public static final byte kDefaultXChannel = 0;
+    public static final byte DEFAULT_X_CHANNEL = 0;
 
     /** Default Y axis channel. */
-    public static final byte kDefaultYChannel = 1;
+    public static final byte DEFAULT_Y_CHANNEL = 1;
 
     /** Default Z axis channel. */
-    public static final byte kDefaultZChannel = 2;
+    public static final byte DEFAULT_Z_CHANNEL = 2;
 
     /** Default twist axis channel. */
-    public static final byte kDefaultTwistChannel = 2;
+    public static final byte DEFAULT_TWIST_CHANNEL = 2;
 
     /** Default throttle axis channel. */
-    public static final byte kDefaultThrottleChannel = 3;
+    public static final byte DEFAULT_THROTTLE_CHANNEL = 3;
 
     /** Represents an analog axis on a joystick. */
     public enum AxisType {
         /** X axis. */
-        kX(0),
+        X(0),
         /** Y axis. */
-        kY(1),
+        Y(1),
         /** Z axis. */
-        kZ(2),
+        Z(2),
         /** Twist axis. */
-        kTwist(3),
+        TWIST(3),
         /** Throttle axis. */
-        kThrottle(4);
+        THROTTLE(4);
 
         /** AxisType value. */
         public final int value;
@@ -57,9 +57,9 @@ public class Joystick extends GenericHID {
     /** Represents a digital button on a joystick. */
     public enum ButtonType {
         /** kTrigger. */
-        kTrigger(1),
+        TRIGGER(1),
         /** kTop. */
-        kTop(2);
+        TOP(2);
 
         /** ButtonType value. */
         public final int value;
@@ -79,11 +79,11 @@ public class Joystick extends GenericHID {
     public Joystick(final int port) {
         super(port);
 
-        m_axes[AxisType.kX.value] = kDefaultXChannel;
-        m_axes[AxisType.kY.value] = kDefaultYChannel;
-        m_axes[AxisType.kZ.value] = kDefaultZChannel;
-        m_axes[AxisType.kTwist.value] = kDefaultTwistChannel;
-        m_axes[AxisType.kThrottle.value] = kDefaultThrottleChannel;
+        m_axes[AxisType.X.value] = DEFAULT_X_CHANNEL;
+        m_axes[AxisType.Y.value] = DEFAULT_Y_CHANNEL;
+        m_axes[AxisType.Z.value] = DEFAULT_Z_CHANNEL;
+        m_axes[AxisType.TWIST.value] = DEFAULT_TWIST_CHANNEL;
+        m_axes[AxisType.THROTTLE.value] = DEFAULT_THROTTLE_CHANNEL;
 
         HAL.report(tResourceType.kResourceType_Joystick, port, 0, "Joystick");
     }
@@ -94,7 +94,7 @@ public class Joystick extends GenericHID {
      * @param channel The channel to set the axis to.
      */
     public void setXChannel(int channel) {
-        m_axes[AxisType.kX.value] = (byte) channel;
+        m_axes[AxisType.X.value] = (byte) channel;
     }
 
     /**
@@ -103,7 +103,7 @@ public class Joystick extends GenericHID {
      * @param channel The channel to set the axis to.
      */
     public void setYChannel(int channel) {
-        m_axes[AxisType.kY.value] = (byte) channel;
+        m_axes[AxisType.Y.value] = (byte) channel;
     }
 
     /**
@@ -112,7 +112,7 @@ public class Joystick extends GenericHID {
      * @param channel The channel to set the axis to.
      */
     public void setZChannel(int channel) {
-        m_axes[AxisType.kZ.value] = (byte) channel;
+        m_axes[AxisType.Z.value] = (byte) channel;
     }
 
     /**
@@ -121,7 +121,7 @@ public class Joystick extends GenericHID {
      * @param channel The channel to set the axis to.
      */
     public void setThrottleChannel(int channel) {
-        m_axes[AxisType.kThrottle.value] = (byte) channel;
+        m_axes[AxisType.THROTTLE.value] = (byte) channel;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Joystick extends GenericHID {
      * @param channel The channel to set the axis to.
      */
     public void setTwistChannel(int channel) {
-        m_axes[AxisType.kTwist.value] = (byte) channel;
+        m_axes[AxisType.TWIST.value] = (byte) channel;
     }
 
     /**
@@ -139,7 +139,7 @@ public class Joystick extends GenericHID {
      * @return The channel for the axis.
      */
     public int getXChannel() {
-        return m_axes[AxisType.kX.value];
+        return m_axes[AxisType.X.value];
     }
 
     /**
@@ -148,7 +148,7 @@ public class Joystick extends GenericHID {
      * @return The channel for the axis.
      */
     public int getYChannel() {
-        return m_axes[AxisType.kY.value];
+        return m_axes[AxisType.Y.value];
     }
 
     /**
@@ -157,7 +157,7 @@ public class Joystick extends GenericHID {
      * @return The channel for the axis.
      */
     public int getZChannel() {
-        return m_axes[AxisType.kZ.value];
+        return m_axes[AxisType.Z.value];
     }
 
     /**
@@ -166,7 +166,7 @@ public class Joystick extends GenericHID {
      * @return The channel for the axis.
      */
     public int getTwistChannel() {
-        return m_axes[AxisType.kTwist.value];
+        return m_axes[AxisType.TWIST.value];
     }
 
     /**
@@ -175,7 +175,7 @@ public class Joystick extends GenericHID {
      * @return The channel for the axis.
      */
     public int getThrottleChannel() {
-        return m_axes[AxisType.kThrottle.value];
+        return m_axes[AxisType.THROTTLE.value];
     }
 
     /**
@@ -185,7 +185,7 @@ public class Joystick extends GenericHID {
      * @return The X value of the joystick.
      */
     public final double getX() {
-        return getRawAxis(m_axes[AxisType.kX.value]);
+        return getRawAxis(m_axes[AxisType.X.value]);
     }
 
     /**
@@ -195,7 +195,7 @@ public class Joystick extends GenericHID {
      * @return The Y value of the joystick.
      */
     public final double getY() {
-        return getRawAxis(m_axes[AxisType.kY.value]);
+        return getRawAxis(m_axes[AxisType.Y.value]);
     }
 
     /**
@@ -204,7 +204,7 @@ public class Joystick extends GenericHID {
      * @return the z position
      */
     public final double getZ() {
-        return getRawAxis(m_axes[AxisType.kZ.value]);
+        return getRawAxis(m_axes[AxisType.Z.value]);
     }
 
     /**
@@ -214,7 +214,7 @@ public class Joystick extends GenericHID {
      * @return The Twist value of the joystick.
      */
     public final double getTwist() {
-        return getRawAxis(m_axes[AxisType.kTwist.value]);
+        return getRawAxis(m_axes[AxisType.TWIST.value]);
     }
 
     /**
@@ -224,7 +224,7 @@ public class Joystick extends GenericHID {
      * @return The Throttle value of the joystick.
      */
     public final double getThrottle() {
-        return getRawAxis(m_axes[AxisType.kThrottle.value]);
+        return getRawAxis(m_axes[AxisType.THROTTLE.value]);
     }
 
     /**
@@ -233,7 +233,7 @@ public class Joystick extends GenericHID {
      * @return The state of the trigger.
      */
     public boolean getTrigger() {
-        return getRawButton(ButtonType.kTrigger.value);
+        return getRawButton(ButtonType.TRIGGER.value);
     }
 
     /**
@@ -242,7 +242,7 @@ public class Joystick extends GenericHID {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getTriggerPressed() {
-        return getRawButtonPressed(ButtonType.kTrigger.value);
+        return getRawButtonPressed(ButtonType.TRIGGER.value);
     }
 
     /**
@@ -251,7 +251,7 @@ public class Joystick extends GenericHID {
      * @return Whether the button was released since the last check.
      */
     public boolean getTriggerReleased() {
-        return getRawButtonReleased(ButtonType.kTrigger.value);
+        return getRawButtonReleased(ButtonType.TRIGGER.value);
     }
 
     /**
@@ -262,7 +262,7 @@ public class Joystick extends GenericHID {
      *     given loop.
      */
     public BooleanEvent trigger(EventLoop loop) {
-        return button(ButtonType.kTrigger.value, loop);
+        return button(ButtonType.TRIGGER.value, loop);
     }
 
     /**
@@ -271,7 +271,7 @@ public class Joystick extends GenericHID {
      * @return The state of the top button.
      */
     public boolean getTop() {
-        return getRawButton(ButtonType.kTop.value);
+        return getRawButton(ButtonType.TOP.value);
     }
 
     /**
@@ -280,7 +280,7 @@ public class Joystick extends GenericHID {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getTopPressed() {
-        return getRawButtonPressed(ButtonType.kTop.value);
+        return getRawButtonPressed(ButtonType.TOP.value);
     }
 
     /**
@@ -289,7 +289,7 @@ public class Joystick extends GenericHID {
      * @return Whether the button was released since the last check.
      */
     public boolean getTopReleased() {
-        return getRawButtonReleased(ButtonType.kTop.value);
+        return getRawButtonReleased(ButtonType.TOP.value);
     }
 
     /**
@@ -300,7 +300,7 @@ public class Joystick extends GenericHID {
      *     loop.
      */
     public BooleanEvent top(EventLoop loop) {
-        return button(ButtonType.kTop.value, loop);
+        return button(ButtonType.TOP.value, loop);
     }
 
     /**
