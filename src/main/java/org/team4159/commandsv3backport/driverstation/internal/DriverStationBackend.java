@@ -220,9 +220,8 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The number of axes available on the indicated joystick
      */
-    @Deprecated
     public static int getStickAxesAvailable(int stick) {
-        throw new UnsupportedOperationException();
+        return (int) Math.pow(2, DriverStation.getStickAxisCount(stick)) - 1;
     }
 
     /**
@@ -241,9 +240,8 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The number of povs available on the indicated joystick
      */
-    @Deprecated
     public static int getStickPOVsAvailable(int stick) {
-        throw new UnsupportedOperationException();
+        return (int) Math.pow(2, DriverStation.getStickPOVCount(stick)) - 1;
     }
 
     /**
@@ -262,9 +260,8 @@ public final class DriverStationBackend {
      * @param stick The joystick port number
      * @return The buttons available on the indicated joystick
      */
-    @Deprecated
     public static long getStickButtonsAvailable(int stick) {
-        throw new UnsupportedOperationException();
+        return (int) Math.pow(2, DriverStation.getStickButtonCount(stick)) - 1;
     }
 
     /**
@@ -355,9 +352,14 @@ public final class DriverStationBackend {
      *
      * @return robot mode
      */
-    @Deprecated
     public static RobotMode getRobotMode() {
-        throw new UnsupportedOperationException();
+        if (isAutonomous()) {
+            return RobotMode.AUTONOMOUS;
+        }
+        if (isTeleop()) {
+            return RobotMode.TELEOPERATED;
+        }
+        return RobotMode.UNKNOWN;
     }
 
     /**
