@@ -27,6 +27,16 @@ public class POVButton extends Trigger {
     }
 
     /**
+     * Creates a POV button for triggering commands. By default, acts on POV 0
+     *
+     * @param joystick The GenericHID object that has the POV
+     * @param angle The desired angle
+     */
+    public POVButton(GenericHID joystick, POVDirection angle) {
+        this(joystick, angle, 0);
+    }
+
+    /**
      * Creates a POV button for triggering commands.
      *
      * @param joystick The HIDDevice object that has the POV
@@ -40,10 +50,10 @@ public class POVButton extends Trigger {
     /**
      * Creates a POV button for triggering commands. By default, acts on POV 0
      *
-     * @param joystick The GenericHID object that has the POV
+     * @param joystick The HIDDevice object that has the POV
      * @param angle The desired angle
      */
-    public POVButton(GenericHID joystick, POVDirection angle) {
+    public POVButton(HIDDevice joystick, POVDirection angle) {
         this(joystick, angle, 0);
     }
 }
