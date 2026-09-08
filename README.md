@@ -2,6 +2,8 @@
 
 A comprehensive, but not exhaustive, backport of WPILib 2027 Commands V3 to WPILib 2026.
 
+Also implements other libraries from WPILib 2027 to make programming more ergonomic.
+
 **DISCLAIMER:** Made for Team 4159's rookie Internal Robotics Competition. Do not use for serious or consequential robot code!
 
 ## Installation
