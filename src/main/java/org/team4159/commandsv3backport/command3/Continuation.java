@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class Continuation {
 
-    public static final AtomicReference<Throwable> THROWABLE_RESULT = new AtomicReference<Throwable>(null);
+    static final AtomicReference<Throwable> THROWABLE_PROPAGATOR = new AtomicReference<Throwable>(null);
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
     private static Continuation mountedContinuation = null;
@@ -70,7 +70,7 @@ final class Continuation {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception e) {
-                THROWABLE_RESULT.set(e);
+                THROWABLE_PROPAGATOR.set(e);
             } finally {
                 done = true;
                 yieldQueue.release();

@@ -773,7 +773,7 @@ public final class Coroutine {
 
     void runToYieldPoint() {
         m_backingContinuation.run();
-        Throwable throwable = Continuation.THROWABLE_RESULT.getAndSet(null);
+        Throwable throwable = Continuation.THROWABLE_PROPAGATOR.getAndSet(null);
         if (throwable != null) {
             throw new RuntimeException(
                 throwable.getMessage(),
