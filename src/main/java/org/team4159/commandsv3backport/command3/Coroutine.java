@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 import org.team4159.commandsv3backport.command3.Scheduler.ScheduleResult;
@@ -772,6 +773,13 @@ public final class Coroutine {
 
     void runToYieldPoint() {
         m_backingContinuation.run();
+        Throwable throwable = Continuation.THROWABLE_RESULT.getAndSet(null);
+        if (throwable != null) {
+            throw new RuntimeException(
+                throwable.getMessage(),
+                Objects.requireNonNullElse(throwable.getCause(), throwable)
+            );
+        }
     }
 
     void mount() {
