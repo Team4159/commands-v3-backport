@@ -13,7 +13,6 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import java.util.EnumSet;
 import java.util.Objects;
-import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.event.BooleanEvent;
 import org.team4159.commandsv3backport.event.EventLoop;
 
@@ -23,6 +22,7 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * <p>This class handles Xbox input that comes from the Driver Station. Each time a value
  * is requested the most recent value is returned.
  */
+@Deprecated
 public class XboxController implements HIDDevice, Sendable {
 
     private static final double MAX_DEADBAND = Math.nextDown(1.0);
@@ -45,36 +45,35 @@ public class XboxController implements HIDDevice, Sendable {
     /** Represents a digital button on a XboxController. */
     public enum Button {
         /** A button. */
-        A(1, "AButton"),
+        A(0, "AButton"),
         /** B button. */
-        B(2, "BButton"),
+        B(1, "BButton"),
         /** X button. */
-        X(3, "XButton"),
+        X(2, "XButton"),
         /** Y button. */
-        Y(4, "YButton"),
+        Y(3, "YButton"),
         /** View button. */
-        VIEW(7, "ViewButton"),
+        VIEW(4, "ViewButton"),
         /** Xbox button. */
-        // XBOX(6, "XboxButton"),
+        XBOX(5, "XboxButton"),
         /** Menu button. */
-        MENU(8, "MenuButton"),
+        MENU(6, "MenuButton"),
         /** Left Stick button. */
-        LEFT_STICK(9, "LeftStickButton"),
+        LEFT_STICK(7, "LeftStickButton"),
         /** Right Stick button. */
-        RIGHT_STICK(10, "RightStickButton"),
+        RIGHT_STICK(8, "RightStickButton"),
         /** Left Bumper button. */
-        LEFT_BUMPER(5, "LeftBumperButton"),
+        LEFT_BUMPER(9, "LeftBumperButton"),
         /** Right Bumper button. */
-        RIGHT_BUMPER(6, "RightBumperButton");
-
+        RIGHT_BUMPER(10, "RightBumperButton"),
         /** Dpad Up button. */
-        // DPAD_UP(12, "DpadUpButton"),
+        DPAD_UP(11, "DpadUpButton"),
         /** Dpad Down button. */
-        // DPAD_DOWN(13, "DpadDownButton"),
+        DPAD_DOWN(12, "DpadDownButton"),
         /** Dpad Left button. */
-        // DPAD_LEFT(14, "DpadLeftButton"),
+        DPAD_LEFT(13, "DpadLeftButton"),
         /** Dpad Right button. */
-        // DPAD_RIGHT(15, "DpadRightButton");
+        DPAD_RIGHT(14, "DpadRightButton");
 
         /** Button value. */
         public final int value;
@@ -99,13 +98,13 @@ public class XboxController implements HIDDevice, Sendable {
         /** Left Y. */
         LEFT_Y(1, "LeftY"),
         /** Right X. */
-        RIGHT_X(4, "RightX"),
+        RIGHT_X(2, "RightX"),
         /** Right Y. */
-        RIGHT_Y(5, "RightY"),
+        RIGHT_Y(3, "RightY"),
         /** Left Trigger. */
-        LEFT_TRIGGER(2, "LeftTrigger"),
+        LEFT_TRIGGER(4, "LeftTrigger"),
         /** Right Trigger. */
-        RIGHT_TRIGGER(3, "RightTrigger");
+        RIGHT_TRIGGER(5, "RightTrigger");
 
         /** Axis value. */
         public final int value;
@@ -559,9 +558,8 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
-    @Deprecated
     public boolean getXboxButton() {
-        throw new UnsupportedOperationException();
+        return getButton(Button.XBOX);
     }
 
     /**
@@ -569,9 +567,8 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
-    @Deprecated
     public boolean getXboxButtonPressed() {
-        throw new UnsupportedOperationException();
+        return getButtonPressed(Button.XBOX);
     }
 
     /**
@@ -579,9 +576,8 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
-    @Deprecated
     public boolean getXboxButtonReleased() {
-        throw new UnsupportedOperationException();
+        return getButtonReleased(Button.XBOX);
     }
 
     /**
@@ -591,9 +587,8 @@ public class XboxController implements HIDDevice, Sendable {
      * @return an event instance representing the Xbox button's digital signal
      *     attached to the given loop.
      */
-    @Deprecated
     public BooleanEvent xbox(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Button.XBOX, loop);
     }
 
     /**
@@ -792,7 +787,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadUpButton() {
-        return m_hid.povUp(Scheduler.getDefault().getDefaultEventLoop()).getAsBoolean();
+        return getButton(Button.DPAD_UP);
     }
 
     /**
@@ -801,7 +796,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadUpButtonPressed() {
-        return m_hid.povUp(Scheduler.getDefault().getDefaultEventLoop()).rising().getAsBoolean();
+        return getButtonPressed(Button.DPAD_UP);
     }
 
     /**
@@ -810,7 +805,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadUpButtonReleased() {
-        return m_hid.povUp(Scheduler.getDefault().getDefaultEventLoop()).falling().getAsBoolean();
+        return getButtonReleased(Button.DPAD_UP);
     }
 
     /**
@@ -821,7 +816,7 @@ public class XboxController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadUp(EventLoop loop) {
-        return m_hid.povUp(loop);
+        return button(Button.DPAD_UP, loop);
     }
 
     /**
@@ -830,7 +825,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadDownButton() {
-        return m_hid.povDown(Scheduler.getDefault().getDefaultEventLoop()).getAsBoolean();
+        return getButton(Button.DPAD_DOWN);
     }
 
     /**
@@ -839,7 +834,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadDownButtonPressed() {
-        return m_hid.povDown(Scheduler.getDefault().getDefaultEventLoop()).rising().getAsBoolean();
+        return getButtonPressed(Button.DPAD_DOWN);
     }
 
     /**
@@ -848,7 +843,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadDownButtonReleased() {
-        return m_hid.povDown(Scheduler.getDefault().getDefaultEventLoop()).falling().getAsBoolean();
+        return getButtonReleased(Button.DPAD_DOWN);
     }
 
     /**
@@ -859,7 +854,7 @@ public class XboxController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadDown(EventLoop loop) {
-        return m_hid.povDown(loop);
+        return button(Button.DPAD_DOWN, loop);
     }
 
     /**
@@ -868,7 +863,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadLeftButton() {
-        return m_hid.povLeft(Scheduler.getDefault().getDefaultEventLoop()).getAsBoolean();
+        return getButton(Button.DPAD_LEFT);
     }
 
     /**
@@ -877,7 +872,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadLeftButtonPressed() {
-        return m_hid.povLeft(Scheduler.getDefault().getDefaultEventLoop()).rising().getAsBoolean();
+        return getButtonPressed(Button.DPAD_LEFT);
     }
 
     /**
@@ -886,7 +881,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadLeftButtonReleased() {
-        return m_hid.povLeft(Scheduler.getDefault().getDefaultEventLoop()).falling().getAsBoolean();
+        return getButtonReleased(Button.DPAD_LEFT);
     }
 
     /**
@@ -897,7 +892,7 @@ public class XboxController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadLeft(EventLoop loop) {
-        return m_hid.povLeft(loop);
+        return button(Button.DPAD_LEFT, loop);
     }
 
     /**
@@ -906,7 +901,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadRightButton() {
-        return m_hid.povRight(Scheduler.getDefault().getDefaultEventLoop()).getAsBoolean();
+        return getButton(Button.DPAD_RIGHT);
     }
 
     /**
@@ -915,7 +910,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was pressed since the last check.
      */
     public boolean getDpadRightButtonPressed() {
-        return m_hid.povRight(Scheduler.getDefault().getDefaultEventLoop()).rising().getAsBoolean();
+        return getButtonPressed(Button.DPAD_RIGHT);
     }
 
     /**
@@ -924,7 +919,7 @@ public class XboxController implements HIDDevice, Sendable {
      * @return Whether the button was released since the last check.
      */
     public boolean getDpadRightButtonReleased() {
-        return m_hid.povRight(Scheduler.getDefault().getDefaultEventLoop()).falling().getAsBoolean();
+        return getButtonReleased(Button.DPAD_RIGHT);
     }
 
     /**
@@ -935,7 +930,7 @@ public class XboxController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadRight(EventLoop loop) {
-        return m_hid.povRight(loop);
+        return button(Button.DPAD_RIGHT, loop);
     }
 
     /**

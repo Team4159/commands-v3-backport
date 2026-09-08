@@ -29,7 +29,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * only through the official NI DS. Sim is not guaranteed to have the same mapping, as well as any
  * 3rd party controllers.
  */
-@Deprecated
 public class NiDsPS4Controller implements HIDDevice, Sendable {
 
     /** Represents a digital button on a NiDsPS4Controller. */

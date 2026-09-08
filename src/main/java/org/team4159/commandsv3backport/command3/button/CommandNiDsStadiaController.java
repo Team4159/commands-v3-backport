@@ -17,7 +17,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see NiDsStadiaController
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandNiDsStadiaController {
 
     private final CommandGenericHID m_hid;

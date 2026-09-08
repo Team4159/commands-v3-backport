@@ -17,7 +17,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see NiDsPS5Controller
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandNiDsPS5Controller {
 
     private final CommandGenericHID m_hid;

@@ -5,6 +5,7 @@
 package org.team4159.commandsv3backport.driverstation;
 
 /** Represents a finger on a touchpad. */
+@Deprecated
 public final class TouchpadFinger {
 
     /** Whether the finger is touching the touchpad. */

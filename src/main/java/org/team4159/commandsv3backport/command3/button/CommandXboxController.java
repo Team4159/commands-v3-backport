@@ -9,7 +9,6 @@ package org.team4159.commandsv3backport.command3.button;
 import java.util.Objects;
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
-import org.team4159.commandsv3backport.driverstation.POVDirection;
 import org.team4159.commandsv3backport.driverstation.XboxController;
 import org.team4159.commandsv3backport.event.EventLoop;
 
@@ -19,6 +18,7 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see XboxController
  */
 @SuppressWarnings("MethodName")
+@Deprecated
 public class CommandXboxController {
 
     private final CommandGenericHID m_hid;
@@ -226,9 +226,8 @@ public class CommandXboxController {
      * @return a Trigger instance representing the Xbox button's digital signal attached
      *     to the given loop.
      */
-    @Deprecated
     public Trigger xbox(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return m_hid.button(XboxController.Button.XBOX.value, loop);
     }
 
     /**
@@ -372,10 +371,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.UP, loop)
-            .or(m_hid.pov(0, POVDirection.UP_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.UP_RIGHT, loop));
+        return m_hid.button(XboxController.Button.DPAD_UP.value, loop);
     }
 
     /**
@@ -399,10 +395,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.DOWN, loop)
-            .or(m_hid.pov(0, POVDirection.DOWN_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.DOWN_RIGHT, loop));
+        return m_hid.button(XboxController.Button.DPAD_DOWN.value, loop);
     }
 
     /**
@@ -426,10 +419,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.LEFT, loop)
-            .or(m_hid.pov(0, POVDirection.DOWN_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.UP_LEFT, loop));
+        return m_hid.button(XboxController.Button.DPAD_LEFT.value, loop);
     }
 
     /**
@@ -453,10 +443,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.RIGHT, loop)
-            .or(m_hid.pov(0, POVDirection.UP_RIGHT, loop))
-            .or(m_hid.pov(0, POVDirection.DOWN_RIGHT, loop));
+        return m_hid.button(XboxController.Button.DPAD_RIGHT.value, loop);
     }
 
     /**
