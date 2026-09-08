@@ -6,6 +6,7 @@ package org.team4159.commandsv3backport.command3.button;
 
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
+import org.team4159.commandsv3backport.driverstation.GenericHID;
 import org.team4159.commandsv3backport.driverstation.Joystick;
 import org.team4159.commandsv3backport.event.EventLoop;
 
@@ -36,7 +37,7 @@ public class CommandJoystick {
      */
     public CommandJoystick(Scheduler scheduler, int port) {
         m_hid = CommandGenericHID.getCommandGenericHID(scheduler, port);
-        m_joystick = new Joystick(port);
+        m_joystick = new Joystick(new GenericHID(port));
     }
 
     /**

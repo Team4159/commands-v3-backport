@@ -484,8 +484,8 @@ public class GenericHID {
      *
      * @return the supported outputs for the HID.
      */
-     @Deprecated
-     public EnumSet<SupportedOutput> getSupportedOutputs() {
+    @Deprecated
+    public EnumSet<SupportedOutput> getSupportedOutputs() {
         int supported = DriverStationBackend.getJoystickSupportedOutputs(m_port);
         EnumSet<SupportedOutput> outputs = EnumSet.noneOf(SupportedOutput.class);
         for (SupportedOutput output : SupportedOutput.values()) {

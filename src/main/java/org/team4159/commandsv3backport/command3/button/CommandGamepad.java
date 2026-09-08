@@ -17,6 +17,7 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see Gamepad
  */
 @SuppressWarnings("MethodName")
+@Deprecated
 public class CommandGamepad {
 
     private final CommandGenericHID m_hid;
