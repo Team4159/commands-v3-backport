@@ -82,7 +82,7 @@ public final class DriverStationBackend {
      * @return The state of the joystick button.
      */
     public static boolean getStickButton(final int stick, final int button) {
-        return DriverStation.getStickButton(stick, button);
+        return DriverStation.getStickButton(stick, button + 1);
     }
 
     /**
