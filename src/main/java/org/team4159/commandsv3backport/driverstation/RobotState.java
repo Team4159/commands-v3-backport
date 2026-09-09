@@ -98,7 +98,6 @@ public final class RobotState {
      *
      * @return True if utility mode should be enabled, false otherwise.
      */
-    @Deprecated
     public static boolean isUtility() {
         return DriverStationBackend.isUtility();
     }
@@ -109,7 +108,6 @@ public final class RobotState {
      *
      * @return True if utility mode should be set and the robot should be enabled.
      */
-    @Deprecated
     public static boolean isUtilityEnabled() {
         return DriverStationBackend.isUtilityEnabled();
     }

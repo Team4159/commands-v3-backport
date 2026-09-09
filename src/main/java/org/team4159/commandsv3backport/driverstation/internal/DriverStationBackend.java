@@ -359,6 +359,9 @@ public final class DriverStationBackend {
         if (isTeleop()) {
             return RobotMode.TELEOPERATED;
         }
+        if (isUtility()) {
+            return RobotMode.UTILITY;
+        }
         return RobotMode.UNKNOWN;
     }
 
@@ -408,9 +411,8 @@ public final class DriverStationBackend {
      *
      * @return True if utility mode should be enabled, false otherwise.
      */
-    @Deprecated
     public static boolean isUtility() {
-        throw new UnsupportedOperationException();
+        return DriverStation.isTest();
     }
 
     /**
@@ -419,9 +421,8 @@ public final class DriverStationBackend {
      *
      * @return True if utility mode should be set and the robot should be enabled.
      */
-    @Deprecated
     public static boolean isUtilityEnabled() {
-        throw new UnsupportedOperationException();
+        return DriverStation.isTestEnabled();
     }
 
     /**

@@ -48,7 +48,6 @@ public final class RobotModeTriggers {
      *
      * @return A trigger that is true when the robot is enabled in utility mode.
      */
-    @Deprecated
     public static Trigger utility() {
         return new Trigger(RobotState::isUtilityEnabled);
     }

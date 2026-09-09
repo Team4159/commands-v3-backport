@@ -13,7 +13,6 @@ public enum RobotMode {
     /** Teleoperated. */
     TELEOPERATED(2),
     /** Utility. */
-    @Deprecated
     UTILITY(3);
 
     private final int value;
