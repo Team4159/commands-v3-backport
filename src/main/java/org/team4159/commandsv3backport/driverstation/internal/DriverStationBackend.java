@@ -6,6 +6,7 @@ package org.team4159.commandsv3backport.driverstation.internal;
 
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.hal.ControlWord;
+import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -544,7 +545,7 @@ public final class DriverStationBackend {
      */
     @Deprecated
     public static void observeUserProgramStarting() {
-        throw new UnsupportedOperationException();
+        DriverStationJNI.observeUserProgramStarting();
     }
 
     /**
@@ -636,7 +637,7 @@ public final class DriverStationBackend {
      */
     public static Optional<String> getGameData() {
         String data = DriverStation.getGameSpecificMessage();
-        return data.length() == 0 ? Optional.empty() : Optional.of(data);
+        return data.isEmpty() ? Optional.empty() : Optional.of(data);
     }
 
     /**
@@ -731,23 +732,22 @@ public final class DriverStationBackend {
     }
 
     /**
-     * Allows the user to specify whether they want joystick connection warnings to be printed to the
-     * console. This setting is ignored when the FMS is connected -- warnings will always be on in
-     * that scenario.
+     * Allows the user to specify whether they want joystick connection alerts to be shown. This
+     * setting is ignored when the FMS is connected -- alerts will always be on in that scenario.
      *
-     * @param silence Whether warning messages should be silenced.
+     * @param silence Whether joystick connection alerts should be silenced.
      */
-    public static void silenceJoystickConnectionWarning(boolean silence) {
+    public static void silenceJoystickConnectionAlert(boolean silence) {
         DriverStation.silenceJoystickConnectionWarning(silence);
     }
 
     /**
-     * Returns whether joystick connection warnings are silenced. This will always return false when
+     * Returns whether joystick connection alerts are silenced. This will always return false when
      * connected to the FMS.
      *
-     * @return Whether joystick connection warnings are silenced.
+     * @return Whether joystick connection alerts are silenced.
      */
-    public static boolean isJoystickConnectionWarningSilenced() {
+    public static boolean isJoystickConnectionAlertSilenced() {
         return DriverStation.isJoystickConnectionWarningSilenced();
     }
 
