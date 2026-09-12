@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BooleanSupplier;
 import org.junit.jupiter.api.Test;
+import org.team4159.commandsv3backport.hardware.hal.RobotMode;
 
 class TriggerTest extends CommandTestBase {
 
@@ -179,25 +180,8 @@ class TriggerTest extends CommandTestBase {
 
     // @Test
     // void bindingScopesToOpmodeIfAvailable() {
-    //     var fetcher = new OpModeFetcher() {
-    //         long m_id = 12345;
-
-    //         void clear() {
-    //             m_id = 0;
-    //         }
-
-    //         @Override
-    //         long getOpModeId() {
-    //             return m_id;
-    //         }
-
-    //         @Override
-    //         String getOpModeName() {
-    //             return "This is an opmode!";
-    //         }
-    //     };
-    //     OpModeFetcher.setFetcher(fetcher);
-
+    //     m_opModeId = 12345;
+    //     m_opModeName = "This is an opmode!";
     //     var triggerSignal = new AtomicBoolean(false);
     //     var trigger = new Trigger(m_scheduler, triggerSignal::get);
 
@@ -208,10 +192,108 @@ class TriggerTest extends CommandTestBase {
     //     m_scheduler.run();
     //     assertTrue(m_scheduler.isRunning(command), "Command should have started when triggered");
 
-    //     fetcher.clear();
+    //     m_opModeId = 0;
+    //     m_opModeName = "";
     //     m_scheduler.run();
     //     assertFalse(m_scheduler.isRunning(command), "Command should have stopped when opmode exited");
     // }
+
+    @Test
+    void bindingScopesToRobotModeIfAvailable() {
+        for (RobotMode mode : RobotMode.values()) {
+            if (mode == RobotMode.UNKNOWN) {
+                // global scope, skip
+                continue;
+            }
+
+            m_robotMode = mode;
+
+            var triggerSignal = new AtomicBoolean(false);
+            var trigger = new Trigger(m_scheduler, triggerSignal::get);
+
+            var command = Command.noRequirements(Coroutine::park).named("Command");
+            trigger.whileTrue(command);
+
+            triggerSignal.set(true);
+            m_scheduler.run();
+            assertTrue(m_scheduler.isRunning(command), "Command should have started when triggered");
+
+            m_robotMode = RobotMode.UNKNOWN;
+            m_scheduler.run();
+            assertFalse(m_scheduler.isRunning(command), "Command should have stopped when robot mode exited");
+        }
+    }
+
+    @Test
+    void triggerCreatedInOneModeSurvivesTransitionsToAllOtherModes() {
+        for (RobotMode sourceMode : concreteRobotModes()) {
+            for (RobotMode destinationMode : concreteRobotModes()) {
+                if (sourceMode == destinationMode) {
+                    continue;
+                }
+
+                m_robotMode = sourceMode;
+
+                var triggerSignal = new AtomicBoolean(false);
+                var trigger = new Trigger(m_scheduler, triggerSignal::get);
+
+                var sourceModeCommand = Command.noRequirements(Coroutine::park).named("SourceModeCommand");
+                trigger.whileTrue(sourceModeCommand);
+
+                triggerSignal.set(true);
+                m_scheduler.run();
+                assertTrue(
+                    m_scheduler.isRunning(sourceModeCommand),
+                    () ->
+                        "Command should have started in source mode " +
+                        sourceMode +
+                        " before transition to " +
+                        destinationMode
+                );
+
+                // TRANSITION SOURCE -> DESTINATION
+
+                m_robotMode = destinationMode;
+                m_scheduler.run();
+                assertFalse(
+                    m_scheduler.isRunning(sourceModeCommand),
+                    () ->
+                        "Source mode binding should be inactive after transition " +
+                        sourceMode +
+                        " -> " +
+                        destinationMode
+                );
+
+                triggerSignal.set(false);
+                m_scheduler.run();
+
+                var destinationModeCommand = Command.noRequirements(Coroutine::park).named("DestinationModeCommand");
+                trigger.whileTrue(destinationModeCommand);
+
+                triggerSignal.set(true);
+                m_scheduler.run();
+                assertTrue(
+                    m_scheduler.isRunning(destinationModeCommand),
+                    () -> "Trigger should still be active after transition " + sourceMode + " -> " + destinationMode
+                );
+
+                triggerSignal.set(false);
+                m_scheduler.run();
+                assertFalse(
+                    m_scheduler.isRunning(destinationModeCommand),
+                    () ->
+                        "Destination mode command should cancel on falling edge after transition " +
+                        sourceMode +
+                        " -> " +
+                        destinationMode
+                );
+            }
+        }
+    }
+
+    private static List<RobotMode> concreteRobotModes() {
+        return List.of(RobotMode.AUTONOMOUS, RobotMode.TELEOPERATED, RobotMode.UTILITY);
+    }
 
     // The scheduler lifecycle polls triggers at the start of `run()`
     // Even though the trigger condition is set, the command exits and the trigger's scope goes
@@ -634,8 +716,8 @@ class TriggerTest extends CommandTestBase {
 
     @Test
     void multiPress() {
-        var currentTimeMicros = new AtomicLong(1_000_000L); // Start at 1s
-        RobotController.setTimeSource(currentTimeMicros::get);
+        var currentTimeNanos = new AtomicLong(1_000_000L); // Start at 1s
+        RobotController.setTimeSource(currentTimeNanos::get);
 
         var signal = new AtomicBoolean(false);
         var baseTrigger = new Trigger(m_scheduler, signal::get);
@@ -645,7 +727,7 @@ class TriggerTest extends CommandTestBase {
         assertFalse(multiPressTrigger.getAsBoolean(), "Should not fire initially");
 
         // First press at 1.1s
-        currentTimeMicros.set(1_100_000L);
+        currentTimeNanos.set(1_100_000L);
         signal.set(true);
         m_scheduler.run();
         assertFalse(multiPressTrigger.getAsBoolean(), "Should not fire after 1 press");
@@ -654,7 +736,7 @@ class TriggerTest extends CommandTestBase {
         m_scheduler.run();
 
         // Second press at 1.2s
-        currentTimeMicros.set(1_200_000L);
+        currentTimeNanos.set(1_200_000L);
         signal.set(true);
         m_scheduler.run();
         assertFalse(multiPressTrigger.getAsBoolean(), "Should not fire after 2 presses");
@@ -663,7 +745,7 @@ class TriggerTest extends CommandTestBase {
         m_scheduler.run();
 
         // Third press at 1.3s
-        currentTimeMicros.set(1_300_000L);
+        currentTimeNanos.set(1_300_000L);
         signal.set(true);
         m_scheduler.run();
         assertTrue(multiPressTrigger.getAsBoolean(), "Should fire after 3 presses");
@@ -674,7 +756,7 @@ class TriggerTest extends CommandTestBase {
         // Fourth press at 2.0s (First press at 1.1s should be NOT yet expired, so 1.1s, 1.2s, 1.3s,
         // 2.0s ->
         // 4 presses)
-        currentTimeMicros.set(2_000_000L);
+        currentTimeNanos.set(2_000_000L);
         signal.set(true);
         m_scheduler.run();
         assertTrue(multiPressTrigger.getAsBoolean(), "Should still fire as there are 4 presses within last 1s");
@@ -684,12 +766,12 @@ class TriggerTest extends CommandTestBase {
 
         // Wait until 2.2s. Press at 1.1s is expired (exactly 1.1s elapsed).
         // Remaining: 1.2s, 1.3s, 2.0s -> 3 presses.
-        currentTimeMicros.set(2_200_000L);
+        currentTimeNanos.set(2_200_000L);
         m_scheduler.run();
         assertTrue(multiPressTrigger.getAsBoolean(), "Should still fire as there are 3 presses within last 1s");
 
         // Wait until 2.4s. Presses at 1.2s and 1.3s are definitely expired. Only 2.0s remains.
-        currentTimeMicros.set(2_400_000L);
+        currentTimeNanos.set(2_400_000L);
         m_scheduler.run();
         assertFalse(multiPressTrigger.getAsBoolean(), "Should not fire after presses expire");
     }

@@ -4,7 +4,6 @@
 
 package org.team4159.commandsv3backport.command3;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import edu.wpi.first.wpilibj.RobotController;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.team4159.commandsv3backport.hardware.hal.RobotMode;
 
 class CommandTestBase {
 
@@ -20,6 +20,7 @@ class CommandTestBase {
     protected List<SchedulerEvent> m_events;
     protected long m_opModeId = 0;
     protected String m_opModeName = "";
+    protected RobotMode m_robotMode = RobotMode.UNKNOWN;
 
     @BeforeEach
     void initScheduler() {
@@ -29,27 +30,33 @@ class CommandTestBase {
         m_scheduler.addEventListener(m_events::add);
     }
 
-    // @BeforeEach
-    // void initOpmodeFetcher() {
-    //     OpModeFetcher.setFetcher(
-    //         new OpModeFetcher() {
-    //             @Override
-    //             long getOpModeId() {
-    //                 return m_opModeId;
-    //             }
+    @BeforeEach
+    void initOpmodeFetcher() {
+        RobotStateFetcher.setFetcher(
+            new RobotStateFetcher() {
+                @Override
+                long getOpModeId() {
+                    return m_opModeId;
+                }
 
-    //             @Override
-    //             String getOpModeName() {
-    //                 return m_opModeName;
-    //             }
-    //         }
-    //     );
-    // }
+                @Override
+                String getOpModeName() {
+                    return m_opModeName;
+                }
+
+                @Override
+                RobotMode getRobotMode() {
+                    return m_robotMode;
+                }
+            }
+        );
+    }
 
     @AfterEach
     void resetOpmodeFetcher() {
         m_opModeId = 0;
         m_opModeName = "";
+        m_robotMode = RobotMode.UNKNOWN;
     }
 
     /**

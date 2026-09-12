@@ -47,7 +47,6 @@ public final class RobotState {
      *
      * @return robot mode
      */
-    @Deprecated
     public static RobotMode getRobotMode() {
         return DriverStationBackend.getRobotMode();
     }
