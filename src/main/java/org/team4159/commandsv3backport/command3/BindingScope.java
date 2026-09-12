@@ -59,4 +59,17 @@ interface BindingScope {
             return scheduler.isRunning(command);
         }
     }
+
+    /**
+     * A binding scoped to a running opmode.
+     *
+     * @param opmodeId The ID of the opmode that the binding is scoped to.
+     */
+    @Deprecated
+    record ForOpmode(long opmodeId) implements BindingScope {
+        @Override
+        public boolean active() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
