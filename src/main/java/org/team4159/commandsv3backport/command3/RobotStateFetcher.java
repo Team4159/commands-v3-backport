@@ -23,6 +23,8 @@ abstract class RobotStateFetcher {
 
     abstract RobotMode getRobotMode();
 
+    abstract boolean isEnabled();
+
     /**
      * Gets the current fetcher implementation. If {@link #setFetcher(RobotStateFetcher)} has not
      * already been called to set an implementation, this will default to a {@link
@@ -70,6 +72,11 @@ abstract class RobotStateFetcher {
         @Override
         RobotMode getRobotMode() {
             return RobotState.getRobotMode();
+        }
+
+        @Override
+        boolean isEnabled() {
+            return RobotState.isEnabled();
         }
     }
 }

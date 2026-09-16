@@ -9,6 +9,7 @@ class DummyMechanism implements Mechanism {
 
     private final String m_name;
     private final Scheduler m_scheduler;
+    private final boolean m_controllableDuringDisabled;
 
     /**
      * Creates a dummy mechanism.
@@ -17,8 +18,13 @@ class DummyMechanism implements Mechanism {
      * @param scheduler The registered scheduler. Cannot be null.
      */
     DummyMechanism(String name, Scheduler scheduler) {
+        this(name, scheduler, false);
+    }
+
+    DummyMechanism(String name, Scheduler scheduler, boolean controllableDuringDisabled) {
         m_name = name;
         m_scheduler = scheduler;
+        m_controllableDuringDisabled = controllableDuringDisabled;
     }
 
     @Override
@@ -29,5 +35,10 @@ class DummyMechanism implements Mechanism {
     @Override
     public Scheduler getRegisteredScheduler() {
         return m_scheduler;
+    }
+
+    @Override
+    public boolean controllableDuringDisabled() {
+        return m_controllableDuringDisabled;
     }
 }

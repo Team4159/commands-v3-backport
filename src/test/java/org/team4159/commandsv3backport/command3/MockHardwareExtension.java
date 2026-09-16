@@ -31,5 +31,10 @@ public class MockHardwareExtension implements BeforeEachCallback {
         RobotMode getRobotMode() {
             return RobotMode.UNKNOWN;
         }
+
+        @Override
+        boolean isEnabled() {
+            return true;
+        }
     }
 }

@@ -6,6 +6,9 @@ package org.team4159.commandsv3backport.command3;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import edu.wpi.first.math.MathShared;
+import edu.wpi.first.math.MathSharedStore;
+import edu.wpi.first.math.MathUsageId;
 import edu.wpi.first.wpilibj.RobotController;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ class CommandTestBase {
     protected long m_opModeId = 0;
     protected String m_opModeName = "";
     protected RobotMode m_robotMode = RobotMode.UNKNOWN;
+    protected boolean m_enabled = true;
 
     @BeforeEach
     void initScheduler() {
@@ -48,15 +52,39 @@ class CommandTestBase {
                 RobotMode getRobotMode() {
                     return m_robotMode;
                 }
+
+                @Override
+                boolean isEnabled() {
+                    return m_enabled;
+                }
+            }
+        );
+    }
+
+    @BeforeEach
+    void initTime() {
+        MathSharedStore.setMathShared(
+            new MathShared() {
+                @Override
+                public void reportError(String error, StackTraceElement[] stackTrace) {}
+
+                @Override
+                public void reportUsage(MathUsageId id, int count) {}
+
+                @Override
+                public double getTimestamp() {
+                    return RobotController.getTime() / 1e9;
+                }
             }
         );
     }
 
     @AfterEach
-    void resetOpmodeFetcher() {
+    void resetRobotState() {
         m_opModeId = 0;
         m_opModeName = "";
         m_robotMode = RobotMode.UNKNOWN;
+        m_enabled = true;
     }
 
     /**

@@ -4,7 +4,9 @@
 
 package org.team4159.commandsv3backport.command3;
 
+import java.util.List;
 import java.util.function.Consumer;
+import org.team4159.commandsv3backport.command3.Scheduler.ScheduleResult;
 
 /**
  * An event that occurs during scheduler processing. This can range from {@link Scheduled a command
@@ -83,4 +85,17 @@ public sealed interface SchedulerEvent {
      * @param timestampMicros When the command was interrupted
      */
     record Interrupted(Command command, Command interrupter, long timestampMicros) implements SchedulerEvent {}
+
+    /**
+     * An event marking when a child command could not be forked.
+     *
+     * @param command The command attempting to fork the child commands
+     * @param failures The reasons the child commands could not be forked
+     * @param timestampNanos When the child commands were attempted to be forked
+     */
+    record ForkFailure(
+        Command command,
+        List<ScheduleResult.Failure> failures,
+        long timestampMicros
+    ) implements SchedulerEvent {}
 }
