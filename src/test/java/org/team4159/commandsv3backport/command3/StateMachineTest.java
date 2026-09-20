@@ -39,8 +39,7 @@ class StateMachineTest extends CommandTestBase {
 
         // Don't worry, it'll be caught at runtime.
         // It would actually be caught at compile time, but we disabled the compiler check for this test
-        var exception = assertThrows(RuntimeException.class, () -> m_scheduler.run());
-        assertEquals(IllegalStateException.class, exception.getCause().getClass());
+        var exception = assertThrows(IllegalStateException.class, () -> m_scheduler.run());
         assertEquals(
             "State Machine does not have an initial state. Use .setInitialState() to provide one.",
             exception.getMessage()

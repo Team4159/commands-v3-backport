@@ -27,8 +27,7 @@ class SchedulerConflictTests extends CommandTestBase {
         m_scheduler.schedule(group);
 
         // Running should attempt to schedule multiple conflicting commands
-        var exception = assertThrows(RuntimeException.class, m_scheduler::run);
-        assertEquals(IllegalArgumentException.class, exception.getCause().getClass());
+        var exception = assertThrows(IllegalArgumentException.class, m_scheduler::run);
         assertEquals(
             "Commands running in parallel cannot share requirements: " + "First and Second both require The Mechanism",
             exception.getMessage()

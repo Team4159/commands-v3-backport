@@ -7,12 +7,11 @@ package org.team4159.commandsv3backport.command3;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class Continuation {
 
-    static final AtomicReference<Throwable> THROWABLE_PROPAGATOR = new AtomicReference<Throwable>(null);
+    static RuntimeException RUNTIME_EXCEPTION_PROPAGATOR = null;
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
     private static Continuation mountedContinuation = null;
@@ -69,8 +68,8 @@ final class Continuation {
                 target.run();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-            } catch (Exception e) {
-                THROWABLE_PROPAGATOR.set(e);
+            } catch (RuntimeException e) {
+                RUNTIME_EXCEPTION_PROPAGATOR = e;
             } finally {
                 done = true;
                 yieldQueue.release();

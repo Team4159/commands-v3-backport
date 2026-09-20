@@ -22,7 +22,7 @@ import org.team4159.commandsv3backport.event.EventLoop;
 /**
  * Triggers allow users to specify conditions for when commands should run. Triggers can be set up
  * to read from joystick and controller buttons (eg {@link
- * org.wpilib.command3.button.CommandGamepad#faceDown()}) or be customized to read sensor values or
+ * org.team4159.commandsv3backport.command3.button.CommandGamepad#faceDown()}) or be customized to read sensor values or
  * any other arbitrary true/false condition.
  *
  * <p>It is very easy to link a button to a command. For instance, you could link the trigger button

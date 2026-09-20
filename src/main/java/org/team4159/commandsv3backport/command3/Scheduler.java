@@ -1019,6 +1019,24 @@ public final class Scheduler implements ProtobufSerializable {
             coroutine.runToYieldPoint();
         } catch (RuntimeException e) {
             // Command encountered an uncaught exception.
+            StackTraceElement[] mainStackTrace = Thread.currentThread().getStackTrace();
+            StackTraceElement[] continuationStackTrace = e.getStackTrace();
+            StackTraceElement[] combinedStackTrace = new StackTraceElement[mainStackTrace.length +
+                continuationStackTrace.length -
+                1];
+            for (int i = 0; i < continuationStackTrace.length; i++) {
+                combinedStackTrace[i] = continuationStackTrace[i];
+            }
+            for (int i = 1; i < mainStackTrace.length; i++) {
+                combinedStackTrace[continuationStackTrace.length + i - 1] = mainStackTrace[i];
+            }
+            e.setStackTrace(combinedStackTrace);
+
+            // int i = 0;
+            // for (; i < e.getStackTrace().length; i++) {
+            //     System.out.println("FEED: " + String.valueOf(i) + " " + e.getStackTrace()[i]);
+            // }
+
             handleCommandException(state, e);
         } finally {
             long endMicros = RobotController.getTime();

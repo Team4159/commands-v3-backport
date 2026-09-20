@@ -216,9 +216,8 @@ class CoroutineTest extends CommandTestBase {
         }).named("Parent");
 
         m_scheduler.schedule(parent);
-        var error = assertThrows(RuntimeException.class, m_scheduler::run);
+        var error = assertThrows(IllegalStateException.class, m_scheduler::run);
         assertEquals("Coroutines can only be used by the command bound to them", error.getMessage());
-        assertEquals(IllegalStateException.class, error.getCause().getClass());
     }
 
     @Test

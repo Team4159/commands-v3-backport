@@ -91,7 +91,7 @@ public sealed interface SchedulerEvent {
      *
      * @param command The command attempting to fork the child commands
      * @param failures The reasons the child commands could not be forked
-     * @param timestampNanos When the child commands were attempted to be forked
+     * @param timestampMicros When the child commands were attempted to be forked
      */
     record ForkFailure(
         Command command,

@@ -30,10 +30,14 @@ final class CommandTraceHelper {
 
         List<String> filteredClasses = List.of(
             Coroutine.class.getName(),
-            // Continuation.class.getName(),
+            Continuation.class.getName(),
             Scheduler.class.getName(),
-            "org.wpilib.command3.StagedCommandBuilder$BuilderBackedCommand",
-            "jdk.internal.vm.Continuation"
+            "org.team4159.commandsv3backport.command3.StagedCommandBuilder$BuilderBackedCommand",
+            "java.util.concurrent.Executors$RunnableAdapter",
+            "java.util.concurrent.FutureTask",
+            "java.util.concurrent.ThreadPoolExecutor",
+            "java.util.concurrent.ThreadPoolExecutor$Worker",
+            "java.lang.Thread"
         );
 
         boolean sawRun = false;
