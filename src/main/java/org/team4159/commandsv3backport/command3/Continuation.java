@@ -11,8 +11,9 @@ import java.util.concurrent.Semaphore;
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class Continuation {
 
-    static RuntimeException RUNTIME_EXCEPTION_PROPAGATOR = null;
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
+
+    static RuntimeException runtimeExceptionPropagator = null;
 
     private static Continuation mountedContinuation = null;
 
@@ -69,7 +70,7 @@ final class Continuation {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (RuntimeException e) {
-                RUNTIME_EXCEPTION_PROPAGATOR = e;
+                runtimeExceptionPropagator = e;
             } finally {
                 done = true;
                 yieldQueue.release();
