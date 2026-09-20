@@ -1032,11 +1032,6 @@ public final class Scheduler implements ProtobufSerializable {
             }
             e.setStackTrace(combinedStackTrace);
 
-            // int i = 0;
-            // for (; i < e.getStackTrace().length; i++) {
-            //     System.out.println("FEED: " + String.valueOf(i) + " " + e.getStackTrace()[i]);
-            // }
-
             handleCommandException(state, e);
         } finally {
             long endMicros = RobotController.getTime();
