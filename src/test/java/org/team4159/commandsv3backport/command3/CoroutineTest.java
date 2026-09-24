@@ -149,19 +149,16 @@ class CoroutineTest extends CommandTestBase {
     }
 
     @Test
-      void forkResultAwaitCompletion() {
+    void forkResultAwaitCompletion() {
         var signal = new AtomicBoolean(false);
-        var waitingCommand =
-            Command.noRequirements(coroutine -> coroutine.waitUntil(signal::get))
-                .named("Wait For Signal");
+        var waitingCommand = Command.noRequirements(coroutine -> coroutine.waitUntil(signal::get)).named(
+            "Wait For Signal"
+        );
 
-        var parent =
-            Command.noRequirements(
-                    coroutine -> {
-                      var forkResult = coroutine.fork(waitingCommand);
-                      forkResult.awaitCompletion();
-                    })
-                .named("Parent");
+        var parent = Command.noRequirements(coroutine -> {
+            var forkResult = coroutine.fork(waitingCommand);
+            forkResult.awaitCompletion();
+        }).named("Parent");
 
         m_scheduler.schedule(parent);
         m_scheduler.run();
@@ -177,27 +174,24 @@ class CoroutineTest extends CommandTestBase {
         signal.set(true);
         m_scheduler.run();
         assertEquals(List.of(), m_scheduler.getRunningCommands());
-      }
+    }
 
-      @Test
-      void forkResultAwaitCompletionOneShot() {
+    @Test
+    void forkResultAwaitCompletionOneShot() {
         var ran = new AtomicBoolean(false);
         var oneShot = Command.noRequirements(unused -> {}).named("OneShot");
-        var parent =
-            Command.noRequirements(
-                    coroutine -> {
-                      var forkResult = coroutine.fork(oneShot);
-                      assertTrue(forkResult.successful());
-                      forkResult.awaitCompletion();
-                      ran.set(true);
-                    })
-                .named("Parent");
+        var parent = Command.noRequirements(coroutine -> {
+            var forkResult = coroutine.fork(oneShot);
+            assertTrue(forkResult.successful());
+            forkResult.awaitCompletion();
+            ran.set(true);
+        }).named("Parent");
 
         m_scheduler.schedule(parent);
         m_scheduler.run();
         assertTrue(ran.get());
         assertEquals(List.of(), m_scheduler.getRunningCommands());
-      }
+    }
 
     @Test
     void yieldInSynchronizedBlock() {
