@@ -6,43 +6,61 @@ package org.team4159.commandsv3backport.command3;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class Continuation {
 
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
-    static RuntimeException runtimeExceptionPropagator = null;
-
     private static Continuation mountedContinuation = null;
 
-    private final Semaphore resumeQueue = new Semaphore(0, false);
-    private final Semaphore yieldQueue = new Semaphore(0, false);
+    private final ReentrantLock contextLock = new ReentrantLock(false);
+    private final Condition startedCondition = contextLock.newCondition();
+    private final Condition runningCondition = contextLock.newCondition();
+    private final Condition yieldCondition = contextLock.newCondition();
 
-    private boolean done = false;
+    private RuntimeException runtimeExceptionPropagator = null;
+
+    private boolean started = false;
+    private boolean running = false;
+    private volatile boolean done = false;
 
     Continuation(ContinuationScope scope, Runnable target) {
         start(target);
     }
 
     public boolean yield() {
+        contextLock.lock();
         try {
-            yieldQueue.release();
-            resumeQueue.acquire();
-            return true;
+            running = false;
+            yieldCondition.signal();
+            while (!running) {
+                runningCondition.await();
+            }
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return false;
+            throw createInterruptedRuntimeException(e);
+        } finally {
+            contextLock.unlock();
         }
+        return true;
     }
 
     public void run() {
+        contextLock.lock();
         try {
-            resumeQueue.release();
-            yieldQueue.acquire();
+            handleRuntimeException();
+            running = true;
+            runningCondition.signal();
+            while (running) {
+                yieldCondition.await();
+            }
+            handleRuntimeException();
         } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            throw createInterruptedRuntimeException(e);
+        } finally {
+            contextLock.unlock();
         }
     }
 
@@ -64,17 +82,57 @@ final class Continuation {
 
     private void start(Runnable target) {
         THREAD_POOL.submit(() -> {
+            contextLock.lock();
             try {
-                resumeQueue.acquire();
-                target.run();
+                started = true;
+                startedCondition.signal();
+                while (!running) {
+                    runningCondition.await();
+                }
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                runtimeExceptionPropagator = createInterruptedRuntimeException(e);
+                return;
+            } finally {
+                contextLock.unlock();
+            }
+
+            try {
+                target.run();
             } catch (RuntimeException e) {
                 runtimeExceptionPropagator = e;
             } finally {
-                done = true;
-                yieldQueue.release();
+                contextLock.lock();
+                try {
+                    running = false;
+                    done = true;
+                    yieldCondition.signal();
+                } finally {
+                    contextLock.unlock();
+                }
             }
         });
+
+        contextLock.lock();
+        try {
+            while (!started) {
+                startedCondition.await();
+            }
+        } catch (InterruptedException e) {
+            throw createInterruptedRuntimeException(e);
+        } finally {
+            contextLock.unlock();
+        }
+    }
+
+    private RuntimeException createInterruptedRuntimeException(InterruptedException cause) {
+        return new RuntimeException("Continuation was interrupted unexpectedly!", cause);
+    }
+
+    private void handleRuntimeException() {
+        RuntimeException runtimeException = runtimeExceptionPropagator;
+        runtimeExceptionPropagator = null;
+        if (runtimeException != null) {
+            throw runtimeException;
+        }
     }
 }

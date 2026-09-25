@@ -769,11 +769,6 @@ public final class Coroutine {
 
     void runToYieldPoint() {
         m_backingContinuation.run();
-        RuntimeException runtimeException = Continuation.runtimeExceptionPropagator;
-        Continuation.runtimeExceptionPropagator = null;
-        if (runtimeException != null) {
-            throw runtimeException;
-        }
     }
 
     void mount() {
