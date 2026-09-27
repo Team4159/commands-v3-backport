@@ -215,12 +215,7 @@ public final class Scheduler implements ProtobufSerializable {
         var currentCommand = currentCommand();
         BindingScope scope = BindingScope.createNarrowestScope(this);
 
-        var binding = new Binding(
-            scope,
-            BindingType.CONTINUOUSLY_SCHEDULE_WHILE_HIGH,
-            defaultCommand,
-            new Throwable().getStackTrace()
-        );
+        var binding = new Binding(scope, BindingType.CONTINUOUSLY_SCHEDULE_WHILE_HIGH, defaultCommand, new Throwable());
 
         var currentDefaultCommand = getDefaultCommandFor(mechanism);
         m_defaultCommandBindings.computeIfAbsent(mechanism, k -> new ArrayList<>()).add(binding);
@@ -566,7 +561,7 @@ public final class Scheduler implements ProtobufSerializable {
 
         // Note: we use a throwable here instead of Thread.currentThread().getStackTrace() for easier
         //       stack frame filtering and modification.
-        var binding = new Binding(scope, BindingType.IMMEDIATE, command, new Throwable().getStackTrace());
+        var binding = new Binding(scope, BindingType.IMMEDIATE, command, new Throwable());
 
         return schedule(binding);
     }
@@ -1101,7 +1096,7 @@ public final class Scheduler implements ProtobufSerializable {
 
         // Intercept the exception, inject stack frames from the schedule site, and rethrow it
         var binding = state.binding();
-        e.setStackTrace(CommandTraceHelper.modifyTrace(e.getStackTrace(), binding.frames()));
+        e.setStackTrace(CommandTraceHelper.modifyTrace(e.getStackTrace(), binding.stackTraceStore().getStackTrace()));
         emitCompletedWithErrorEvent(command, e);
 
         // Clean up child commands after emitting the event so child Canceled events are emitted
