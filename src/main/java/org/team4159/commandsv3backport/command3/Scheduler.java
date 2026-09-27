@@ -1014,16 +1014,15 @@ public final class Scheduler implements ProtobufSerializable {
             coroutine.runToYieldPoint();
         } catch (RuntimeException e) {
             // Command encountered an uncaught exception.
-            StackTraceElement[] mainStackTrace = Thread.currentThread().getStackTrace();
+            StackTraceElement[] mainStackTrace = new Throwable().getStackTrace();
             StackTraceElement[] continuationStackTrace = e.getStackTrace();
             StackTraceElement[] combinedStackTrace = new StackTraceElement[mainStackTrace.length +
-                continuationStackTrace.length -
-                1];
+                continuationStackTrace.length];
             for (int i = 0; i < continuationStackTrace.length; i++) {
                 combinedStackTrace[i] = continuationStackTrace[i];
             }
-            for (int i = 1; i < mainStackTrace.length; i++) {
-                combinedStackTrace[continuationStackTrace.length + i - 1] = mainStackTrace[i];
+            for (int i = 0; i < mainStackTrace.length; i++) {
+                combinedStackTrace[continuationStackTrace.length + i] = mainStackTrace[i];
             }
             e.setStackTrace(combinedStackTrace);
 
