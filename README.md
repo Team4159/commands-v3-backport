@@ -26,7 +26,7 @@ You may run into a loop overrun on initialization when using this library. Try p
 
 ```java
 public Robot() {
-    Scheduler.getDefault().run(); // Run the scheduler once to force load imports
+    Scheduler.getDefault().run(); // Run the scheduler once to force load dependencies
 }
 ```
 
