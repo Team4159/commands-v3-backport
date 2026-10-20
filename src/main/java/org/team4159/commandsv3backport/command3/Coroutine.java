@@ -4,11 +4,20 @@
 
 package org.team4159.commandsv3backport.command3;
 
+import static edu.wpi.first.units.Units.Microseconds;
 import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.util.ErrorMessages.requireNonNullParam;
+import static org.team4159.commandsv3backport.command3.CoroutineState.CANCELED;
+import static org.team4159.commandsv3backport.command3.CoroutineState.Canceled;
+import static org.team4159.commandsv3backport.command3.CoroutineState.FROZEN;
+import static org.team4159.commandsv3backport.command3.CoroutineState.ForkFailed;
+import static org.team4159.commandsv3backport.command3.CoroutineState.LIVE;
+import static org.team4159.commandsv3backport.command3.CoroutineState.forkFailed;
+import static org.team4159.commandsv3backport.command3.CoroutineState.parkedUntil;
+import static org.team4159.commandsv3backport.command3.CoroutineState.parkedWhile;
 
 import edu.wpi.first.units.measure.Time;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.RobotController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,8 +38,12 @@ public final class Coroutine {
     private final Continuation m_backingContinuation;
 
     private boolean m_cancelOnForkFailure = true;
-    private ForkResult m_lastForkFailure = null;
-    private boolean m_cancellationRequested = false;
+
+    private CoroutineState m_state = LIVE;
+
+    boolean inUnmountableState() {
+        return !m_state.shouldMount();
+    }
 
     /**
      * Creates a new coroutine. Package-private; only the scheduler should be creating these.
@@ -83,7 +96,9 @@ public final class Coroutine {
     // Package-private. User code can never access this because setting the flag happens immediately
     // before the coroutine yields itself.
     boolean isInterruptRequested() {
-        return m_cancelOnForkFailure && m_lastForkFailure != null;
+        // Note that we only get into a ForkFailed state if m_cancelOnForkFailure is true,
+        // so there's no point in checking it here
+        return m_state instanceof ForkFailed;
     }
 
     /**
@@ -98,20 +113,22 @@ public final class Coroutine {
     public void requestCancellation() {
         requireMounted();
 
-        // Set the flag and immediately yield. The scheduler will check the flag after the yield call
-        // and cancel the command and its descendants.
-        m_cancellationRequested = true;
+        m_state = CANCELED;
         this.yield();
     }
 
     // package-private; setting the flag will immediately yield, so user code can never access this
     // in a state where it returns anything other than `false`
     boolean isCancellationRequested() {
-        return m_cancellationRequested;
+        return m_state instanceof Canceled;
     }
 
     ForkResult getForkResult() {
-        return m_lastForkFailure;
+        if (m_state instanceof ForkFailed forkFailed) {
+            return forkFailed.failure();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -124,7 +141,12 @@ public final class Coroutine {
     public boolean yield() {
         requireMounted();
 
-        return m_backingContinuation.yield();
+        m_backingContinuation.yield();
+
+        // If the coroutine was picked back up by the scheduler, it is definitionally live.
+        // Reset the state to reflect this.
+        m_state = LIVE;
+        return true;
     }
 
     /**
@@ -133,14 +155,11 @@ public final class Coroutine {
      *
      * @throws IllegalStateException if called anywhere other than the coroutine's running command
      */
-    @SuppressWarnings("InfiniteLoopStatement")
     public void park() {
         requireMounted();
 
-        while (true) {
-            // 'this' is required because 'yield' is a semi-keyword and needs to be qualified
-            this.yield();
-        }
+        m_state = FROZEN;
+        this.yield();
     }
 
     /**
@@ -261,7 +280,7 @@ public final class Coroutine {
             if (m_cancelOnForkFailure) {
                 // Canceling on fork failure means no coroutine or user code gets to run to handle the
                 // failure result
-                m_lastForkFailure = result;
+                m_state = forkFailed(result);
                 this.yield();
                 // could throw an IllegalStateException, but probably shouldn't crash user code
                 return result;
@@ -316,7 +335,7 @@ public final class Coroutine {
             // commands, which we can't restore. The two options are to either cancel the entire command
             // composition - which is the default behavior - or to allow user code to handle the failure
             // and do something with it (eg trying something else, retrying, etc).
-            m_lastForkFailure = result;
+            m_state = forkFailed(result);
             this.yield();
             return result; // note: unreachable
         }
@@ -443,7 +462,9 @@ public final class Coroutine {
             // If the command is a one-shot, then the schedule call will completely execute the command.
             // runId(command) will return 0 and the loop condition will never be met, so we'd return
             // immediately without yielding.
-            while (m_scheduler.runId(command) == id) {
+            var cond = parkedWhile(() -> m_scheduler.runId(forked.command()) == id);
+            if (!cond.conditionMet()) {
+                m_state = cond;
                 this.yield();
             }
 
@@ -453,7 +474,7 @@ public final class Coroutine {
             // Failed to fork
             var result = new ForkResult(List.of(), List.of(failed));
             if (m_cancelOnForkFailure) {
-                m_lastForkFailure = result;
+                m_state = forkFailed(result);
                 this.yield();
                 return result; // note: unreachable because the scheduler will never remount the coroutine
             }
@@ -499,7 +520,9 @@ public final class Coroutine {
         }
 
         var tracker = CommandRunTracker.of(m_scheduler, forkResult.getForkedCommands());
-        while (tracker.isAnyRunning()) {
+        var cond = parkedWhile(tracker::isAnyRunning);
+        if (!cond.conditionMet()) {
+            m_state = cond;
             this.yield();
         }
 
@@ -565,7 +588,9 @@ public final class Coroutine {
         }
 
         var tracker = CommandRunTracker.of(m_scheduler, forkResult.getForkedCommands());
-        while (tracker.areAllRunning()) {
+        var cond = parkedWhile(tracker::areAllRunning);
+        if (!cond.conditionMet()) {
+            m_state = cond;
             this.yield();
         }
 
@@ -647,9 +672,9 @@ public final class Coroutine {
 
         requireNonNullParam(duration, "duration", "Coroutine.wait");
 
-        var timer = new Timer();
-        timer.start();
-        while (!timer.hasElapsed(duration.in(Seconds))) {
+        var cond = parkedUntil(RobotController.getTime() + (long) duration.in(Microseconds));
+        if (duration.in(Seconds) > 0) {
+            m_state = cond;
             this.yield();
         }
     }
@@ -698,7 +723,9 @@ public final class Coroutine {
 
         requireNonNullParam(condition, "condition", "Coroutine.waitUntil");
 
-        while (!condition.getAsBoolean()) {
+        var cond = parkedUntil(condition);
+        if (!cond.conditionMet()) {
+            m_state = cond;
             this.yield();
         }
 
@@ -747,18 +774,21 @@ public final class Coroutine {
         requireNonNullParam(condition, "condition", "Coroutine.waitUntil");
         requireNonNullParam(timeout, "timeout", "Coroutine.waitUntil");
 
-        var timer = new Timer();
-        timer.start();
-
-        while (!condition.getAsBoolean()) {
-            if (timer.hasElapsed(timeout)) {
-                return WaitResult.TIMED_OUT;
-            } else {
-                this.yield();
-            }
+        if (condition.getAsBoolean()) {
+            return WaitResult.CONDITION_MET;
         }
 
-        return WaitResult.CONDITION_MET;
+        long targetTimestampMicros = RobotController.getTime() + (long) timeout.in(Microseconds);
+        m_state = parkedUntil(() -> condition.getAsBoolean() || RobotController.getTime() >= targetTimestampMicros);
+        this.yield();
+
+        // In case of a tiebreaker where the condition and the timeout are both reached in the same
+        // cycle, let the condition win.
+        if (condition.getAsBoolean()) {
+            return WaitResult.CONDITION_MET;
+        } else {
+            return WaitResult.TIMED_OUT;
+        }
     }
 
     /**
