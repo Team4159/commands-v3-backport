@@ -44,8 +44,8 @@ sealed interface CoroutineState {
    * @param targetTimestamp The timestamp at which the coroutine should be un-parked
    * @return The new {@link ParkedUntil} state
    */
-  static ParkedUntil parkedUntil(long targetTimestampNanos) {
-    return new ParkedUntil(targetTimestampNanos);
+  static ParkedUntil parkedUntil(long targetTimestampMicros) {
+    return new ParkedUntil(targetTimestampMicros);
   }
 
   /**
@@ -123,11 +123,11 @@ sealed interface CoroutineState {
    * A coroutine in this state is considered parked and should only be mounted by the scheduler when
    * the target timestamp is reached.
    *
-   * @param targetTimestampNanos The timestamp at which the coroutine should be un-parked
+   * @param targetTimestampMicros The timestamp at which the coroutine should be un-parked
    */
-  record ParkedUntil(long targetTimestampNanos) implements CoroutineState {
+  record ParkedUntil(long targetTimestampMicros) implements CoroutineState {
     boolean elapsed() {
-      return RobotController.getTime() >= targetTimestampNanos;
+      return RobotController.getTime() >= targetTimestampMicros;
     }
 
     @Override
@@ -137,7 +137,7 @@ sealed interface CoroutineState {
 
     @Override
     public String toString() {
-      return "ParkedUntil[" + targetTimestampNanos + "ns]";
+      return "ParkedUntil[" + targetTimestampMicros + "ns]";
     }
   }
 
