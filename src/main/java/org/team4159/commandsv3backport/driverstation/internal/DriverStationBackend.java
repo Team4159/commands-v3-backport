@@ -27,6 +27,8 @@ public final class DriverStationBackend {
     /** Number of Joystick ports. */
     public static final int JOYSTICK_PORTS = DriverStation.kJoystickPorts;
 
+    private static volatile boolean m_userProgramStarted = false;
+
     /**
      * DriverStation constructor.
      *
@@ -354,6 +356,9 @@ public final class DriverStationBackend {
      * @return robot mode
      */
     public static RobotMode getRobotMode() {
+        if (!m_userProgramStarted) {
+            return RobotMode.UNKNOWN;
+        }
         if (isAutonomous()) {
             return RobotMode.AUTONOMOUS;
         }
@@ -543,8 +548,8 @@ public final class DriverStationBackend {
      * @see #getOpMode()
      * @see #getOpModeId()
      */
-    @Deprecated
     public static void observeUserProgramStarting() {
+        m_userProgramStarted = true;
         DriverStationJNI.observeUserProgramStarting();
     }
 
