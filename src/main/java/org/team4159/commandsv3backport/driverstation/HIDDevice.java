@@ -4,9 +4,14 @@
 
 package org.team4159.commandsv3backport.driverstation;
 
+import org.team4159.commandsv3backport.driverstation.internal.DriverStationBackend;
+
 /** Interface for device wrappers backed by a GenericHID. */
 @SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface HIDDevice {
+    /** The maximum number of HID devices supported by the FIRST Driverstation. */
+    int MAX_DEVICES = DriverStationBackend.JOYSTICK_PORTS;
+
     /**
      * Get the underlying GenericHID object.
      *

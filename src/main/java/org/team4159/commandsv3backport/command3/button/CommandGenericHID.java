@@ -13,8 +13,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.GenericHID;
+import org.team4159.commandsv3backport.driverstation.HIDDevice;
 import org.team4159.commandsv3backport.driverstation.POVDirection;
-import org.team4159.commandsv3backport.driverstation.internal.DriverStationBackend;
 import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
@@ -79,7 +79,7 @@ public final class CommandGenericHID {
         try {
             CommandGenericHID[] hids = m_hids.computeIfAbsent(
                 scheduler,
-                k -> new CommandGenericHID[DriverStationBackend.JOYSTICK_PORTS]
+                k -> new CommandGenericHID[HIDDevice.MAX_DEVICES]
             );
             CommandGenericHID toRet = hids[port];
             if (toRet == null) {
