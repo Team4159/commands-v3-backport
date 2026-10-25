@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
-@SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class Continuation {
 
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
