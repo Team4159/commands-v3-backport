@@ -63,14 +63,6 @@ public class DualSenseController implements HIDDevice, Sendable {
         R3(11, "R3Button"),
         /** L 1 button. */
         L1(4, "L1Button"),
-        /** Dpad Up button. */
-        DPAD_UP(14, "DpadUpButton"),
-        /** Dpad Down button. */
-        DPAD_DOWN(15, "DpadDownButton"),
-        /** Dpad Left button. */
-        DPAD_LEFT(16, "DpadLeftButton"),
-        /** Dpad Right button. */
-        DPAD_RIGHT(17, "DpadRightButton"),
         /** R 1 button. */
         R1(5, "R1Button"),
         /** Touchpad button. */

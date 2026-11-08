@@ -65,14 +65,6 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
         L1(4, "L1Button"),
         /** R 1 button. */
         R1(5, "R1Button"),
-        /** Dpad Up button. */
-        DPAD_UP(14, "DpadUpButton"),
-        /** Dpad Down button. */
-        DPAD_DOWN(15, "DpadDownButton"),
-        /** Dpad Left button. */
-        DPAD_LEFT(16, "DpadLeftButton"),
-        /** Dpad Right button. */
-        DPAD_RIGHT(17, "DpadRightButton"),
         /** Touchpad button. */
         TOUCHPAD(13, "TouchpadButton");
 

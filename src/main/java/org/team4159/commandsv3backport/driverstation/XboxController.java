@@ -61,14 +61,6 @@ public class XboxController implements HIDDevice, Sendable {
         RIGHT_STICK(9, "RightStickButton"),
         /** Left Bumper button. */
         LEFT_BUMPER(4, "LeftBumperButton"),
-        /** Dpad Up button. */
-        DPAD_UP(10, "DpadUpButton"),
-        /** Dpad Down button. */
-        DPAD_DOWN(11, "DpadDownButton"),
-        /** Dpad Left button. */
-        DPAD_LEFT(12, "DpadLeftButton"),
-        /** Dpad Right button. */
-        DPAD_RIGHT(13, "DpadRightButton"),
         /** Right Bumper button. */
         RIGHT_BUMPER(5, "RightBumperButton");
 
