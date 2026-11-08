@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.ref.WeakReference;
+import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -49,25 +50,25 @@ class WeakLinkedHashSetTest {
         assertEquals(List.copyOf(expected), List.copyOf(actual));
     }
 
-    // @Test
-    // void reversedViewIterationMatchesLinkedHashSet() {
-    //     final SequencedSet<TestValue> expected = new LinkedHashSet<>();
-    //     final SequencedSet<TestValue> actual = new WeakLinkedHashSet<>();
+    @Test
+    void reversedViewIterationMatchesLinkedHashSet() {
+        final AbstractSet<TestValue> expectedReversed = new LinkedHashSet<>();
+        final WeakLinkedHashSet<TestValue> actual = new WeakLinkedHashSet<>();
 
-    //     final var a = new TestValue(1);
-    //     final var b = new TestValue(2);
-    //     final var c = new TestValue(3);
+        final var a = new TestValue(1);
+        final var b = new TestValue(2);
+        final var c = new TestValue(3);
 
-    //     expected.add(a);
-    //     expected.add(b);
-    //     expected.add(c);
+        expectedReversed.add(c);
+        expectedReversed.add(b);
+        expectedReversed.add(a);
 
-    //     actual.add(a);
-    //     actual.add(b);
-    //     actual.add(c);
+        actual.add(a);
+        actual.add(b);
+        actual.add(c);
 
-    //     assertEquals(List.copyOf(expected.reversed()), List.copyOf(actual.reversed()));
-    // }
+        assertEquals(List.copyOf(expectedReversed), List.copyOf(actual.reversed()));
+    }
 
     @Test
     void positionalInsertionsMatchLinkedHashSet() {
@@ -76,24 +77,27 @@ class WeakLinkedHashSetTest {
 
         final var a = new TestValue(1);
         final var b = new TestValue(2);
-        // final var c = new TestValue(3);
-        // final var d = new TestValue(4);
+        final var c = new TestValue(3);
+        final var d = new TestValue(4);
 
         expected.add(a);
+        expected.add(c);
         expected.add(b);
+        expected.add(d);
+
         actual.add(a);
         actual.add(b);
-
-        // expected.addFirst(c);
-        // expected.addLast(d);
-        // expected.addFirst(a);
-
-        // actual.addFirst(c);
-        // actual.addLast(d);
-        // actual.addFirst(a);
+        actual.addFirst(c);
+        actual.addLast(d);
+        actual.addFirst(a);
 
         assertEquals(List.copyOf(expected), List.copyOf(actual));
-        // assertEquals(List.copyOf(expected.reversed()), List.copyOf(actual.reversed()));
+        final LinkedHashSet<TestValue> expectedReversed = new LinkedHashSet<>();
+        expectedReversed.add(d);
+        expectedReversed.add(b);
+        expectedReversed.add(c);
+        expectedReversed.add(a);
+        assertEquals(List.copyOf(expectedReversed), List.copyOf(actual.reversed()));
     }
 
     @Test
@@ -103,21 +107,29 @@ class WeakLinkedHashSetTest {
 
         final var a = new TestValue(1);
         final var b = new TestValue(2);
-        // final var c = new TestValue(3);
+        final var c = new TestValue(3);
 
         expected.add(a);
         expected.add(b);
         actual.add(a);
         actual.add(b);
 
-        // final SequencedSet<TestValue> expectedReversed = expected.reversed();
-        // final SequencedSet<TestValue> actualReversed = actual.reversed();
+        final AbstractSet<TestValue> expectedReversed = new LinkedHashSet<>();
+        expectedReversed.add(b);
+        expectedReversed.add(a);
+        final AbstractSet<TestValue> actualReversed = actual.reversed();
 
-        // assertEquals(expectedReversed.add(c), actualReversed.add(c));
-        // assertEquals(expectedReversed.add(c), actualReversed.add(c));
+        assertEquals(expectedReversed.add(c), actualReversed.add(c));
+        assertEquals(expectedReversed.add(c), actualReversed.add(c));
+
+        expected.add(c);
+        expectedReversed.clear();
+        expectedReversed.add(c);
+        expectedReversed.add(b);
+        expectedReversed.add(a);
 
         assertEquals(List.copyOf(expected), List.copyOf(actual));
-        // assertEquals(List.copyOf(expectedReversed), List.copyOf(actualReversed));
+        assertEquals(List.copyOf(expectedReversed), List.copyOf(actualReversed));
     }
 
     @Test
@@ -125,8 +137,8 @@ class WeakLinkedHashSetTest {
         final var set = new WeakLinkedHashSet<TestValue>();
 
         assertThrows(NullPointerException.class, () -> set.add(null));
-        // assertThrows(NullPointerException.class, () -> set.addFirst(null));
-        // assertThrows(NullPointerException.class, () -> set.addLast(null));
+        assertThrows(NullPointerException.class, () -> set.addFirst(null));
+        assertThrows(NullPointerException.class, () -> set.addLast(null));
         assertThrows(NullPointerException.class, () -> set.contains(null));
         assertThrows(NullPointerException.class, () -> set.remove(null));
     }
@@ -134,11 +146,11 @@ class WeakLinkedHashSetTest {
     @Test
     void nullArgumentsThrowInReversedView() {
         final WeakLinkedHashSet<TestValue> set = new WeakLinkedHashSet<>();
-        final Set<TestValue> reversed = set.reversed();
+        final WeakLinkedHashSet<TestValue> reversed = set.reversed();
 
         assertThrows(NullPointerException.class, () -> reversed.add(null));
-        // assertThrows(NullPointerException.class, () -> reversed.addFirst(null));
-        // assertThrows(NullPointerException.class, () -> reversed.addLast(null));
+        assertThrows(NullPointerException.class, () -> reversed.addFirst(null));
+        assertThrows(NullPointerException.class, () -> reversed.addLast(null));
         assertThrows(NullPointerException.class, () -> reversed.contains(null));
         assertThrows(NullPointerException.class, () -> reversed.remove(null));
     }

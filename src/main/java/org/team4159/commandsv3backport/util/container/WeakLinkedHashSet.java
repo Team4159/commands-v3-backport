@@ -10,11 +10,10 @@ import java.lang.ref.WeakReference;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 
@@ -28,7 +27,7 @@ import java.util.Spliterators;
  * @see java.util.LinkedHashSet
  * @see WeakReference
  */
-public final class WeakLinkedHashSet<E> extends AbstractSet<E> {
+public sealed class WeakLinkedHashSet<E> extends AbstractSet<E> {
 
     private final LinkedHashMap<WeakKey<E>, Object> map = new LinkedHashMap<>();
     private static final Object PRESENT = new Object();
@@ -60,6 +59,23 @@ public final class WeakLinkedHashSet<E> extends AbstractSet<E> {
 
         purgeCollected();
         return map.put(new WeakKey<>(e), PRESENT) == null;
+    }
+
+    public void addFirst(E e) {
+        requireNonNullParam(e, "e", "WeakLinkedHashSet.addFirst");
+
+        purgeCollected();
+        LinkedHashMap<WeakKey<E>, Object> temp = new LinkedHashMap<>(map);
+        map.clear();
+        map.put(new WeakKey<>(e), PRESENT);
+        map.putAll(temp);
+    }
+
+    public void addLast(E e) {
+        requireNonNullParam(e, "e", "WeakLinkedHashSet.addLast");
+
+        purgeCollected();
+        map.put(new WeakKey<>(e), PRESENT);
     }
 
     @Override
@@ -95,17 +111,8 @@ public final class WeakLinkedHashSet<E> extends AbstractSet<E> {
         return new WeakKeyIterator(map.keySet().iterator());
     }
 
-    public Set<E> reversed() {
-        purgeCollected();
-
-        var keySet = new ArrayList<>(map.keySet());
-        var iterator = keySet.listIterator(keySet.size());
-        LinkedHashSet<WeakKey<E>> reversed = new LinkedHashSet<>((int) (map.size() / 0.75f) + 1);
-        while (iterator.hasPrevious()) {
-            var key = iterator.previous();
-            reversed.add(key);
-        }
-        return new ReversedView<>(this, reversed);
+    public WeakLinkedHashSet<E> reversed() {
+        return new ReversedView<>(this);
     }
 
     @Override
@@ -186,14 +193,12 @@ public final class WeakLinkedHashSet<E> extends AbstractSet<E> {
         }
     }
 
-    private static class ReversedView<E> extends AbstractSet<E> {
+    private static final class ReversedView<E> extends WeakLinkedHashSet<E> {
 
         private final WeakLinkedHashSet<E> originalSet;
-        private final Set<WeakKey<E>> reversedKeys;
 
-        ReversedView(WeakLinkedHashSet<E> originalSet, Set<WeakKey<E>> reversedKeys) {
+        ReversedView(WeakLinkedHashSet<E> originalSet) {
             this.originalSet = originalSet;
-            this.reversedKeys = reversedKeys;
         }
 
         @Override
@@ -203,6 +208,9 @@ public final class WeakLinkedHashSet<E> extends AbstractSet<E> {
 
         @Override
         public Iterator<E> iterator() {
+            originalSet.purgeCollected();
+            var reversedKeys = new ArrayList<>(originalSet.map.keySet());
+            Collections.reverse(reversedKeys);
             return originalSet.new WeakKeyIterator(reversedKeys.iterator());
         }
 
