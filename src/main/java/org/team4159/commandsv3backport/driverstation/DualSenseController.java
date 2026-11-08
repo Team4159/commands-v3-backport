@@ -935,8 +935,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMicrophoneButton() {
-        return getButton(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -944,8 +945,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonPressed() {
-        return getButtonPressed(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -953,8 +955,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonReleased() {
-        return getButtonReleased(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -964,8 +967,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return an event instance representing the Microphone button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent microphone(EventLoop loop) {
-        return button(Button.MICROPHONE, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

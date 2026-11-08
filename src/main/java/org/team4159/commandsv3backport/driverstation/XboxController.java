@@ -547,8 +547,9 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getXboxButton() {
-        return getButton(Button.XBOX);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -556,8 +557,9 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getXboxButtonPressed() {
-        return getButtonPressed(Button.XBOX);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -565,8 +567,9 @@ public class XboxController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getXboxButtonReleased() {
-        return getButtonReleased(Button.XBOX);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -576,8 +579,9 @@ public class XboxController implements HIDDevice, Sendable {
      * @return an event instance representing the Xbox button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent xbox(EventLoop loop) {
-        return button(Button.XBOX, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

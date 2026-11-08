@@ -935,8 +935,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMicrophoneButton() {
-        return getButton(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -944,8 +945,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonPressed() {
-        return getButtonPressed(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -953,8 +955,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonReleased() {
-        return getButtonReleased(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -964,8 +967,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return an event instance representing the Microphone button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent microphone(EventLoop loop) {
-        return button(Button.MICROPHONE, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -973,8 +977,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getRightPaddle1Button() {
-        return getButton(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -982,8 +987,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle1ButtonPressed() {
-        return getButtonPressed(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -991,8 +997,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getRightPaddle1ButtonReleased() {
-        return getButtonReleased(Button.RIGHT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1002,8 +1009,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return an event instance representing the Right Paddle 1 button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent rightPaddle1(EventLoop loop) {
-        return button(Button.RIGHT_PADDLE_1, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1011,8 +1019,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getLeftPaddle1Button() {
-        return getButton(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1020,8 +1029,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle1ButtonPressed() {
-        return getButtonPressed(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1029,8 +1039,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getLeftPaddle1ButtonReleased() {
-        return getButtonReleased(Button.LEFT_PADDLE_1);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1040,8 +1051,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return an event instance representing the Left Paddle 1 button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent leftPaddle1(EventLoop loop) {
-        return button(Button.LEFT_PADDLE_1, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1087,8 +1099,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getLeftFunctionButton() {
-        return getButton(Button.LEFT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1096,8 +1109,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getLeftFunctionButtonPressed() {
-        return getButtonPressed(Button.LEFT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1105,8 +1119,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getLeftFunctionButtonReleased() {
-        return getButtonReleased(Button.LEFT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1116,8 +1131,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return an event instance representing the Left Function button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent leftFunction(EventLoop loop) {
-        return button(Button.LEFT_FUNCTION, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1125,8 +1141,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getRightFunctionButton() {
-        return getButton(Button.RIGHT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1134,8 +1151,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getRightFunctionButtonPressed() {
-        return getButtonPressed(Button.RIGHT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1143,8 +1161,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getRightFunctionButtonReleased() {
-        return getButtonReleased(Button.RIGHT_FUNCTION);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -1154,8 +1173,9 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return an event instance representing the Right Function button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent rightFunction(EventLoop loop) {
-        return button(Button.RIGHT_FUNCTION, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

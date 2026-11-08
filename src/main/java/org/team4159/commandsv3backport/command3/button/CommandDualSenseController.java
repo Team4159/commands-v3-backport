@@ -465,8 +465,9 @@ public class CommandDualSenseController {
      * @return a Trigger instance representing the Microphone button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger microphone(EventLoop loop) {
-        return m_hid.button(DualSenseController.Button.MICROPHONE.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

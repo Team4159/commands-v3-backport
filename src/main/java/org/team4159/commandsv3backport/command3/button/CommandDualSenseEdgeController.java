@@ -465,8 +465,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Microphone button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger microphone(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.MICROPHONE.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -489,8 +490,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Right Paddle 1 button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger rightPaddle1(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.RIGHT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -513,8 +515,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Left Paddle 1 button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger leftPaddle1(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.LEFT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -561,8 +564,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Left Function button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger leftFunction(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.LEFT_FUNCTION.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -585,8 +589,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Right Function button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger rightFunction(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.RIGHT_FUNCTION.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
