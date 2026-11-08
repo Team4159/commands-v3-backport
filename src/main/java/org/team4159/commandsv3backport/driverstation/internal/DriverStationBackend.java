@@ -7,13 +7,13 @@ package org.team4159.commandsv3backport.driverstation.internal;
 import edu.wpi.first.hal.AllianceStationID;
 import edu.wpi.first.hal.ControlWord;
 import edu.wpi.first.hal.DriverStationJNI;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.util.Color;
-import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
@@ -26,6 +26,14 @@ public final class DriverStationBackend {
 
     /** Number of Joystick ports. */
     public static final int JOYSTICK_PORTS = DriverStation.kJoystickPorts;
+
+    private static final Map<Integer, POVDirection> ANGLE_POV_MAP = new HashMap<>();
+
+    static {
+        for (POVDirection direction : POVDirection.values()) {
+            direction.getAngle().ifPresent(angle -> ANGLE_POV_MAP.put((int) Math.round(angle.getDegrees()), direction));
+        }
+    }
 
     private static volatile boolean m_userProgramStarted = false;
 
@@ -181,20 +189,8 @@ public final class DriverStationBackend {
      * @return the angle of the POV.
      */
     public static POVDirection getStickPOV(int stick, int pov) {
-        double angle = DriverStation.getStickPOV(stick, pov);
-        if (angle == -1.0) {
-            return POVDirection.CENTER;
-        }
-        for (POVDirection povDirection : EnumSet.allOf(POVDirection.class)) {
-            Optional<Rotation2d> otherAngle = povDirection.getAngle();
-            if (otherAngle.isEmpty()) {
-                continue;
-            }
-            if (angle == otherAngle.get().getDegrees()) {
-                return povDirection;
-            }
-        }
-        return POVDirection.CENTER;
+        int angle = DriverStation.getStickPOV(stick, pov);
+        return ANGLE_POV_MAP.getOrDefault(angle, POVDirection.CENTER);
     }
 
     /**
