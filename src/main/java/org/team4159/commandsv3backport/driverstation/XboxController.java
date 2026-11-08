@@ -22,7 +22,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * <p>This class handles Xbox input that comes from the Driver Station. Each time a value
  * is requested the most recent value is returned.
  */
-@Deprecated
 public class XboxController implements HIDDevice, Sendable {
 
     private static final double MAX_DEADBAND = Math.nextDown(1.0);
@@ -53,27 +52,25 @@ public class XboxController implements HIDDevice, Sendable {
         /** Y button. */
         Y(3, "YButton"),
         /** View button. */
-        VIEW(4, "ViewButton"),
-        /** Xbox button. */
-        XBOX(5, "XboxButton"),
+        VIEW(6, "ViewButton"),
         /** Menu button. */
-        MENU(6, "MenuButton"),
+        MENU(7, "MenuButton"),
         /** Left Stick button. */
-        LEFT_STICK(7, "LeftStickButton"),
+        LEFT_STICK(8, "LeftStickButton"),
         /** Right Stick button. */
-        RIGHT_STICK(8, "RightStickButton"),
+        RIGHT_STICK(9, "RightStickButton"),
         /** Left Bumper button. */
-        LEFT_BUMPER(9, "LeftBumperButton"),
-        /** Right Bumper button. */
-        RIGHT_BUMPER(10, "RightBumperButton"),
+        LEFT_BUMPER(4, "LeftBumperButton"),
         /** Dpad Up button. */
-        DPAD_UP(11, "DpadUpButton"),
+        DPAD_UP(10, "DpadUpButton"),
         /** Dpad Down button. */
-        DPAD_DOWN(12, "DpadDownButton"),
+        DPAD_DOWN(11, "DpadDownButton"),
         /** Dpad Left button. */
-        DPAD_LEFT(13, "DpadLeftButton"),
+        DPAD_LEFT(12, "DpadLeftButton"),
         /** Dpad Right button. */
-        DPAD_RIGHT(14, "DpadRightButton");
+        DPAD_RIGHT(13, "DpadRightButton"),
+        /** Right Bumper button. */
+        RIGHT_BUMPER(5, "RightBumperButton");
 
         /** Button value. */
         public final int value;
@@ -98,13 +95,13 @@ public class XboxController implements HIDDevice, Sendable {
         /** Left Y. */
         LEFT_Y(1, "LeftY"),
         /** Right X. */
-        RIGHT_X(2, "RightX"),
+        RIGHT_X(4, "RightX"),
         /** Right Y. */
-        RIGHT_Y(3, "RightY"),
+        RIGHT_Y(5, "RightY"),
         /** Left Trigger. */
-        LEFT_TRIGGER(4, "LeftTrigger"),
+        LEFT_TRIGGER(2, "LeftTrigger"),
         /** Right Trigger. */
-        RIGHT_TRIGGER(5, "RightTrigger");
+        RIGHT_TRIGGER(3, "RightTrigger");
 
         /** Axis value. */
         public final int value;

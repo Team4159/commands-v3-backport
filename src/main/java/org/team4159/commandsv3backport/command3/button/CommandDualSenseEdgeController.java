@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see DualSenseEdgeController
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandDualSenseEdgeController {
 
     private final CommandGenericHID m_hid;

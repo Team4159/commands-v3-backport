@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see XboxController
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandXboxController {
 
     private final CommandGenericHID m_hid;

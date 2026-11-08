@@ -22,7 +22,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * <p>This class handles DualShock4 input that comes from the Driver Station. Each time a value
  * is requested the most recent value is returned.
  */
-@Deprecated
 public class DualShock4Controller implements HIDDevice, Sendable {
 
     private static final double MAX_DEADBAND = Math.nextDown(1.0);
@@ -45,11 +44,11 @@ public class DualShock4Controller implements HIDDevice, Sendable {
     /** Represents a digital button on a DualShock4Controller. */
     public enum Button {
         /** Cross button. */
-        CROSS(0, "CrossButton"),
+        CROSS(1, "CrossButton"),
         /** Circle button. */
-        CIRCLE(1, "CircleButton"),
+        CIRCLE(2, "CircleButton"),
         /** Square button. */
-        SQUARE(2, "SquareButton"),
+        SQUARE(0, "SquareButton"),
         /** Triangle button. */
         TRIANGLE(3, "TriangleButton"),
         /** Share button. */
@@ -59,23 +58,23 @@ public class DualShock4Controller implements HIDDevice, Sendable {
         /** Options button. */
         OPTIONS(6, "OptionsButton"),
         /** L 3 button. */
-        L3(7, "L3Button"),
+        L3(10, "L3Button"),
         /** R 3 button. */
-        R3(8, "R3Button"),
+        R3(11, "R3Button"),
         /** L 1 button. */
-        L1(9, "L1Button"),
+        L1(4, "L1Button"),
         /** R 1 button. */
-        R1(10, "R1Button"),
+        R1(5, "R1Button"),
         /** Dpad Up button. */
-        DPAD_UP(11, "DpadUpButton"),
+        DPAD_UP(14, "DpadUpButton"),
         /** Dpad Down button. */
-        DPAD_DOWN(12, "DpadDownButton"),
+        DPAD_DOWN(15, "DpadDownButton"),
         /** Dpad Left button. */
-        DPAD_LEFT(13, "DpadLeftButton"),
+        DPAD_LEFT(16, "DpadLeftButton"),
         /** Dpad Right button. */
-        DPAD_RIGHT(14, "DpadRightButton"),
+        DPAD_RIGHT(17, "DpadRightButton"),
         /** Touchpad button. */
-        TOUCHPAD(20, "TouchpadButton");
+        TOUCHPAD(13, "TouchpadButton");
 
         /** Button value. */
         public final int value;
@@ -102,11 +101,11 @@ public class DualShock4Controller implements HIDDevice, Sendable {
         /** Right X. */
         RIGHT_X(2, "RightX"),
         /** Right Y. */
-        RIGHT_Y(3, "RightY"),
+        RIGHT_Y(5, "RightY"),
         /** L 2. */
-        L2(4, "L2"),
+        L2(3, "L2"),
         /** R 2. */
-        R2(5, "R2");
+        R2(4, "R2");
 
         /** Axis value. */
         public final int value;

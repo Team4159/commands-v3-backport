@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see DualShock4Controller
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandDualShock4Controller {
 
     private final CommandGenericHID m_hid;

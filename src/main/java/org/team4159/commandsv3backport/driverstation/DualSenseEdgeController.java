@@ -22,7 +22,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * <p>This class handles DualSenseEdge input that comes from the Driver Station. Each time a value
  * is requested the most recent value is returned.
  */
-@Deprecated
 public class DualSenseEdgeController implements HIDDevice, Sendable {
 
     private static final double MAX_DEADBAND = Math.nextDown(1.0);
@@ -45,47 +44,37 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
     /** Represents a digital button on a DualSenseEdgeController. */
     public enum Button {
         /** Cross button. */
-        CROSS(0, "CrossButton"),
+        CROSS(1, "CrossButton"),
         /** Circle button. */
-        CIRCLE(1, "CircleButton"),
+        CIRCLE(2, "CircleButton"),
         /** Square button. */
-        SQUARE(2, "SquareButton"),
+        SQUARE(0, "SquareButton"),
         /** Triangle button. */
         TRIANGLE(3, "TriangleButton"),
         /** Create button. */
-        CREATE(4, "CreateButton"),
+        CREATE(8, "CreateButton"),
         /** PS button. */
-        PS(5, "PSButton"),
+        PS(12, "PSButton"),
         /** Options button. */
-        OPTIONS(6, "OptionsButton"),
+        OPTIONS(9, "OptionsButton"),
         /** L 3 button. */
-        L3(7, "L3Button"),
+        L3(10, "L3Button"),
         /** R 3 button. */
-        R3(8, "R3Button"),
+        R3(11, "R3Button"),
         /** L 1 button. */
-        L1(9, "L1Button"),
+        L1(4, "L1Button"),
         /** R 1 button. */
-        R1(10, "R1Button"),
+        R1(5, "R1Button"),
         /** Dpad Up button. */
-        DPAD_UP(11, "DpadUpButton"),
+        DPAD_UP(14, "DpadUpButton"),
         /** Dpad Down button. */
-        DPAD_DOWN(12, "DpadDownButton"),
+        DPAD_DOWN(15, "DpadDownButton"),
         /** Dpad Left button. */
-        DPAD_LEFT(13, "DpadLeftButton"),
+        DPAD_LEFT(16, "DpadLeftButton"),
         /** Dpad Right button. */
-        DPAD_RIGHT(14, "DpadRightButton"),
-        /** Microphone button. */
-        MICROPHONE(15, "MicrophoneButton"),
-        /** Right Paddle 1 button. */
-        RIGHT_PADDLE_1(16, "RightPaddle1Button"),
-        /** Left Paddle 1 button. */
-        LEFT_PADDLE_1(17, "LeftPaddle1Button"),
+        DPAD_RIGHT(17, "DpadRightButton"),
         /** Touchpad button. */
-        TOUCHPAD(20, "TouchpadButton"),
-        /** Left Function button. */
-        LEFT_FUNCTION(21, "LeftFunctionButton"),
-        /** Right Function button. */
-        RIGHT_FUNCTION(22, "RightFunctionButton");
+        TOUCHPAD(13, "TouchpadButton");
 
         /** Button value. */
         public final int value;
