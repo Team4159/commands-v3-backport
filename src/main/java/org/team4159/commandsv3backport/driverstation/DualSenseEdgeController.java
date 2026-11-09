@@ -784,7 +784,10 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadUpButton() {
-        return getButton(Button.DPAD_UP);
+        return switch (m_hid.getPOV()) {
+            case UP_LEFT, UP, UP_RIGHT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -813,7 +816,7 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadUp(EventLoop loop) {
-        return button(Button.DPAD_UP, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -822,7 +825,10 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadDownButton() {
-        return getButton(Button.DPAD_DOWN);
+        return switch (m_hid.getPOV()) {
+            case DOWN_RIGHT, DOWN, DOWN_LEFT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -851,7 +857,7 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadDown(EventLoop loop) {
-        return button(Button.DPAD_DOWN, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -860,7 +866,10 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadLeftButton() {
-        return getButton(Button.DPAD_LEFT);
+        return switch (m_hid.getPOV()) {
+            case DOWN_LEFT, LEFT, UP_LEFT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -889,7 +898,7 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadLeft(EventLoop loop) {
-        return button(Button.DPAD_LEFT, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -898,7 +907,10 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadRightButton() {
-        return getButton(Button.DPAD_RIGHT);
+        return switch (m_hid.getPOV()) {
+            case UP_RIGHT, RIGHT, DOWN_RIGHT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -927,7 +939,7 @@ public class DualSenseEdgeController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadRight(EventLoop loop) {
-        return button(Button.DPAD_RIGHT, loop);
+        return m_hid.povRight(loop);
     }
 
     /**
