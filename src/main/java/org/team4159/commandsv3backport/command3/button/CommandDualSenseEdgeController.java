@@ -370,7 +370,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_UP.value, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -394,7 +394,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_DOWN.value, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -418,7 +418,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_LEFT.value, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -442,7 +442,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_RIGHT.value, loop);
+        return m_hid.povRight(loop);
     }
 
     /**
