@@ -454,6 +454,7 @@ public class CommandDualSenseController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #microphone(EventLoop)
      */
+    @Deprecated
     public Trigger microphone() {
         return microphone(m_hid.getScheduler().getDefaultEventLoop());
     }

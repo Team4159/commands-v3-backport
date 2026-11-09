@@ -8,7 +8,6 @@ import java.util.Objects;
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.Gamepad;
-import org.team4159.commandsv3backport.driverstation.POVDirection;
 import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
@@ -62,7 +61,7 @@ public class CommandGamepad {
      */
     public CommandGamepad(Scheduler scheduler, Gamepad gamepad) {
         m_gamepad = Objects.requireNonNull(gamepad, "Provided gamepad cannot be null");
-        m_hid = new CommandGenericHID(scheduler, gamepad.getHID());
+        m_hid = new CommandGenericHID(scheduler, m_gamepad.getHID());
     }
 
     /**
@@ -246,9 +245,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Guide button's digital signal attached to the given
      *     loop.
      */
-    @Deprecated
     public Trigger guide(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.GUIDE.value, loop);
     }
 
     /**
@@ -392,10 +390,7 @@ public class CommandGamepad {
      *     given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.UP, loop)
-            .or(m_hid.pov(0, POVDirection.UP_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.UP_RIGHT, loop));
+        return button(Gamepad.Button.DPAD_UP.value, loop);
     }
 
     /**
@@ -419,10 +414,7 @@ public class CommandGamepad {
      *     given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.DOWN, loop)
-            .or(m_hid.pov(0, POVDirection.DOWN_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.DOWN_RIGHT, loop));
+        return button(Gamepad.Button.DPAD_DOWN.value, loop);
     }
 
     /**
@@ -446,10 +438,7 @@ public class CommandGamepad {
      *     given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.LEFT, loop)
-            .or(m_hid.pov(0, POVDirection.DOWN_LEFT, loop))
-            .or(m_hid.pov(0, POVDirection.UP_LEFT, loop));
+        return button(Gamepad.Button.DPAD_LEFT.value, loop);
     }
 
     /**
@@ -473,10 +462,7 @@ public class CommandGamepad {
      *     given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid
-            .pov(0, POVDirection.RIGHT, loop)
-            .or(m_hid.pov(0, POVDirection.UP_RIGHT, loop))
-            .or(m_hid.pov(0, POVDirection.DOWN_RIGHT, loop));
+        return button(Gamepad.Button.DPAD_RIGHT.value, loop);
     }
 
     /**
@@ -499,9 +485,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 1 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc1(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_1.value, loop);
     }
 
     /**
@@ -524,9 +509,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Right Paddle 1 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger rightPaddle1(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.RIGHT_PADDLE_1.value, loop);
     }
 
     /**
@@ -549,9 +533,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Left Paddle 1 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger leftPaddle1(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.LEFT_PADDLE_1.value, loop);
     }
 
     /**
@@ -575,7 +558,7 @@ public class CommandGamepad {
      *     the given loop.
      */
     public Trigger rightPaddle2(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.RIGHT_PADDLE_2.value, loop);
     }
 
     /**
@@ -598,9 +581,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Left Paddle 2 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger leftPaddle2(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.LEFT_PADDLE_2.value, loop);
     }
 
     /**
@@ -623,9 +605,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Touchpad button's digital signal attached to the
      *     given loop.
      */
-    @Deprecated
     public Trigger touchpad(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.TOUCHPAD.value, loop);
     }
 
     /**
@@ -648,9 +629,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 2 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc2(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_2.value, loop);
     }
 
     /**
@@ -673,9 +653,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 3 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc3(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_3.value, loop);
     }
 
     /**
@@ -698,9 +677,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 4 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc4(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_4.value, loop);
     }
 
     /**
@@ -723,9 +701,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 5 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc5(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_5.value, loop);
     }
 
     /**
@@ -748,9 +725,8 @@ public class CommandGamepad {
      * @return a Trigger instance representing the Miscellaneous 6 button's digital signal attached to
      *     the given loop.
      */
-    @Deprecated
     public Trigger misc6(EventLoop loop) {
-        throw new UnsupportedOperationException();
+        return button(Gamepad.Button.MISC_6.value, loop);
     }
 
     /**

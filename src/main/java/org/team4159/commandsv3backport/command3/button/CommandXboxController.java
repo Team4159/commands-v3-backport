@@ -214,6 +214,7 @@ public class CommandXboxController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #xbox(EventLoop)
      */
+    @Deprecated
     public Trigger xbox() {
         return xbox(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -225,8 +226,9 @@ public class CommandXboxController {
      * @return a Trigger instance representing the Xbox button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger xbox(EventLoop loop) {
-        return m_hid.button(XboxController.Button.XBOX.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

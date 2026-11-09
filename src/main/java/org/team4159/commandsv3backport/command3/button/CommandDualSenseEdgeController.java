@@ -454,6 +454,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #microphone(EventLoop)
      */
+    @Deprecated
     public Trigger microphone() {
         return microphone(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -479,6 +480,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #rightPaddle1(EventLoop)
      */
+    @Deprecated
     public Trigger rightPaddle1() {
         return rightPaddle1(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -504,6 +506,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #leftPaddle1(EventLoop)
      */
+    @Deprecated
     public Trigger leftPaddle1() {
         return leftPaddle1(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -553,6 +556,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #leftFunction(EventLoop)
      */
+    @Deprecated
     public Trigger leftFunction() {
         return leftFunction(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -578,6 +582,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #rightFunction(EventLoop)
      */
+    @Deprecated
     public Trigger rightFunction() {
         return rightFunction(m_hid.getScheduler().getDefaultEventLoop());
     }
