@@ -38,7 +38,7 @@ Loop overruns caused by scheduling commands (usually ~30ms) are unavoidable.
 
 ### HID Inputs
 
-HID inputs from Driver Station are updated before `robotPeriodic()`, but **not** before any modal periodic method like `teleopPeriodic()`, `autonomousPeriodic()`, etc.
+Some D-pad input information (pressed, released) from Driver Station is updated during `Scheduler.run()`. This means that it's **not** updated before any modal periodic method like `teleopPeriodic()`, `autonomousPeriodic()`, etc., if `Scheduler.run()` is called under `robotPeriodic()`.
 
 ### Compatibility
 
