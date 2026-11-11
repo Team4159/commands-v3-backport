@@ -36,13 +36,10 @@ public Robot() {
 
 Loop overruns caused by scheduling commands (usually ~30ms) are unavoidable.
 
-<<<<<<< HEAD
 ### HID Inputs
 
 Some D-pad input information (pressed, released) from Driver Station is updated during `Scheduler.run()`. This means that it's **not** updated before any modal periodic method like `teleopPeriodic()`, `autonomousPeriodic()`, etc., if `Scheduler.run()` is called under `robotPeriodic()`.
 
-=======
->>>>>>> main
 ### Compatibility
 
 This library is incompatible with any 2026 library that depends on the default commands library.
