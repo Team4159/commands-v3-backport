@@ -795,8 +795,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadUpButtonPressed() {
-        return getButtonPressed(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -804,8 +805,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadUpButtonReleased() {
-        return getButtonReleased(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -836,8 +838,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadDownButtonPressed() {
-        return getButtonPressed(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -845,8 +848,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadDownButtonReleased() {
-        return getButtonReleased(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -877,8 +881,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadLeftButtonPressed() {
-        return getButtonPressed(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -886,8 +891,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadLeftButtonReleased() {
-        return getButtonReleased(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -918,8 +924,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadRightButtonPressed() {
-        return getButtonPressed(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -927,8 +934,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadRightButtonReleased() {
-        return getButtonReleased(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
