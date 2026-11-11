@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see DualSenseEdgeController
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandDualSenseEdgeController {
 
     private final CommandGenericHID m_hid;
@@ -371,7 +370,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_UP.value, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -395,7 +394,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_DOWN.value, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -419,7 +418,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_LEFT.value, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -443,7 +442,7 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.DPAD_RIGHT.value, loop);
+        return m_hid.povRight(loop);
     }
 
     /**
@@ -455,6 +454,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #microphone(EventLoop)
      */
+    @Deprecated
     public Trigger microphone() {
         return microphone(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -466,8 +466,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Microphone button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger microphone(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.MICROPHONE.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -479,6 +480,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #rightPaddle1(EventLoop)
      */
+    @Deprecated
     public Trigger rightPaddle1() {
         return rightPaddle1(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -490,8 +492,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Right Paddle 1 button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger rightPaddle1(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.RIGHT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -503,6 +506,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #leftPaddle1(EventLoop)
      */
+    @Deprecated
     public Trigger leftPaddle1() {
         return leftPaddle1(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -514,8 +518,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Left Paddle 1 button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger leftPaddle1(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.LEFT_PADDLE_1.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -551,6 +556,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #leftFunction(EventLoop)
      */
+    @Deprecated
     public Trigger leftFunction() {
         return leftFunction(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -562,8 +568,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Left Function button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger leftFunction(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.LEFT_FUNCTION.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -575,6 +582,7 @@ public class CommandDualSenseEdgeController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #rightFunction(EventLoop)
      */
+    @Deprecated
     public Trigger rightFunction() {
         return rightFunction(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -586,8 +594,9 @@ public class CommandDualSenseEdgeController {
      * @return a Trigger instance representing the Right Function button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger rightFunction(EventLoop loop) {
-        return m_hid.button(DualSenseEdgeController.Button.RIGHT_FUNCTION.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

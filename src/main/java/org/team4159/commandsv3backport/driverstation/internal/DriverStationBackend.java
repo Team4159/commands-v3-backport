@@ -116,7 +116,7 @@ public final class DriverStationBackend {
      * @return Whether the joystick button was pressed since the last check.
      */
     public static boolean getStickButtonPressed(final int stick, final int button) {
-        return DriverStation.getStickButtonPressed(stick, button);
+        return DriverStation.getStickButtonPressed(stick, button + 1);
     }
 
     /**
@@ -127,7 +127,7 @@ public final class DriverStationBackend {
      * @return Whether the joystick button was released since the last check.
      */
     public static boolean getStickButtonReleased(final int stick, final int button) {
-        return DriverStation.getStickButtonReleased(stick, button);
+        return DriverStation.getStickButtonReleased(stick, button + 1);
     }
 
     /**

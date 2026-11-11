@@ -22,7 +22,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * <p>This class handles DualSense input that comes from the Driver Station. Each time a value
  * is requested the most recent value is returned.
  */
-@Deprecated
 public class DualSenseController implements HIDDevice, Sendable {
 
     private static final double MAX_DEADBAND = Math.nextDown(1.0);
@@ -45,39 +44,29 @@ public class DualSenseController implements HIDDevice, Sendable {
     /** Represents a digital button on a DualSenseController. */
     public enum Button {
         /** Cross button. */
-        CROSS(0, "CrossButton"),
+        CROSS(1, "CrossButton"),
         /** Circle button. */
-        CIRCLE(1, "CircleButton"),
+        CIRCLE(2, "CircleButton"),
         /** Square button. */
-        SQUARE(2, "SquareButton"),
+        SQUARE(0, "SquareButton"),
         /** Triangle button. */
         TRIANGLE(3, "TriangleButton"),
         /** Create button. */
-        CREATE(4, "CreateButton"),
+        CREATE(8, "CreateButton"),
         /** PS button. */
-        PS(5, "PSButton"),
+        PS(12, "PSButton"),
         /** Options button. */
-        OPTIONS(6, "OptionsButton"),
+        OPTIONS(9, "OptionsButton"),
         /** L 3 button. */
-        L3(7, "L3Button"),
+        L3(10, "L3Button"),
         /** R 3 button. */
-        R3(8, "R3Button"),
+        R3(11, "R3Button"),
         /** L 1 button. */
-        L1(9, "L1Button"),
+        L1(4, "L1Button"),
         /** R 1 button. */
-        R1(10, "R1Button"),
-        /** Dpad Up button. */
-        DPAD_UP(11, "DpadUpButton"),
-        /** Dpad Down button. */
-        DPAD_DOWN(12, "DpadDownButton"),
-        /** Dpad Left button. */
-        DPAD_LEFT(13, "DpadLeftButton"),
-        /** Dpad Right button. */
-        DPAD_RIGHT(14, "DpadRightButton"),
-        /** Microphone button. */
-        MICROPHONE(15, "MicrophoneButton"),
+        R1(5, "R1Button"),
         /** Touchpad button. */
-        TOUCHPAD(20, "TouchpadButton");
+        TOUCHPAD(13, "TouchpadButton");
 
         /** Button value. */
         public final int value;
@@ -795,7 +784,10 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadUpButton() {
-        return getButton(Button.DPAD_UP);
+        return switch (m_hid.getPOV()) {
+            case UP_LEFT, UP, UP_RIGHT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -803,8 +795,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadUpButtonPressed() {
-        return getButtonPressed(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -812,8 +805,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadUpButtonReleased() {
-        return getButtonReleased(Button.DPAD_UP);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -824,7 +818,7 @@ public class DualSenseController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadUp(EventLoop loop) {
-        return button(Button.DPAD_UP, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -833,7 +827,10 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadDownButton() {
-        return getButton(Button.DPAD_DOWN);
+        return switch (m_hid.getPOV()) {
+            case DOWN_RIGHT, DOWN, DOWN_LEFT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -841,8 +838,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadDownButtonPressed() {
-        return getButtonPressed(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -850,8 +848,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadDownButtonReleased() {
-        return getButtonReleased(Button.DPAD_DOWN);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -862,7 +861,7 @@ public class DualSenseController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadDown(EventLoop loop) {
-        return button(Button.DPAD_DOWN, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -871,7 +870,10 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadLeftButton() {
-        return getButton(Button.DPAD_LEFT);
+        return switch (m_hid.getPOV()) {
+            case DOWN_LEFT, LEFT, UP_LEFT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -879,8 +881,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadLeftButtonPressed() {
-        return getButtonPressed(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -888,8 +891,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadLeftButtonReleased() {
-        return getButtonReleased(Button.DPAD_LEFT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -900,7 +904,7 @@ public class DualSenseController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadLeft(EventLoop loop) {
-        return button(Button.DPAD_LEFT, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -909,7 +913,10 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return The state of the button.
      */
     public boolean getDpadRightButton() {
-        return getButton(Button.DPAD_RIGHT);
+        return switch (m_hid.getPOV()) {
+            case UP_RIGHT, RIGHT, DOWN_RIGHT -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -917,8 +924,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getDpadRightButtonPressed() {
-        return getButtonPressed(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -926,8 +934,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getDpadRightButtonReleased() {
-        return getButtonReleased(Button.DPAD_RIGHT);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -938,7 +947,7 @@ public class DualSenseController implements HIDDevice, Sendable {
      *     attached to the given loop.
      */
     public BooleanEvent dpadRight(EventLoop loop) {
-        return button(Button.DPAD_RIGHT, loop);
+        return m_hid.povRight(loop);
     }
 
     /**
@@ -946,8 +955,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return The state of the button.
      */
+    @Deprecated
     public boolean getMicrophoneButton() {
-        return getButton(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -955,8 +965,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was pressed since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonPressed() {
-        return getButtonPressed(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -964,8 +975,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      *
      * @return Whether the button was released since the last check.
      */
+    @Deprecated
     public boolean getMicrophoneButtonReleased() {
-        return getButtonReleased(Button.MICROPHONE);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -975,8 +987,9 @@ public class DualSenseController implements HIDDevice, Sendable {
      * @return an event instance representing the Microphone button's digital signal
      *     attached to the given loop.
      */
+    @Deprecated
     public BooleanEvent microphone(EventLoop loop) {
-        return button(Button.MICROPHONE, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**

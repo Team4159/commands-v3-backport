@@ -24,6 +24,8 @@ Also implements other libraries from WPILib 2027+ to make programming more ergon
 
 ## Usage
 
+### Loop Overruns
+
 You may run into a loop overrun on startup when using this library. Try pasting in the following line into your `Robot.java` constructor:
 
 ```java
@@ -33,5 +35,7 @@ public Robot() {
 ```
 
 Loop overruns caused by scheduling commands (usually ~30ms) are unavoidable.
+
+### Compatibility
 
 This library is incompatible with any 2026 library that depends on the default commands library.

@@ -185,6 +185,10 @@ public final class CommandGenericHID {
         return pov(POVDirection.UP);
     }
 
+    protected Trigger povUp(EventLoop loop) {
+        return pov(0, POVDirection.UP, loop);
+    }
+
     /**
      * Constructs a Trigger instance based around the 45 degree angle (right up) of the default (index
      * 0) POV on the HID, attached to {@link Scheduler#getDefaultEventLoop() the default command
@@ -194,6 +198,10 @@ public final class CommandGenericHID {
      */
     public Trigger povUpRight() {
         return pov(POVDirection.UP_RIGHT);
+    }
+
+    protected Trigger povUpRight(EventLoop loop) {
+        return pov(0, POVDirection.UP_RIGHT, loop);
     }
 
     /**
@@ -207,6 +215,10 @@ public final class CommandGenericHID {
         return pov(POVDirection.RIGHT);
     }
 
+    protected Trigger povRight(EventLoop loop) {
+        return pov(0, POVDirection.RIGHT, loop);
+    }
+
     /**
      * Constructs a Trigger instance based around the 135 degree angle (right down) of the default
      * (index 0) POV on the HID, attached to {@link Scheduler#getDefaultEventLoop() the default
@@ -216,6 +228,10 @@ public final class CommandGenericHID {
      */
     public Trigger povDownRight() {
         return pov(POVDirection.DOWN_RIGHT);
+    }
+
+    protected Trigger povDownRight(EventLoop loop) {
+        return pov(0, POVDirection.DOWN_RIGHT, loop);
     }
 
     /**
@@ -229,6 +245,10 @@ public final class CommandGenericHID {
         return pov(POVDirection.DOWN);
     }
 
+    protected Trigger povDown(EventLoop loop) {
+        return pov(0, POVDirection.DOWN, loop);
+    }
+
     /**
      * Constructs a Trigger instance based around the 225 degree angle (down left) of the default
      * (index 0) POV on the HID, attached to {@link Scheduler#getDefaultEventLoop() the default
@@ -238,6 +258,10 @@ public final class CommandGenericHID {
      */
     public Trigger povDownLeft() {
         return pov(POVDirection.DOWN_LEFT);
+    }
+
+    protected Trigger povDownLeft(EventLoop loop) {
+        return pov(0, POVDirection.DOWN_LEFT, loop);
     }
 
     /**
@@ -251,6 +275,10 @@ public final class CommandGenericHID {
         return pov(POVDirection.LEFT);
     }
 
+    protected Trigger povLeft(EventLoop loop) {
+        return pov(0, POVDirection.LEFT, loop);
+    }
+
     /**
      * Constructs a Trigger instance based around the 315 degree angle (left up) of the default (index
      * 0) POV on the HID, attached to {@link Scheduler#getDefaultEventLoop() the default command
@@ -262,6 +290,10 @@ public final class CommandGenericHID {
         return pov(POVDirection.UP_LEFT);
     }
 
+    protected Trigger povUpLeft(EventLoop loop) {
+        return pov(0, POVDirection.UP_LEFT, loop);
+    }
+
     /**
      * Constructs a Trigger instance based around the center (not pressed) position of the default
      * (index 0) POV on the HID, attached to {@link Scheduler#getDefaultEventLoop() the default
@@ -271,6 +303,10 @@ public final class CommandGenericHID {
      */
     public Trigger povCenter() {
         return pov(POVDirection.CENTER);
+    }
+
+    protected Trigger povCenter(EventLoop loop) {
+        return pov(0, POVDirection.CENTER, loop);
     }
 
     /**

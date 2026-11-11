@@ -418,7 +418,6 @@ public class GenericHID {
      *
      * @return the number of axis for the current HID
      */
-    @Deprecated
     public int getAxesAvailable() {
         return DriverStationBackend.getStickAxesAvailable(m_port);
     }
@@ -437,7 +436,6 @@ public class GenericHID {
      *
      * @return the number of POVs for the current HID
      */
-    @Deprecated
     public int getPOVsAvailable() {
         return DriverStationBackend.getStickPOVsAvailable(m_port);
     }
@@ -456,7 +454,6 @@ public class GenericHID {
      *
      * @return the number of buttons for the current HID
      */
-    @Deprecated
     public long getButtonsAvailable() {
         return DriverStationBackend.getStickButtonsAvailable(m_port);
     }

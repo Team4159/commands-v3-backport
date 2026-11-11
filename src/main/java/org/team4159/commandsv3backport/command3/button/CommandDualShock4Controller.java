@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see DualShock4Controller
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandDualShock4Controller {
 
     private final CommandGenericHID m_hid;
@@ -371,7 +370,7 @@ public class CommandDualShock4Controller {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.button(DualShock4Controller.Button.DPAD_UP.value, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -395,7 +394,7 @@ public class CommandDualShock4Controller {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.button(DualShock4Controller.Button.DPAD_DOWN.value, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -419,7 +418,7 @@ public class CommandDualShock4Controller {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.button(DualShock4Controller.Button.DPAD_LEFT.value, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -443,7 +442,7 @@ public class CommandDualShock4Controller {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.button(DualShock4Controller.Button.DPAD_RIGHT.value, loop);
+        return m_hid.povRight(loop);
     }
 
     /**

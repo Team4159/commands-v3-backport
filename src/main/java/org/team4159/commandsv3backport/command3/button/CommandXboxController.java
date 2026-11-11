@@ -18,7 +18,6 @@ import org.team4159.commandsv3backport.event.EventLoop;
  * @see XboxController
  */
 @SuppressWarnings("MethodName")
-@Deprecated
 public class CommandXboxController {
 
     private final CommandGenericHID m_hid;
@@ -215,6 +214,7 @@ public class CommandXboxController {
      *     default scheduler} if a scheduler was not explicitly provided.
      * @see #xbox(EventLoop)
      */
+    @Deprecated
     public Trigger xbox() {
         return xbox(m_hid.getScheduler().getDefaultEventLoop());
     }
@@ -226,8 +226,9 @@ public class CommandXboxController {
      * @return a Trigger instance representing the Xbox button's digital signal attached
      *     to the given loop.
      */
+    @Deprecated
     public Trigger xbox(EventLoop loop) {
-        return m_hid.button(XboxController.Button.XBOX.value, loop);
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -371,7 +372,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.button(XboxController.Button.DPAD_UP.value, loop);
+        return m_hid.povUp(loop);
     }
 
     /**
@@ -395,7 +396,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.button(XboxController.Button.DPAD_DOWN.value, loop);
+        return m_hid.povDown(loop);
     }
 
     /**
@@ -419,7 +420,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.button(XboxController.Button.DPAD_LEFT.value, loop);
+        return m_hid.povLeft(loop);
     }
 
     /**
@@ -443,7 +444,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.button(XboxController.Button.DPAD_RIGHT.value, loop);
+        return m_hid.povRight(loop);
     }
 
     /**
