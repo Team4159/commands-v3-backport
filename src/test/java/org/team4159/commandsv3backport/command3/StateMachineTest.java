@@ -12,8 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.team4159.commandsv3backport.command3.SchedulerEvent.Canceled;
 import org.team4159.commandsv3backport.command3.SchedulerEvent.Mounted;
@@ -22,6 +24,45 @@ import org.team4159.commandsv3backport.command3.SchedulerEvent.Yielded;
 
 @SuppressWarnings("PMD.CompareObjectsWithEquals")
 class StateMachineTest extends CommandTestBase {
+
+    @Nested
+    // We're testing POD attributes and don't need fully configured state machine objects
+    class CommandAttributes {
+
+        @Test
+        void name() {
+            var sm = new StateMachine("State Machine");
+            assertEquals("State Machine", sm.name());
+        }
+
+        @Test
+        void defaultPriorityIsZero() {
+            var sm = new StateMachine("State Machine");
+            assertEquals(Command.DEFAULT_PRIORITY, sm.priority());
+        }
+
+        @Test
+        void setPriorityIsRespected() {
+            var sm = new StateMachine("State Machine");
+            sm.setPriority(Command.HIGHEST_PRIORITY);
+            assertEquals(Command.HIGHEST_PRIORITY, sm.priority());
+        }
+
+        @Test
+        void requirementsEmptyByDefault() {
+            var sm = new StateMachine("State Machine");
+            assertEquals(Set.of(), sm.requirements());
+        }
+
+        @Test
+        void requirementsAreNotInherited() {
+            var mech = new DummyMechanism("Mechanism", m_scheduler);
+            var command = mech.run(Coroutine::park).named("Command");
+            var sm = new StateMachine("State Machine");
+            sm.addState(command);
+            assertEquals(Set.of(), sm.requirements());
+        }
+    }
 
     @Test
     void errorsWithoutInitialState() {
