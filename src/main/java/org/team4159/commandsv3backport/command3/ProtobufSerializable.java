@@ -4,6 +4,8 @@
 
 package org.team4159.commandsv3backport.command3;
 
+import edu.wpi.first.util.WPISerializable;
+
 /**
  * Marker interface to indicate a class is serializable using Protobuf serialization.
  *
