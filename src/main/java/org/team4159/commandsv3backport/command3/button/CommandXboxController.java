@@ -372,7 +372,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.povUp(loop);
+        return m_hid.povUpLeft(loop).or(m_hid.povUp(loop)).or(m_hid.povUpRight(loop));
     }
 
     /**
@@ -396,7 +396,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.povDown(loop);
+        return m_hid.povDownRight(loop).or(m_hid.povDown(loop)).or(m_hid.povDownLeft(loop));
     }
 
     /**
@@ -420,7 +420,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.povLeft(loop);
+        return m_hid.povDownLeft(loop).or(m_hid.povLeft(loop)).or(m_hid.povUpLeft(loop));
     }
 
     /**
@@ -444,7 +444,7 @@ public class CommandXboxController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.povRight(loop);
+        return m_hid.povUpRight(loop).or(m_hid.povRight(loop)).or(m_hid.povDownRight(loop));
     }
 
     /**
