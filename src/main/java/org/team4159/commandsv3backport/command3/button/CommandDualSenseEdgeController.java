@@ -6,10 +6,13 @@
 
 package org.team4159.commandsv3backport.command3.button;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import org.team4159.commandsv3backport.command3.Scheduler;
 import org.team4159.commandsv3backport.command3.Trigger;
 import org.team4159.commandsv3backport.driverstation.DualSenseEdgeController;
+import org.team4159.commandsv3backport.driverstation.POVDirection;
 import org.team4159.commandsv3backport.event.EventLoop;
 
 /**
@@ -22,6 +25,7 @@ public class CommandDualSenseEdgeController {
 
     private final CommandGenericHID m_hid;
     private final DualSenseEdgeController m_controller;
+    private final Map<POVDirection, Trigger> dpadTriggerCache = new EnumMap<>(POVDirection.class);
 
     /**
      * Construct an instance of a controller. Commands bound to buttons on the controller will be
@@ -370,7 +374,9 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadUp(EventLoop loop) {
-        return m_hid.povUpLeft(loop).or(m_hid.povUp(loop)).or(m_hid.povUpRight(loop));
+        return dpadTriggerCache.computeIfAbsent(POVDirection.UP, direction ->
+            m_hid.povUpLeft(loop).or(m_hid.povUp(loop)).or(m_hid.povUpRight(loop))
+        );
     }
 
     /**
@@ -394,7 +400,9 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadDown(EventLoop loop) {
-        return m_hid.povDownRight(loop).or(m_hid.povDown(loop)).or(m_hid.povDownLeft(loop));
+        return dpadTriggerCache.computeIfAbsent(POVDirection.DOWN, direction ->
+            m_hid.povDownRight(loop).or(m_hid.povDown(loop)).or(m_hid.povDownLeft(loop))
+        );
     }
 
     /**
@@ -418,7 +426,9 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadLeft(EventLoop loop) {
-        return m_hid.povDownLeft(loop).or(m_hid.povLeft(loop)).or(m_hid.povUpLeft(loop));
+        return dpadTriggerCache.computeIfAbsent(POVDirection.LEFT, direction ->
+            m_hid.povDownLeft(loop).or(m_hid.povLeft(loop)).or(m_hid.povUpLeft(loop))
+        );
     }
 
     /**
@@ -442,7 +452,9 @@ public class CommandDualSenseEdgeController {
      *     to the given loop.
      */
     public Trigger dpadRight(EventLoop loop) {
-        return m_hid.povUpRight(loop).or(m_hid.povRight(loop)).or(m_hid.povDownRight());
+        return dpadTriggerCache.computeIfAbsent(POVDirection.RIGHT, direction ->
+            m_hid.povUpRight(loop).or(m_hid.povRight(loop)).or(m_hid.povDownRight(loop))
+        );
     }
 
     /**
