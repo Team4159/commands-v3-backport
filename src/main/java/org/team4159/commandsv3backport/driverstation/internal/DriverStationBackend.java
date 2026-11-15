@@ -220,7 +220,7 @@ public final class DriverStationBackend {
      * @return The number of axes available on the indicated joystick
      */
     public static int getStickAxesAvailable(int stick) {
-        return (int) Math.pow(2, DriverStation.getStickAxisCount(stick)) - 1;
+        return (1 << DriverStation.getStickAxisCount(stick)) - 1;
     }
 
     /**
@@ -240,7 +240,7 @@ public final class DriverStationBackend {
      * @return The number of povs available on the indicated joystick
      */
     public static int getStickPOVsAvailable(int stick) {
-        return (int) Math.pow(2, DriverStation.getStickPOVCount(stick)) - 1;
+        return (1 << DriverStation.getStickPOVCount(stick)) - 1;
     }
 
     /**
@@ -260,7 +260,7 @@ public final class DriverStationBackend {
      * @return The buttons available on the indicated joystick
      */
     public static long getStickButtonsAvailable(int stick) {
-        return (int) Math.pow(2, DriverStation.getStickButtonCount(stick)) - 1;
+        return (1 << DriverStation.getStickButtonCount(stick)) - 1;
     }
 
     /**
