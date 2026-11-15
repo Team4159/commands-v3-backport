@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.team4159.commandsv3backport.command3.Command;
 import org.team4159.commandsv3backport.command3.CommandTestBase;
 import org.team4159.commandsv3backport.command3.Mechanism;
-import org.team4159.commandsv3backport.command3.sysid.SysIdRoutine;
 import org.team4159.commandsv3backport.command3.sysid.SysIdRoutine.Config;
 import org.team4159.commandsv3backport.command3.sysid.SysIdRoutine.SysIdMechanism;
 
