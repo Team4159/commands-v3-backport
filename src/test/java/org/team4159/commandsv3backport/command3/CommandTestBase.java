@@ -17,7 +17,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.team4159.commandsv3backport.hardware.hal.RobotMode;
 
-class CommandTestBase {
+public class CommandTestBase {
 
     protected Scheduler m_scheduler;
     protected List<SchedulerEvent> m_events;

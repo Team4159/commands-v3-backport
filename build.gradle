@@ -42,6 +42,7 @@ dependencies {
     implementation 'edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-2'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+    testImplementation 'org.mockito:mockito-core:5.24.0'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'us.hebi.quickbuf:quickbuf-runtime:1.4'
 }
