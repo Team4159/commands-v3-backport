@@ -2,7 +2,7 @@
 
 A comprehensive, but not exhaustive, backport of WPILib 2027+ Commands V3 to WPILib 2026.
 
-Also implements other libraries from WPILib 2027+ to make programming more ergonomic.
+Works on the roboRIO!
 
 **DISCLAIMER:** Made for Team 4159's rookie Internal Robotics Competition. Do not use for serious or consequential robot code!
 
@@ -23,6 +23,10 @@ Also implements other libraries from WPILib 2027+ to make programming more ergon
 8. You might have to clear your language server's cache and restart it
 
 ## Usage
+
+### Features
+
+This library implements Commands V3 along with adjacent dependencies to make programming more ergonomic. 
 
 ### Loop Overruns
 
