@@ -4,7 +4,7 @@ A comprehensive, but not exhaustive, backport of WPILib 2027+ Commands V3 to WPI
 
 Works on the roboRIO!
 
-**DISCLAIMER:** Made for Team 4159's rookie Internal Robotics Competition. Do not use for serious or consequential robot code!
+**DISCLAIMER:** Made for Team 4159's Internal Robotics Competition for rookies. Do not use for serious or consequential robot code!
 
 [GitHub Repository](https://github.com/Team4159/commands-v3-backport)
 
